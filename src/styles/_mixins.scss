@@ -1,0 +1,19 @@
+@use "sass:map";
+
+//------**BREAKPOINTS**-----//
+$breakpoints: (
+  md: 767px,
+  lg: 1023px,
+);
+
+@mixin up($bp) {
+  $min: map.get($breakpoints, $bp);
+
+  @if $min == null {
+    @error "Okänd breakpoint: #{$bp}";
+  }
+
+  @media (min-width: $min) {
+    @content;
+  }
+}
