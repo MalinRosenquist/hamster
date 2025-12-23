@@ -1,0 +1,15 @@
+@use "../../styles/variables" as vars;
+
+.footer {
+  background-color: vars.$clr-bg-card;
+  height: 115px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  small {
+    font-family: vars.$font-small;
+    color: vars.$clr-font-light;
+  }
+}
