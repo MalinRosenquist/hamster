@@ -1,0 +1,19 @@
+@use "../../styles/variables" as v;
+
+.header {
+  background-color: v.$clr-bg-card;
+  height: 197px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid v.$clr-border;
+
+  img {
+    width: 95px;
+    height: 95px;
+  }
+
+  .logoName {
+    color: v.$clr-accent;
+  }
+}
