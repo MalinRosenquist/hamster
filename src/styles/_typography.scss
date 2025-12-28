@@ -2,22 +2,21 @@
 @use "./mixins" as m;
 
 .logoName {
-  font-family: v.$font-brand;
+  font-family: var(--font-brand);
   font-weight: 800;
   line-height: 1.1;
-  font-size: v.$fs-40;
+  font-size: v.$fs-28;
 
   @include m.up(md) {
-    font-size: v.$fs-52;
+    font-size: v.$fs-34;
   }
 
   @include m.up(lg) {
-    font-size: v.$fs-64;
+    font-size: v.$fs-52;
   }
 }
 
 h1 {
-  font-family: v.$font-brand;
   font-weight: 800;
   line-height: 1.2;
   font-size: v.$fs-28;
@@ -32,7 +31,6 @@ h1 {
 }
 
 h2 {
-  font-family: v.$font-brand;
   font-weight: 600;
   line-height: 1.3;
   font-size: v.$fs-22;
@@ -47,7 +45,6 @@ h2 {
 }
 
 h3 {
-  font-family: v.$font-body;
   font-weight: 500;
   line-height: 1.3;
   font-size: v.$fs-20;
@@ -62,7 +59,6 @@ h3 {
 }
 
 p {
-  font-family: v.$font-body;
   font-weight: 400;
   line-height: 1.4;
   font-size: v.$fs-16;
@@ -77,7 +73,6 @@ p {
 }
 
 small {
-  font-family: v.$font-small;
   font-weight: 500;
   line-height: 1.4;
   font-size: v.$fs-13;
@@ -92,7 +87,6 @@ small {
 }
 
 input {
-  font-family: v.$font-body;
   font-weight: 500;
   line-height: 1.3;
   font-size: v.$fs-16;
@@ -107,7 +101,6 @@ input {
 }
 
 label {
-  font-family: v.$font-body;
   font-weight: 500;
   line-height: 1.3;
   font-size: v.$fs-14;
@@ -122,7 +115,6 @@ label {
 }
 
 button {
-  font-family: v.$font-brand;
   font-weight: 600;
   line-height: 1.2;
   font-size: v.$fs-18;
@@ -137,16 +129,15 @@ button {
 }
 
 nav {
-  font-family: v.$font-brand;
   font-weight: 500;
   line-height: 1.2;
   font-size: v.$fs-16;
 
   @include m.up(md) {
-    font-size: v.$fs-17;
+    font-size: v.$fs-18;
   }
 
   @include m.up(lg) {
-    font-size: v.$fs-18;
+    font-size: v.$fs-20;
   }
 }

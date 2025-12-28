@@ -10,9 +10,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  font-family: var(--font-body);
+  color: v.$clr-font-dark;
 }
 
 main {
-  background-color: v.$clr-bg-dark;
+  background-color: v.$clr-bg-main;
   flex: 1;
 }
