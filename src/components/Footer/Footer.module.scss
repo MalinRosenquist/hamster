@@ -1,15 +1,142 @@
-@use "../../styles/variables" as vars;
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
 
 .footer {
-  background-color: vars.$clr-bg-card;
-  height: 115px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: v.$clr-bg-frame;
+  padding: 2rem 0;
 
-  small {
-    font-family: vars.$font-small;
-    color: vars.$clr-font-light;
+  p {
+    font-size: v.$fs-13;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+
+    @include m.up(md) {
+      font-size: v.$fs-14;
+    }
+  }
+}
+
+// --- Top 3 columns
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-bottom: 1.5rem;
+
+  @include m.up(md) {
+    grid-template-columns: 1fr 1.3fr 1.3fr;
+    gap: 4rem;
+  }
+}
+
+.colHeading {
+  font-size: v.$fs-14;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  margin-top: 0;
+  opacity: 0.8;
+}
+
+.colNav {
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    margin-bottom: 0.8rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: v.$clr-primary;
+    }
+  }
+
+  li {
+    font-size: v.$fs-14;
+  }
+}
+
+.colInfo {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 3px solid v.$clr-accent;
+
+  .infoHeading {
+    @extend .colHeading;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 1;
+  }
+
+  .finePrint {
+    display: block;
+    font-size: v.$fs-13;
+    opacity: 0.8;
+    font-style: italic;
+  }
+}
+
+.colAbout {
+  .readMoreLink {
+    text-decoration: none;
+    font-weight: 700;
+    color: inherit;
+    opacity: 0.8;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// --- Bottom
+
+.bottom {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: v.$fs-13;
+  opacity: 0.8;
+  text-align: center;
+
+  @include m.up(md) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .copyright {
+    font-weight: 700;
+    display: block;
+    margin: 0 auto;
+
+    @include m.up(md) {
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+  }
+
+  .disclaimer {
+    display: block;
+    line-height: 1.5;
+
+    @include m.up(md) {
+      text-align: right;
+      max-width: 65%;
+      margin-left: auto;
+    }
   }
 }
