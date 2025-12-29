@@ -4,6 +4,7 @@
 .footer {
   background-color: v.$clr-bg-frame;
   padding: 2rem 0;
+  opacity: 0.8;
 
   p {
     font-size: v.$fs-13;
@@ -38,7 +39,6 @@
   font-weight: 700;
   margin-bottom: 1.2rem;
   margin-top: 0;
-  opacity: 0.8;
 }
 
 .colNav {
@@ -78,13 +78,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    opacity: 1;
   }
 
   .finePrint {
     display: block;
     font-size: v.$fs-13;
-    opacity: 0.8;
     font-style: italic;
   }
 }
@@ -94,7 +92,6 @@
     text-decoration: none;
     font-weight: 700;
     color: inherit;
-    opacity: 0.8;
 
     &:hover {
       text-decoration: underline;
@@ -108,7 +105,6 @@
   padding-top: 1.5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   font-size: v.$fs-13;
-  opacity: 0.8;
   text-align: center;
 
   @include m.up(md) {
