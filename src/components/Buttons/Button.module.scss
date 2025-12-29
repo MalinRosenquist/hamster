@@ -1,0 +1,36 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.button {
+  min-height: 44px;
+  box-shadow: 1px 10px 20px rgb(0 0 0 / 30%);
+  border-radius: 18px;
+  padding: 1rem;
+  line-height: 1;
+  border: 0;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: v.$clr-primary;
+
+  &:hover {
+    background-color: v.$clr-primary-hover;
+  }
+}
+
+.secondary {
+  background-color: v.$clr-secondary;
+
+  &:hover {
+    background-color: v.$clr-secondary-hover;
+  }
+}
+
+.danger {
+  background-color: v.$clr-danger;
+
+  &:hover {
+    background-color: v.$clr-danger-hover;
+  }
+}
