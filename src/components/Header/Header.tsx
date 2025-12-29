@@ -9,7 +9,7 @@ const links = [
   { href: "/categories", label: "Utforska" },
   { href: "/watchlist", label: "Bevaka" },
   { href: "/collection", label: "Samling" },
-  { href: "/myPage", label: "Min sida" },
+  { href: "/mypage", label: "Min sida" },
   { href: "/faq", label: "FAQ" },
 ];
 
