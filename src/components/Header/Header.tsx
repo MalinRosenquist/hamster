@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.inner}>
+      <div className={`container ${styles.inner}`}>
         <Link href="/" className={`${styles.logoName} logoName`}>
           Hamster
         </Link>
