@@ -3,20 +3,25 @@
 import Button from "@/components/Buttons/Button";
 import styles from "./Login.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/contexts/UserContext";
 import { UserActionTypes } from "@/reducers/UserReducer";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
-  const [userName, setUserName] = useState("");
-  const trimmed = userName.trim();
+  const [nameInput, setNameInput] = useState("");
+  const { userName: savedUserName, dispatch } = useContext(UserContext);
+  const trimmed = nameInput.trim();
   const USERNAME_RE = /^[A-Za-zÅÄÖåäö]{3,20}$/;
   const isValid = USERNAME_RE.test(trimmed);
   const isDisabled = isPending || !isValid;
   const router = useRouter();
-  const { dispatch } = useContext(UserContext);
+
+  // If user already exists, send to "/".
+  useEffect(() => {
+    if (savedUserName) router.replace("/");
+  }, [savedUserName, router]);
 
   // Send user to "/" when entered userName
   async function handleSubmit(e: React.FormEvent) {
@@ -30,7 +35,7 @@ export default function LoginPage() {
     dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
 
     await Promise.resolve();
-    router.push("/");
+    router.replace("/");
   }
 
   return (
@@ -47,14 +52,14 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName">Smeknamn</label>
-            <small id="userNameHelp">Välj ett smeknamn (minst 3 bokstäver)</small>
+            <small id="userNameHelp">Välj ett smeknamn (3-20 bokstäver)</small>
             <input
               id="userName"
               name="username"
               type="text"
               placeholder="T.ex Lego-Lasse"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
               disabled={isPending}
               required
               aria-describedby="userNameHelp"
