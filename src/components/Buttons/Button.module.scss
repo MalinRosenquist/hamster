@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../../styles/variables" as v;
 @use "../../styles/mixins" as m;
 
@@ -16,15 +17,17 @@
   gap: 0.5rem;
 
   &:disabled {
-    opacity: 0.8;
     cursor: not-allowed;
+    box-shadow: none;
+    color: v.$clr-font-disabled;
+    background-color: v.$clr-primary-disabled;
   }
 }
 
 .primary {
   background-color: v.$clr-primary;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: v.$clr-primary-hover;
   }
 }
