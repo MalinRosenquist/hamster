@@ -3,26 +3,31 @@
 import Button from "@/components/Buttons/Button";
 import styles from "./Login.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
+import { UserContext } from "@/contexts/UserContext";
+import { UserActionTypes } from "@/reducers/UserReducer";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
   const [userName, setUserName] = useState("");
   const trimmed = userName.trim();
-  const isDisabled = isPending || trimmed.length < 3;
-  const router = useRouter();
   const USERNAME_RE = /^[A-Za-zÅÄÖåäö]{3,20}$/;
+  const isValid = USERNAME_RE.test(trimmed);
+  const isDisabled = isPending || !isValid;
+  const router = useRouter();
+  const { dispatch } = useContext(UserContext);
 
   // Send user to "/" when entered userName
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!USERNAME_RE.test(trimmed)) {
+    if (!isValid) {
       return;
     }
 
     setIsPending(true);
+    dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
 
     await Promise.resolve();
     router.push("/");
@@ -42,7 +47,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName">Smeknamn</label>
-            <small id="userNameHelp">Välj ett smeknamn (minst 3 tecken)</small>
+            <small id="userNameHelp">Välj ett smeknamn (minst 3 bokstäver)</small>
             <input
               id="userName"
               name="username"
