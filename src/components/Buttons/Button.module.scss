@@ -9,6 +9,16 @@
   line-height: 1;
   border: 0;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
 }
 
 .primary {
