@@ -1,0 +1,48 @@
+@use "../../styles/variables" as v;
+
+.spinner {
+  --size: 50px;
+  --dot: 8px;
+
+  display: inline-block;
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(farthest-side, #{v.$clr-accent} 94%, #0000) top/var(--dot)
+      var(--dot) no-repeat,
+    conic-gradient(#0000 30%, #{v.$clr-accent});
+
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - var(--dot)),
+    #000 0
+  );
+
+  mask: radial-gradient(farthest-side, #0000 calc(100% - var(--dot)), #000 0);
+
+  animation: spin 1s infinite linear;
+}
+
+.small {
+  --size: 18px;
+  --dot: 4px;
+}
+
+.default {
+  --size: 50px;
+  --dot: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
