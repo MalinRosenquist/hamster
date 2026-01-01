@@ -44,7 +44,7 @@
     margin: 2rem;
     border: 2px solid v.$clr-primary;
     border-radius: 18px;
-    box-shadow: 1px 12px 20px rgb(0 0 0 / 30%);
+    box-shadow: v.$shadow;
 
     h2 {
       text-transform: uppercase;
