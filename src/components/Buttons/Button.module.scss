@@ -4,14 +4,15 @@
 
 .button {
   min-height: 44px;
-  box-shadow: 1px 10px 20px rgb(0 0 0 / 30%);
+  width: fit-content;
+  box-shadow: v.$shadow;
   border-radius: 18px;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   line-height: 1;
   border: 0;
   cursor: pointer;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
@@ -20,7 +21,6 @@
     cursor: not-allowed;
     box-shadow: none;
     color: v.$clr-font-disabled;
-    background-color: v.$clr-primary-disabled;
   }
 }
 
@@ -30,18 +30,27 @@
   &:not(:disabled):hover {
     background-color: v.$clr-primary-hover;
   }
+
+  &:disabled {
+    background-color: v.$clr-primary-disabled;
+  }
 }
 
 .secondary {
   background-color: v.$clr-secondary;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: v.$clr-secondary-hover;
+  }
+
+  &:disabled {
+    background-color: v.$clr-secondary-disabled;
   }
 }
 
 .danger {
   background-color: v.$clr-danger;
+  color: v.$clr-font-light;
 
   &:hover {
     background-color: v.$clr-danger-hover;
