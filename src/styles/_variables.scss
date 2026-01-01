@@ -9,6 +9,7 @@ $clr-primary-hover: #5c845a;
 $clr-primary-disabled: #b6c4b5;
 $clr-secondary: #f5d283;
 $clr-secondary-hover: #e2bc66;
+$clr-secondary-disabled: #dac79b;
 $clr-danger: #9c4b4b;
 $clr-danger-hover: #8c3636;
 
@@ -39,3 +40,7 @@ $fs-16: 1rem;
 $fs-15: 0.9375rem;
 $fs-14: 0.875rem;
 $fs-13: 0.8125rem;
+
+//------**MISC**---------//
+$border: 18px;
+$shadow: 1px 12px 20px rgb(0 0 0 / 30%);
