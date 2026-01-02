@@ -1,0 +1,74 @@
+@use "../styles/variables" as v;
+@use "../styles/mixins" as m;
+
+.hero {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  height: clamp(220px, 28vw, 580px);
+
+  .heroImg {
+    object-fit: cover;
+    object-position: top;
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: grid;
+    align-content: start;
+    padding-top: clamp(24px, 3vw, 48px);
+
+    h1 {
+      margin: 0;
+      text-align: right;
+      padding: 0;
+    }
+
+    p {
+      text-align: right;
+      justify-self: end;
+    }
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  justify-items: center;
+  margin-top: 5rem;
+
+  @include m.up(md) {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .card {
+    background-color: v.$clr-bg-card;
+    max-width: 400px;
+    text-align: left;
+    padding: 2rem;
+    border-radius: v.$border;
+    box-shadow: v.$shadow;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    @include m.up(md) {
+      max-width: 400px;
+      justify-self: center;
+    }
+
+    h2 {
+      text-transform: uppercase;
+    }
+
+    button {
+      display: flex;
+      align-self: end;
+    }
+  }
+}
