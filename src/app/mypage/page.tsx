@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Buttons/Button";
+import Button from "@/components/Buttons/Button/Button";
 import styles from "./MyPage.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/contexts/UserContext";

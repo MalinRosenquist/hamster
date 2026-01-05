@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
-import Button from "@/components/Buttons/Button";
+import Button from "@/components/Buttons/Button/Button";
 import Link from "next/link";
 
 export default function HomePage() {

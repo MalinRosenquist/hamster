@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Button from "../Buttons/Button";
+import Button from "../Buttons/Button/Button";
 import styles from "./ClearModal.module.scss";
 import Image from "next/image";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Buttons/Button";
+import Button from "@/components/Buttons/Button/Button";
 import styles from "./Login.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
 import { useContext, useEffect, useState } from "react";

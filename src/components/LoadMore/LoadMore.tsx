@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./LoadMore.module.scss";
-import Button from "@/components/Buttons/Button";
+import Button from "@/components/Buttons/Button/Button";
 import { ReactNode } from "react";
 
 type LoadMoreProps = {
