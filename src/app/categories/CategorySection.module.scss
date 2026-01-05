@@ -20,6 +20,12 @@
     grid-template-rows: auto auto;
     gap: 1.6rem;
     text-align: left;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
 
     .title {
       font-size: v.$fs-18;
