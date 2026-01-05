@@ -6,12 +6,15 @@ import LoadMore from "@/components/LoadMore/LoadMore";
 import styles from "./CategorySection.module.scss";
 import Image from "next/image";
 
-type Props = {
+type CategoryProps = {
   initialCategories: ThemeWithThumb[];
   total: number;
 };
 
-export default function CategorySection({ initialCategories, total }: Props) {
+export default function CategorySection({
+  initialCategories,
+  total,
+}: CategoryProps) {
   const [themes, setThemes] = useState<ThemeWithThumb[]>(initialCategories);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -28,7 +31,7 @@ export default function CategorySection({ initialCategories, total }: Props) {
       );
 
       if (!res.ok) {
-        console.error("Kunde inte hämta fler teman", res.status);
+        console.error("Could not fetch more themes", res.status);
         return;
       }
 
