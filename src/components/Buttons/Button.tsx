@@ -9,12 +9,15 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export default function Button({
   variant = "primary",
   className,
+  children,
   ...props
 }: ButtonProps) {
   return (
     <button
       {...props}
       className={`${styles.button} ${styles[variant]} ${className ?? ""}`}
-    />
+    >
+      {children}
+    </button>
   );
 }
