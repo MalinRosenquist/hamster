@@ -1,0 +1,61 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.top {
+  h1 {
+    text-align: center;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+  list-style: none;
+
+  .card {
+    background-color: v.$clr-bg-card;
+    width: min(180px, 100%);
+    justify-self: center;
+    padding: 0.6rem;
+    border-radius: v.$border;
+    box-shadow: v.$shadow;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 1.6rem;
+    text-align: left;
+
+    .title {
+      font-size: v.$fs-18;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-align: center;
+      line-height: 1.2;
+      min-height: v.$fs-18 * 1.2 * 2; //font-size * line-height * lines
+      line-clamp: 2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    @include m.up(md) {
+      justify-self: center;
+    }
+
+    .imgContainer {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .thumb {
+        object-fit: contain;
+      }
+    }
+  }
+}
