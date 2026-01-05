@@ -24,7 +24,6 @@ export default function UserProvider({ children }: { children: React.ReactNode }
     }
   }, [userName]);
 
-  console.log("UserProvider userName:", userName);
   return (
     <UserContext.Provider value={{ userName, dispatch }}>
       {children}
