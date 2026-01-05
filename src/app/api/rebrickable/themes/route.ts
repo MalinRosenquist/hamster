@@ -1,4 +1,4 @@
-import { getThemes } from "@/server/services/themeService";
+import { getThemes, getThemeThumbnail } from "@/server/services/themeService";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -9,7 +9,15 @@ export async function GET(req: Request) {
 
   try {
     const data = await getThemes(page, pageSize);
-    return NextResponse.json(data);
+
+    const results = await Promise.all(
+      data.results.map(async (theme) => ({
+        ...theme,
+        thumb: await getThemeThumbnail(theme.id),
+      }))
+    );
+
+    return NextResponse.json({ count: data.count, results });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: true, message: message }, { status: 500 });
