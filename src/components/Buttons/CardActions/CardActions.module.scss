@@ -1,0 +1,33 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+
+.cardActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  .iconButton {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    background: transparent;
+
+    &:hover .icon {
+      color: red;
+    }
+
+    &:active .icon {
+      fill: red;
+    }
+  }
+
+  .icon {
+    color: #666666;
+    width: 24px;
+    height: 24px;
+  }
+}
