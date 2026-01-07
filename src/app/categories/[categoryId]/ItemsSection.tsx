@@ -15,6 +15,7 @@ type ItemsListProps = {
   total: number;
   themeId: number;
   initialOrdering: string;
+  initialSearch: string;
 };
 
 export default function ItemsSection({
@@ -22,14 +23,49 @@ export default function ItemsSection({
   total,
   themeId,
   initialOrdering,
+  initialSearch,
 }: ItemsListProps) {
   const [items, setItems] = useState<SetItem[]>(initialItems);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [ordering, setOrdering] = useState(initialOrdering);
+  const [search, setSearch] = useState(initialSearch);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  async function handleSearchSumbit() {
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `/api/rebrickable/setItems?page=1&page_size=10&theme_id=${themeId}&ordering=${ordering}&search=${encodeURIComponent(search)}`
+      );
+
+      if (!res.ok) {
+        console.error("Could not fetch searched sets", res.status);
+        return;
+      }
+
+      const data: { count: number; results: SetItem[] } = await res.json();
+
+      setItems(data.results);
+      setPage(1);
+
+      const params = new URLSearchParams(searchParams.toString());
+      if (search) {
+        params.set("search", search);
+      } else {
+        params.delete("search");
+      }
+
+      router.replace(`${pathname}?${params.toString()}`);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleOrderingChange(value: string) {
     if (loading) return;
@@ -37,7 +73,7 @@ export default function ItemsSection({
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/rebrickable/setItems?page=1&page_size=10&theme_id=${themeId}&ordering=${value}`
+        `/api/rebrickable/setItems?page=1&page_size=10&theme_id=${themeId}&ordering=${value}&search=${encodeURIComponent(search)}`
       );
 
       if (!res.ok) {
@@ -73,7 +109,7 @@ export default function ItemsSection({
 
     try {
       const res = await fetch(
-        `/api/rebrickable/setItems?page=${nextPage}&page_size=10&theme_id=${themeId}&ordering=${ordering}`
+        `/api/rebrickable/setItems?page=${nextPage}&page_size=10&theme_id=${themeId}&ordering=${ordering}&search=${encodeURIComponent(search)}`
       );
 
       if (!res.ok) {
@@ -93,7 +129,13 @@ export default function ItemsSection({
   return (
     <>
       <div>
-        <ToolBar ordering={ordering} onOrderingChange={handleOrderingChange} />
+        <ToolBar
+          ordering={ordering}
+          onOrderingChange={handleOrderingChange}
+          search={search}
+          onSearchChange={setSearch}
+          onSearchSubmit={handleSearchSumbit}
+        />
         <section className={styles.listWrapper}>
           <ul className={styles.grid}>
             {items.map((s) => (

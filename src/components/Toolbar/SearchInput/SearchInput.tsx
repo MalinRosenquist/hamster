@@ -1,15 +1,38 @@
 import Image from "next/image";
 import styles from "./SearchBar.module.scss";
 
-export default function SearchBar() {
+type SearchInputProps = {
+  value: string;
+  onChange: (value: string) => void;
+  onSubmit: () => void;
+  placeholder?: string;
+  ariaLabel?: string;
+};
+
+export default function SearchBar({
+  value,
+  onChange,
+  onSubmit,
+  placeholder = "Sök",
+  ariaLabel = "Sök",
+}: SearchInputProps) {
   return (
     <>
       <div className={styles.wrap}>
-        <div className={styles.search}>
+        <form
+          className={styles.search}
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit();
+          }}
+        >
           <input
             className={styles.searchInput}
             type="text"
-            placeholder="Sök på namn eller nummer"
+            placeholder={placeholder}
+            aria-label={ariaLabel}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
           />
           <button className={styles.searchButton}>
             <span className={styles.searchIcon} aria-hidden="true">
@@ -17,7 +40,7 @@ export default function SearchBar() {
             </span>
             <span>Sök</span>
           </button>
-        </div>
+        </form>
       </div>
     </>
   );
