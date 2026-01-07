@@ -1,6 +1,5 @@
 "use client";
 
-import FilterSelect from "./FilterSelect/FilterSelect";
 import SearchBar from "./SearchInput/SearchInput";
 import SortSelect from "./SortSelect/SortSelect";
 
@@ -28,7 +27,6 @@ export default function ToolBar({
         onSubmit={onSearchSubmit}
       />
       <SortSelect value={ordering} onChange={onOrderingChange} />
-      {/* <FilterSelect /> */}
     </>
   );
 }
