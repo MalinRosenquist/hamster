@@ -6,6 +6,7 @@ import LoadMore from "@/components/LoadMore/LoadMore";
 import styles from "./CategorySection.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 type CategoryProps = {
   initialCategories: ThemeWithThumb[];
@@ -19,6 +20,7 @@ export default function CategorySection({
   const [themes, setThemes] = useState<ThemeWithThumb[]>(initialCategories);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
 
   async function handleLoadMore() {
     if (loading) return;
@@ -51,7 +53,7 @@ export default function CategorySection({
         <ul className={styles.grid}>
           {themes.map((theme) => (
             <li key={theme.id} className={styles.item}>
-              <Link href={`/categories/${theme.id}`}>
+              <Link href={`/categories/${theme.id}?${searchParams.toString()}`}>
                 <div className={styles.card}>
                   <div className={styles.imgContainer}>
                     {theme.thumb ? (

@@ -1,3 +1,5 @@
+"use client";
+
 import FilterSelect from "./FilterSelect/FilterSelect";
 import SearchBar from "./SearchInput/SearchInput";
 import SortSelect from "./SortSelect/SortSelect";

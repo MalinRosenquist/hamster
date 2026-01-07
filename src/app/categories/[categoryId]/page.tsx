@@ -3,13 +3,18 @@ import ItemsSection from "./ItemsSection";
 import { getSetItems } from "@/server/services/setService";
 
 type ThemeProps = {
-  params: { categoryId: string };
+  params: Promise<{ categoryId: string }>;
+  searchParams: Promise<{ ordering?: string }>;
 };
 
-export default async function CategoryDetailPage({ params }: ThemeProps) {
+export default async function CategoryDetailPage({
+  params,
+  searchParams,
+}: ThemeProps) {
   const { categoryId } = await params;
+  const { ordering } = await searchParams;
   const theme = await getThemeById(Number(categoryId));
-  const setsData = await getSetItems(1, 10, theme.id);
+  const setsData = await getSetItems(1, 10, theme.id, undefined, ordering ?? "");
 
   return (
     <div className="container">
@@ -21,6 +26,7 @@ export default async function CategoryDetailPage({ params }: ThemeProps) {
         initialItems={setsData.results}
         total={setsData.count}
         themeId={theme.id}
+        initialOrdering={ordering ?? ""}
       />
     </div>
   );
