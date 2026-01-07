@@ -10,7 +10,11 @@ export const getSetItems = async (
   pageSize = 10,
   themeId?: number,
   search?: string,
-  ordering?: string
+  ordering?: string,
+  minYear?: number,
+  maxYear?: number,
+  minParts?: number,
+  maxParts?: number
 ): Promise<SetListResponse> => {
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
@@ -23,6 +27,10 @@ export const getSetItems = async (
   if (themeId !== undefined) url.searchParams.set("theme_id", String(themeId));
   if (search) url.searchParams.set("search", search);
   if (ordering) url.searchParams.set("ordering", ordering);
+  if (minYear) url.searchParams.set("min_year", String(minYear));
+  if (maxYear) url.searchParams.set("max_year", String(maxYear));
+  if (minParts) url.searchParams.set("min_parts", String(minParts));
+  if (maxParts) url.searchParams.set("max_parts", String(maxParts));
 
   return get<SetListResponse>(url.toString(), {
     headers: { Authorization: `key ${key}` },

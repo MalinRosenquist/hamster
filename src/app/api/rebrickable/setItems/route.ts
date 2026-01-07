@@ -16,9 +16,28 @@ export async function GET(req: Request) {
   const themeIdParam = searchParams.get("theme_id");
   const themeId = themeIdParam ? Number(themeIdParam) : undefined;
   const search = searchParams.get("search") ?? undefined;
+  const ordering = searchParams.get("ordering") ?? undefined;
+  const minYearParam = searchParams.get("min_year");
+  const maxYearParam = searchParams.get("max_year");
+  const minPartsParam = searchParams.get("min_parts");
+  const maxPartsParam = searchParams.get("max_parts");
+  const minYear = minYearParam ? Number(minYearParam) : undefined;
+  const maxYear = maxYearParam ? Number(maxYearParam) : undefined;
+  const minParts = minPartsParam ? Number(minPartsParam) : undefined;
+  const maxParts = maxPartsParam ? Number(maxPartsParam) : undefined;
 
   try {
-    const data = await getSetItems(page, pageSize, themeId, search);
+    const data = await getSetItems(
+      page,
+      pageSize,
+      themeId,
+      search,
+      ordering,
+      minYear,
+      maxYear,
+      minParts,
+      maxParts
+    );
     return NextResponse.json(data);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
