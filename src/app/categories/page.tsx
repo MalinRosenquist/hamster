@@ -1,6 +1,5 @@
-import { getThemes } from "@/server/services/themeService";
+import { getThemes, getThemeThumbnailCached } from "@/server/services/themeService";
 import styles from "./Categories.module.scss";
-import { getThemeThumbnail } from "@/server/services/themeService";
 import CategorySection from "./CategorySection";
 
 export default async function CategoriesPage() {
@@ -9,7 +8,7 @@ export default async function CategoriesPage() {
   const themesWithThumbs = await Promise.all(
     data.results.map(async (theme) => ({
       ...theme,
-      thumb: await getThemeThumbnail(theme.id),
+      thumb: await getThemeThumbnailCached(theme.id),
     }))
   );
 

@@ -3,6 +3,7 @@ import { ThemesResponse } from "@/models/RebrickableResponses";
 import { get } from "./serviceBase";
 import { Theme } from "@/models/Theme";
 import { getSetItems } from "./setService";
+import { unstable_cache } from "next/cache";
 
 const BASE_URL = "https://rebrickable.com/api/v3/lego/themes/";
 
@@ -27,6 +28,14 @@ export const getThemeThumbnail = async (themeId: number): Promise<string | null>
   const sets = await getSetItems(1, 1, themeId, undefined, "-year");
   return sets.results[0]?.set_img_url ?? null;
 };
+
+// Cache theme thumbnails on server for 24h to save API calls
+export const getThemeThumbnailCached = (themeId: number) =>
+  unstable_cache(
+    () => getThemeThumbnail(themeId),
+    ["theme-thumb", String(themeId)],
+    { revalidate: 60 * 60 * 24 } // 24 timmar
+  )();
 
 export const getThemeById = async (id: number): Promise<Theme> => {
   const key = process.env.REBRICKABLE_API_KEY;
