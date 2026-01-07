@@ -1,0 +1,7 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+
+.filter {
+  padding: 0.3rem 0.5rem;
+  border-radius: v.$border-input;
+}

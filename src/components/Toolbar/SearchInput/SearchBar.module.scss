@@ -1,0 +1,36 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+
+.wrap {
+  padding: 2rem 0;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 5px 120px 5px 16px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.searchButton {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  height: 36px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: v.$fs-17;
+  font-weight: 400;
+  letter-spacing: 2px;
+}

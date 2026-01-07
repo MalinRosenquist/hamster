@@ -7,6 +7,7 @@ import { SetItem } from "@/models/SetItem";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import ToolBar from "@/components/Toolbar/Toolbar";
 
 type ItemsListProps = {
   initialItems: SetItem[];
@@ -22,6 +23,7 @@ export default function ItemsSection({
   const [items, setItems] = useState<SetItem[]>(initialItems);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [ordering, setOrdering] = useState<string>("");
 
   async function handleLoadMore() {
     if (loading) return;
@@ -51,6 +53,7 @@ export default function ItemsSection({
   return (
     <>
       <div>
+        <ToolBar ordering={ordering} onOrderingChange={setOrdering} />
         <section className={styles.listWrapper}>
           <ul className={styles.grid}>
             {items.map((s) => (
