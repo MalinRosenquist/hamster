@@ -1,0 +1,28 @@
+@use "../../../styles/variables" as v;
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.resetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: transparent;
+  min-height: 44px;
+  border: 1px solid red;
+
+  .buttonTitle {
+    font-size: v.$fs-16;
+    font-weight: 400;
+    letter-spacing: 1px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

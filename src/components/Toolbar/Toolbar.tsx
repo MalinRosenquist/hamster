@@ -2,6 +2,7 @@
 
 import SearchBar from "./SearchInput/SearchInput";
 import SortSelect from "./SortSelect/SortSelect";
+import YearFilter from "./YearFilter/YearFilter";
 
 type ToolBarProps = {
   ordering: string;
@@ -10,6 +11,12 @@ type ToolBarProps = {
   search?: string;
   onSearchChange: (value: string) => void;
   onSearchSubmit: () => void;
+
+  minYear?: string;
+  maxYear?: string;
+  onMinYearChange?: (value: string) => void;
+  onMaxYearChange?: (value: string) => void;
+  onYearApply: () => void;
 };
 
 export default function ToolBar({
@@ -18,6 +25,11 @@ export default function ToolBar({
   search = "",
   onSearchChange = () => {},
   onSearchSubmit = () => {},
+  minYear = "",
+  maxYear = "",
+  onMinYearChange = () => {},
+  onMaxYearChange = () => {},
+  onYearApply = () => {},
 }: ToolBarProps) {
   return (
     <>
@@ -27,6 +39,13 @@ export default function ToolBar({
         onSubmit={onSearchSubmit}
       />
       <SortSelect value={ordering} onChange={onOrderingChange} />
+      <YearFilter
+        minYear={minYear}
+        maxYear={maxYear}
+        onMinYearChange={onMinYearChange}
+        onMaxYearChange={onMaxYearChange}
+        onApply={onYearApply}
+      />
     </>
   );
 }
