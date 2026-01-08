@@ -13,11 +13,13 @@ type ToolBarProps = {
   onSearchChange: (value: string) => void;
   onSearchSubmit: () => void;
 
-  minYear?: string;
-  maxYear?: string;
-  onMinYearChange?: (value: string) => void;
-  onMaxYearChange?: (value: string) => void;
-  onYearApply: () => void;
+  yearFilter?: {
+    minYear: string;
+    maxYear: string;
+    onMinYearChange: (value: string) => void;
+    onMaxYearChange: (value: string) => void;
+    onApply: () => void;
+  };
 };
 
 export default function ToolBar({
@@ -26,11 +28,7 @@ export default function ToolBar({
   search = "",
   onSearchChange = () => {},
   onSearchSubmit = () => {},
-  minYear = "",
-  maxYear = "",
-  onMinYearChange = () => {},
-  onMaxYearChange = () => {},
-  onYearApply = () => {},
+  yearFilter,
 }: ToolBarProps) {
   return (
     <div className={styles.toolbar}>
@@ -42,15 +40,15 @@ export default function ToolBar({
         />
       </div>
       <div className={`${styles.row} ${styles.rowControls}`}>
-        <YearFilter
-          minYear={minYear}
-          maxYear={maxYear}
-          onMinYearChange={onMinYearChange}
-          onMaxYearChange={onMaxYearChange}
-          onApply={onYearApply}
-        />
-      </div>
-      <div className={styles.row}>
+        {yearFilter && (
+          <YearFilter
+            minYear={yearFilter.minYear}
+            maxYear={yearFilter.maxYear}
+            onMinYearChange={yearFilter.onMinYearChange}
+            onMaxYearChange={yearFilter.onMaxYearChange}
+            onApply={yearFilter.onApply}
+          />
+        )}
         <SortSelect value={ordering} onChange={onOrderingChange} />
       </div>
     </div>
