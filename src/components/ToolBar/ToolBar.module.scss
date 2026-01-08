@@ -7,15 +7,11 @@
 }
 
 .row {
-  margin: 1rem;
+  margin: 0.6rem;
 }
 
 .rowControls {
-  display: grid;
+  display: flex;
+  align-items: start;
   gap: 0.8rem;
-
-  @include m.up(md) {
-    display: flex;
-    align-items: start;
-  }
 }
