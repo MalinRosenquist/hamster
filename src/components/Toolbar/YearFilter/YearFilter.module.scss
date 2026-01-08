@@ -1,28 +1,133 @@
 @use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+
+.yearFilter {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+
+  .triggerButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 44px;
+    padding: 0 12px;
+    border: none;
+    border-radius: v.$border-input;
+    background: transparent;
+    font-size: v.$fs-16;
+    cursor: pointer;
+
+    &[aria-expanded="true"] {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      background-color: v.$clr-bg-card;
+
+      + .panel {
+        border-top: 0;
+        border-top-left-radius: 0;
+        box-shadow: 5 10px 10px rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+}
+
+@keyframes growDown {
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+}
+
+.panel {
+  animation: growDown 300ms ease-in-out forwards;
+  transform-origin: top center;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  width: min(420px, 92vw);
+  padding: 0.8rem;
+  border-radius: v.$border-input;
+  background-color: v.$clr-bg-card;
+
+  .title {
+    margin: 0 0 12px 0;
+    font-size: v.$fs-16;
+    letter-spacing: 0.3px;
+  }
+}
+
+.inputs {
+  display: grid;
+  gap: 0.8rem;
+
+  @include m.up(md) {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+}
+
+.label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.labelText {
+  font-size: v.$fs-14;
+  letter-spacing: 0.3px;
+}
+
+.input {
+  width: 100%;
+}
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+
+  @include m.up(md) {
+    grid-column: 1 / -1;
+  }
 }
 
 .resetButton {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.4rem;
   background: transparent;
   min-height: 44px;
-  border: 1px solid red;
+  border: none;
+  cursor: pointer;
 
   .buttonTitle {
     font-size: v.$fs-16;
     font-weight: 400;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 
     &:hover {
       text-decoration: underline;
-      cursor: pointer;
     }
   }
+}
+
+.error {
+  grid-column: 1 / -1;
+  font-size: v.$fs-14;
+  margin-top: 4px;
 }
