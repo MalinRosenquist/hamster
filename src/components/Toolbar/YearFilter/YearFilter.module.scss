@@ -15,6 +15,7 @@
     border: none;
     border-radius: v.$border-input;
     background: transparent;
+    color: v.$clr-font-dark;
     font-size: v.$fs-16;
     cursor: pointer;
 
@@ -27,7 +28,7 @@
       + .panel {
         border-top: 0;
         border-top-left-radius: 0;
-        box-shadow: 5 10px 10px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12);
       }
     }
   }
