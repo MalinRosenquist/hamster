@@ -7,7 +7,7 @@ import { SetItem } from "@/models/SetItem";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import ToolBar from "@/components/Toolbar/Toolbar";
+import ToolBar from "@/components/ToolBar/ToolBar";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 type ItemsListProps = {

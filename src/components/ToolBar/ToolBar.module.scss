@@ -1,0 +1,21 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.toolbar {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.row {
+  margin: 1rem;
+}
+
+.rowControls {
+  display: grid;
+  gap: 0.8rem;
+
+  @include m.up(md) {
+    display: flex;
+    align-items: start;
+  }
+}
