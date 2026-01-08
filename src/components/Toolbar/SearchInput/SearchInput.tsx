@@ -28,13 +28,13 @@ export default function SearchBar({
         >
           <input
             className={styles.searchInput}
-            type="text"
+            type="search"
             placeholder={placeholder}
             aria-label={ariaLabel}
             value={value}
             onChange={(e) => onChange(e.target.value)}
           />
-          <button className={styles.searchButton}>
+          <button className={styles.searchButton} type="submit">
             <span className={styles.searchIcon} aria-hidden="true">
               <Image src="/icons/search.svg" alt="" width={30} height={30} />
             </span>

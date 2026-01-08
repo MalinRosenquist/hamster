@@ -1,36 +1,37 @@
 @use "../../../styles/variables" as v;
 @use "../../../styles/mixins" as m;
 
-.wrap {
-  padding: 2rem 0;
-}
+// .wrap {
+//   padding: 0;
+// }
 
 .search {
   width: 100%;
-  position: relative;
   display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: v.$border-input;
+  border: 1px solid v.$clr-form-border;
 }
 
 .searchInput {
-  width: 100%;
-  padding: 5px 120px 5px 16px;
-  border-radius: 10px;
-  position: relative;
+  flex: 1;
+  border: none;
+  border-radius: 0;
+  padding: 0 52px 0 12px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .searchButton {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  bottom: 0;
-  height: 36px;
+  height: 44px;
   border: none;
-  background-color: transparent;
+  background-color: rgb(255, 255, 255);
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: v.$fs-17;
+  font-size: v.$fs-16;
   font-weight: 400;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
