@@ -4,7 +4,12 @@ import { getSetItems } from "@/server/services/setService";
 
 type ThemeProps = {
   params: Promise<{ categoryId: string }>;
-  searchParams: Promise<{ ordering?: string }>;
+  searchParams: Promise<{
+    ordering?: string;
+    search?: string;
+    min_year?: string;
+    max_year?: string;
+  }>;
 };
 
 export default async function CategoryDetailPage({
@@ -12,9 +17,21 @@ export default async function CategoryDetailPage({
   searchParams,
 }: ThemeProps) {
   const { categoryId } = await params;
-  const { ordering } = await searchParams;
+  const { ordering, search, min_year, max_year } = await searchParams;
+  const initialOrdering = ordering ?? "";
+  const initialSearch = search ?? "";
+  const initialMinYear = min_year ?? "";
+  const initialMaxYear = max_year ?? "";
   const theme = await getThemeById(Number(categoryId));
-  const setsData = await getSetItems(1, 10, theme.id, undefined, ordering ?? "");
+  const setsData = await getSetItems(
+    1,
+    10,
+    theme.id,
+    initialSearch || undefined,
+    initialOrdering || undefined,
+    initialMinYear ? Number(initialMinYear) : undefined,
+    initialMaxYear ? Number(initialMaxYear) : undefined
+  );
 
   return (
     <div className="container">
@@ -26,7 +43,10 @@ export default async function CategoryDetailPage({
         initialItems={setsData.results}
         total={setsData.count}
         themeId={theme.id}
-        initialOrdering={ordering ?? ""}
+        initialOrdering={initialOrdering}
+        initialSearch={initialSearch}
+        initialMinYear={initialMinYear}
+        initialMaxYear={initialMaxYear}
       />
     </div>
   );
