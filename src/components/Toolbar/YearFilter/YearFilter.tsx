@@ -3,7 +3,8 @@ import CloseIcon from "@/components/Icons/CloseIcon";
 import FilterIcon from "@/components/Icons/FilterIcon";
 import styles from "./YearFilter.module.scss";
 import Button from "@/components/Buttons/Button/Button";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
+import { useDismissPopover } from "@/hooks/useDismissPopover";
 
 type YearFilterProps = {
   minYear: string;
@@ -20,12 +21,12 @@ export default function YearFilter({
   onMaxYearChange,
   onApply,
 }: YearFilterProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const { isOpen, setIsOpen, rootRef, triggerRef, onKeyDown } = useDismissPopover();
   const isYear = (value: string) => /^\d{4}$/.test(value.trim());
   const isEmpty = (value: string) => value.trim() === "";
   const [touched, setTouched] = useState(false);
+  const error = getYearFilterError(minYear, maxYear);
+  const canApply = error === null;
 
   function getYearFilterError(minYear: string, maxYear: string) {
     const minEmpty = isEmpty(minYear);
@@ -47,12 +48,10 @@ export default function YearFilter({
     return null;
   }
 
-  const error = getYearFilterError(minYear, maxYear);
-  const canApply = error === null;
-
   function handleApply() {
     onApply();
     setIsOpen(false);
+    triggerRef.current?.focus();
   }
 
   function handleReset() {
@@ -60,39 +59,11 @@ export default function YearFilter({
     onMaxYearChange("");
     onApply();
     setIsOpen(false);
+    triggerRef.current?.focus();
   }
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const onClickOutside = (event: MouseEvent | TouchEvent) => {
-      const target = event.target as Node;
-      if (rootRef.current && !rootRef.current.contains(target)) {
-        setIsOpen(false);
-        triggerRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("mousedown", onClickOutside);
-    document.addEventListener("touchstart", onClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", onClickOutside);
-      document.removeEventListener("touchstart", onClickOutside);
-    };
-  }, [isOpen]);
-
   return (
-    <div
-      className={styles.yearFilter}
-      ref={rootRef}
-      onKeyDown={(e) => {
-        if (e.key === "Escape" && isOpen) {
-          setIsOpen(false);
-          triggerRef.current?.focus();
-        }
-      }}
-    >
+    <div className={styles.yearFilter} ref={rootRef} onKeyDown={onKeyDown}>
       <button
         className={styles.triggerButton}
         ref={triggerRef}
