@@ -1,0 +1,74 @@
+import styles from "./ItemDetailPage.module.scss";
+import { getSetBySetNum } from "@/server/services/setService";
+import Image from "next/image";
+import CollectIcon from "@/components/Icons/CollectIcon";
+import WatchIcon from "@/components/Icons/WatchIcon";
+
+type SetProps = {
+  params: Promise<{ setId: string }>;
+};
+
+export default async function ItemDetailPage({ params }: SetProps) {
+  const { setId } = await params;
+  const set = await getSetBySetNum(setId);
+
+  return (
+    <div className={`container ${styles.container}`}>
+      <section className={styles.top}>
+        <h1>{set.name}</h1>
+      </section>
+
+      <section className={styles.setCard}>
+        <div className={styles.imgContainer}>
+          <Image src={set.set_img_url} alt="" width={200} height={200} />
+        </div>
+        <div className={styles.detailsContainer}>
+          <dl className={styles.details}>
+            <div className={styles.detailRow}>
+              <dt>Setnamn</dt>
+              <dd>{set.name}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Setnummer</dt>
+              <dd>{set.set_num}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Tema</dt>
+              <dd>{set.theme_id}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Antal delar</dt>
+              <dd>{set.num_parts}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Utgivningsår</dt>
+              <dd>{set.year}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Status</dt>
+              <dd></dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Tillagd</dt>
+              <dd></dd>
+            </div>
+          </dl>
+          <div className={styles.actions}>
+            <button className={styles.toggle} aria-pressed="true">
+              <WatchIcon className={styles.icon} />
+              <span>Bevakar</span>
+            </button>
+            <button className={styles.toggle} aria-pressed="false">
+              <CollectIcon className={styles.icon} />
+              <span>Samla</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.traderaCard}>
+        <h2>Tradera</h2>
+      </section>
+    </div>
+  );
+}
