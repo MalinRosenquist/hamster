@@ -1,6 +1,6 @@
 "use client";
 
-import CardActions from "@/components/Buttons/CardActions/CardActions";
+import CardToggles from "@/components/ListToggle/CardToggles/CardToggles";
 import styles from "./ItemsSection.module.scss";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import { SetItem } from "@/models/SetItem";
@@ -228,6 +228,7 @@ export default function ItemsSection({
                     <div className={styles.actions}>
                       <CardActions />
                     </div>
+                    <CardToggles setNum={s.set_num} />
                   </div>
                 </Link>
               </li>

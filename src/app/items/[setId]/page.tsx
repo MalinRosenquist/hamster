@@ -1,8 +1,7 @@
 import styles from "./ItemDetailPage.module.scss";
 import { getSetBySetNum } from "@/server/services/setService";
 import Image from "next/image";
-import CollectIcon from "@/components/Icons/CollectIcon";
-import WatchIcon from "@/components/Icons/WatchIcon";
+import DetailToggles from "@/components/ListToggle/DetailToggles/DetailToggles";
 
 type SetProps = {
   params: Promise<{ setId: string }>;
@@ -53,16 +52,7 @@ export default async function ItemDetailPage({ params }: SetProps) {
               <dd></dd>
             </div>
           </dl>
-          <div className={styles.actions}>
-            <button className={styles.toggle} aria-pressed="true">
-              <WatchIcon className={styles.icon} />
-              <span>Bevakar</span>
-            </button>
-            <button className={styles.toggle} aria-pressed="false">
-              <CollectIcon className={styles.icon} />
-              <span>Samla</span>
-            </button>
-          </div>
+          <DetailToggles setNum={set.set_num} />
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 @use "../../../styles/variables" as v;
 @use "../../../styles/mixins" as m;
 
-.cardActions {
+.cardToggles {
   display: flex;
   justify-content: center;
   gap: 10px;

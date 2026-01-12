@@ -1,0 +1,51 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  .toggle {
+    height: 38px;
+    padding: 0 0.9rem;
+    border-radius: v.$border;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid v.$clr-form-border;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-size: v.$fs-16;
+
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease,
+      background 120ms ease,
+      border-color 120ms ease;
+
+    &[aria-pressed="true"] {
+      border: 2px solid v.$clr-primary;
+
+      .icon {
+        scale: 1.5;
+      }
+    }
+
+    .icon {
+      width: 15px;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+    }
+  }
+}
