@@ -27,15 +27,16 @@
       border-color 120ms ease;
 
     &[aria-pressed="true"] {
-      border: 2px solid v.$clr-primary;
+      background: v.$clr-toggle;
+      color: v.$clr-font-light;
 
       .icon {
-        scale: 1.5;
+        scale: 1.4;
       }
     }
 
     .icon {
-      width: 15px;
+      width: 18px;
     }
 
     &:hover {
