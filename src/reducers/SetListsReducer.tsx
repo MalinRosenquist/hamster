@@ -58,7 +58,7 @@ export default function SetListsReducer(
       }
       return {
         collectionIds: [...state.collectionIds, id],
-        watchlistIds: state.watchlistIds.filter((s) => s != id!),
+        watchlistIds: state.watchlistIds.filter((s) => s != id),
       };
     }
 
