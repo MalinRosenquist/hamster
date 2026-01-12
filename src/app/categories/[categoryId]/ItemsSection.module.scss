@@ -18,7 +18,7 @@
     border-radius: v.$border;
     box-shadow: v.$shadow;
     display: grid;
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: 1fr auto;
     gap: 0.6rem;
     height: 100%;
     text-align: left;
@@ -38,8 +38,15 @@
       }
     }
 
-    .setNumber {
-      font-size: v.$fs-14;
+    .meta {
+      margin-top: 0.6rem;
+      display: grid;
+      gap: 0.5rem;
+      min-width: 0;
+
+      .setNumber {
+        font-size: v.$fs-14;
+      }
     }
 
     @include m.up(md) {

@@ -201,8 +201,11 @@ export default function ItemsSection({
           <ul className={styles.grid}>
             {items.map((s) => (
               <li key={s.set_num} className={styles.item}>
-                <Link href={`/items/${s.set_num}?${searchParams.toString()}`}>
-                  <div className={styles.card}>
+                <div className={styles.card}>
+                  <Link
+                    href={`/items/${s.set_num}?${searchParams.toString()}`}
+                    className={styles.cardLink}
+                  >
                     <div className={styles.imgContainer}>
                       {s.set_img_url ? (
                         <Image
@@ -223,14 +226,15 @@ export default function ItemsSection({
                         />
                       )}
                     </div>
-                    <span className={styles.setNumber}>{s.set_num}</span>
-                    <span className={styles.title}>{s.name}</span>
-                    <div className={styles.actions}>
-                      <CardActions />
+                    <div className={styles.meta}>
+                      <span className={styles.setNumber}>{s.set_num}</span>
+                      <span className={styles.title}>{s.name}</span>
                     </div>
+                  </Link>
+                  <div className={styles.actions}>
                     <CardToggles setNum={s.set_num} />
                   </div>
-                </Link>
+                </div>
               </li>
             ))}
           </ul>
