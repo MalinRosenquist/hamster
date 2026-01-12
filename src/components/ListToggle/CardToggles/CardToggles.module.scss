@@ -17,11 +17,11 @@
     background: transparent;
 
     &:hover .icon {
-      color: red;
+      color: v.$clr-toggle;
     }
 
     &:active .icon {
-      fill: red;
+      fill: v.$clr-toggle;
     }
   }
 

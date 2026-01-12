@@ -31,7 +31,7 @@ export default function CardToggles({ setNum }: CardTogglesProps) {
         className={styles.iconButton}
         aria-label={isCollected ? "Ta bort från samling" : "Lägg till i samling"}
         aria-pressed={isCollected}
-        title={isWatching ? "Ta bort bevakning" : "Lägg till i bevakning"}
+        title={isWatching ? "Ta bort från samling" : "Lägg till i samling"}
         onClick={toggleCollection}
       >
         <CollectIcon className={styles.icon} aria-hidden />
