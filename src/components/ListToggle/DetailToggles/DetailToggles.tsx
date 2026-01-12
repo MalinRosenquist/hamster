@@ -23,7 +23,7 @@ export default function DetailToggles({ setNum }: DetailTogglesProps) {
         onClick={toggleWatchlist}
       >
         <WatchIcon className={styles.icon} />
-        <span>Bevakar</span>
+        <span>{isWatching ? "Bevakar" : "Bevaka"}</span>
       </button>
       <button
         className={styles.toggle}
@@ -33,7 +33,7 @@ export default function DetailToggles({ setNum }: DetailTogglesProps) {
         onClick={toggleCollection}
       >
         <CollectIcon className={styles.icon} />
-        <span>Samla</span>
+        <span>{isCollected ? "I samling" : "Samla"}</span>
       </button>
     </div>
   );
