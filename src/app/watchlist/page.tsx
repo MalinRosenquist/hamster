@@ -1,3 +1,13 @@
+import WatchlistSection from "./WatchlistSection";
+
 export default function WatchListPage() {
-  return <h1>Bevakning</h1>;
+  return (
+    <div className="container">
+      <section>
+        <h1>Samling</h1>
+      </section>
+
+      <WatchlistSection />
+    </div>
+  );
 }
