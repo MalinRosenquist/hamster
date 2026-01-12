@@ -3,6 +3,7 @@ import { Karma, Martel_Sans } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import UserProvider from "@/providers/UserProvider";
+import SetListsProvider from "@/providers/SetListsProvider";
 
 const karma = Karma({
   subsets: ["latin"],
@@ -23,9 +24,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="sv" className={`${karma.variable} ${martelSans.variable}`}>
       <body>
         <UserProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <SetListsProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </SetListsProvider>
         </UserProvider>
       </body>
     </html>
