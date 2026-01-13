@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "./variables" as v;
 
 //------**BREAKPOINTS**-----//
 $breakpoints: (
@@ -15,5 +16,22 @@ $breakpoints: (
 
   @media (min-width: $min) {
     @content;
+  }
+}
+
+//------**CARDS**-----//
+
+@mixin cardBase {
+  background-color: v.$clr-bg-card;
+  padding: 0.6rem;
+  border-radius: v.$border;
+  box-shadow: v.$shadow;
+  transition: transform 0.3s ease-in-out;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
   }
 }
