@@ -1,78 +1,12 @@
 @use "../../../styles/variables" as v;
 @use "../../../styles/mixins" as m;
 
-.grid {
+.list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  justify-content: start;
   margin: 0;
   padding: 0;
-  gap: 2rem;
+  gap: 1rem;
   list-style: none;
-
-  .card {
-    position: relative;
-    background-color: v.$clr-bg-card;
-    width: min(180px, 100%);
-    justify-self: center;
-    padding: 0.6rem;
-    border-radius: v.$border;
-    box-shadow: v.$shadow;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    gap: 0.6rem;
-    height: 100%;
-    text-align: left;
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-      transform: scale(1.05);
-      cursor: pointer;
-    }
-
-    .title {
-      font-size: v.$fs-16;
-      font-weight: 600;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    .meta {
-      margin-top: 0.6rem;
-      display: grid;
-      gap: 0.5rem;
-      min-width: 0;
-
-      .setNumber {
-        font-size: v.$fs-14;
-      }
-    }
-
-    @include m.up(md) {
-      justify-self: center;
-    }
-
-    .imgContainer {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &:hover {
-        cursor: pointer;
-      }
-
-      .thumb {
-        object-fit: contain;
-      }
-    }
-
-    .actions {
-      margin-top: auto;
-    }
-  }
 }

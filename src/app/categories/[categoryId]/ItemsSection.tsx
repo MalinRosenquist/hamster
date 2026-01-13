@@ -1,14 +1,12 @@
 "use client";
 
-import CardToggles from "@/components/ListToggle/CardToggles/CardToggles";
 import styles from "./ItemsSection.module.scss";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import { SetItem } from "@/models/SetItem";
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import ToolBar from "@/components/ToolBar/ToolBar";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import SetCard from "@/components/SetCard/SetCard";
 
 type ItemsListProps = {
   initialItems: SetItem[];
@@ -197,44 +195,11 @@ export default function ItemsSection({
             onApply: handleYearApply,
           }}
         />
-        <section className={styles.listWrapper}>
-          <ul className={styles.grid}>
-            {items.map((s) => (
-              <li key={s.set_num} className={styles.item}>
-                <div className={styles.card}>
-                  <Link
-                    href={`/items/${s.set_num}?${searchParams.toString()}`}
-                    className={styles.cardLink}
-                  >
-                    <div className={styles.imgContainer}>
-                      {s.set_img_url ? (
-                        <Image
-                          src={s.set_img_url}
-                          alt=""
-                          fill
-                          sizes="180"
-                          className={styles.thumb}
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <Image
-                          src="/icons/no_photo.svg"
-                          alt=""
-                          width={40}
-                          height={40}
-                          aria-hidden="true"
-                        />
-                      )}
-                    </div>
-                    <div className={styles.meta}>
-                      <span className={styles.setNumber}>{s.set_num}</span>
-                      <span className={styles.title}>{s.name}</span>
-                    </div>
-                  </Link>
-                  <div className={styles.actions}>
-                    <CardToggles setNum={s.set_num} />
-                  </div>
-                </div>
+        <section>
+          <ul className={styles.list}>
+            {items.map((item) => (
+              <li key={item.set_num} className={styles.item}>
+                <SetCard item={item} />
               </li>
             ))}
           </ul>
