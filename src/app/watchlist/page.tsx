@@ -4,7 +4,7 @@ export default function WatchListPage() {
   return (
     <div className="container">
       <section>
-        <h1>Samling</h1>
+        <h1>Bevakning</h1>
       </section>
 
       <WatchlistSection />
