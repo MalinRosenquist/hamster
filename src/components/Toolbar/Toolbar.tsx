@@ -1,11 +1,11 @@
 "use client";
 
-import styles from "./ToolBar.module.scss";
+import styles from "./Toolbar.module.scss";
 import SearchBar from "./SearchInput/SearchInput";
 import SortSelect from "./SortSelect/SortSelect";
 import YearFilter from "./YearFilter/YearFilter";
 
-type ToolBarProps = {
+type ToolbarProps = {
   ordering: string;
   onOrderingChange: (value: string) => void;
 
@@ -22,14 +22,14 @@ type ToolBarProps = {
   };
 };
 
-export default function ToolBar({
+export default function Toolbar({
   ordering,
   onOrderingChange,
   search = "",
   onSearchChange = () => {},
   onSearchSubmit = () => {},
   yearFilter,
-}: ToolBarProps) {
+}: ToolbarProps) {
   return (
     <div className={styles.toolbar}>
       <div className={styles.row}>
@@ -39,7 +39,7 @@ export default function ToolBar({
           onSubmit={onSearchSubmit}
         />
       </div>
-      <div className={`${styles.row} ${styles.rowControls}`}>
+      <div className={`${styles.row} ${styles.rowSortFilter}`}>
         {yearFilter && (
           <YearFilter
             minYear={yearFilter.minYear}

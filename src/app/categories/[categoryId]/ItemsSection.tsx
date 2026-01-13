@@ -4,7 +4,7 @@ import styles from "./ItemsSection.module.scss";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import { SetItem } from "@/models/SetItem";
 import { useState } from "react";
-import ToolBar from "@/components/ToolBar/ToolBar";
+import Toolbar from "@/components/Toolbar/Toolbar";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import SetCard from "@/components/SetCard/SetCard";
 
@@ -181,7 +181,7 @@ export default function ItemsSection({
   return (
     <>
       <div>
-        <ToolBar
+        <Toolbar
           ordering={ordering}
           onOrderingChange={handleOrderingChange}
           search={search}
