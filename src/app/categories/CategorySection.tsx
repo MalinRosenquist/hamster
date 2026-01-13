@@ -4,9 +4,7 @@ import { useState } from "react";
 import { ThemeWithThumb } from "@/models/ThemeWithThumb";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import styles from "./CategorySection.module.scss";
-import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import ThemeCard from "@/components/ThemeCard/ThemeCard";
 
 type CategoryProps = {
   initialCategories: ThemeWithThumb[];
@@ -20,7 +18,6 @@ export default function CategorySection({
   const [themes, setThemes] = useState<ThemeWithThumb[]>(initialCategories);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
 
   async function handleLoadMore() {
     if (loading) return;
@@ -49,35 +46,11 @@ export default function CategorySection({
 
   return (
     <div>
-      <section className={styles.listWrapper}>
-        <ul className={styles.grid}>
+      <section>
+        <ul className={styles.list}>
           {themes.map((theme) => (
             <li key={theme.id} className={styles.item}>
-              <Link href={`/categories/${theme.id}?${searchParams.toString()}`}>
-                <div className={styles.card}>
-                  <div className={styles.imgContainer}>
-                    {theme.thumb ? (
-                      <Image
-                        src={theme.thumb}
-                        alt=""
-                        fill
-                        sizes="180"
-                        className={styles.thumb}
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <Image
-                        src="/icons/no_photo.svg"
-                        alt=""
-                        width={40}
-                        height={40}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </div>
-                  <span className={styles.title}>{theme.name}</span>
-                </div>
-              </Link>
+              <ThemeCard theme={theme} />
             </li>
           ))}
         </ul>

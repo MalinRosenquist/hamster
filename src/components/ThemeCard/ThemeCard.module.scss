@@ -1,0 +1,54 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.card {
+  @include m.cardBase;
+
+  position: relative;
+  width: min(180px, 100%);
+  justify-self: center;
+  text-align: left;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.6rem;
+  height: 100%;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  .image {
+    object-fit: contain;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.details {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: v.$fs-16;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
