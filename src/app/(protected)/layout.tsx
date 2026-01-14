@@ -1,8 +1,6 @@
 "use client";
 
 import styles from "./Layout.module.scss";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
 import Spinner from "@/components/Spinner/Spinner";
 import { LS_USER_NAME } from "@/lib/storageKeys";
 import SetListsProvider from "@/providers/SetListsProvider";
@@ -37,9 +35,7 @@ export default function ProtectedLayout({
 
   return (
     <SetListsProvider>
-      <Header />
       <main>{children}</main>
-      <Footer />
     </SetListsProvider>
   );
 }
