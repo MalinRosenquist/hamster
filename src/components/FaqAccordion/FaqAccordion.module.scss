@@ -1,0 +1,28 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.accordion {
+  display: grid;
+  gap: 1rem;
+}
+
+.item {
+  border: 1px solid grey;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: v.$clr-bg-card;
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
