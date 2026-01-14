@@ -2,10 +2,16 @@
 
 import { useContext } from "react";
 import { SetListsContext } from "@/contexts/SetListsContext";
-import SetList from "@/components/SavedSetList/SavedSetList";
+import SavedSetList from "@/components/SavedSetList/SavedSetList";
 
 export default function CollectionSection() {
   const { collectionIds } = useContext(SetListsContext);
 
-  return <SetList ids={collectionIds} emptyText="Din samling är tom." />;
+  return (
+    <SavedSetList
+      ids={collectionIds}
+      emptyText="Din samling är tom."
+      source="collection"
+    />
+  );
 }

@@ -6,14 +6,26 @@ import Image from "next/image";
 import CardToggles from "../ListToggle/CardToggles/CardToggles";
 import { SetItem } from "@/models/SetItem";
 
+type SetCardSource = "categories" | "collection" | "watchlist";
+
 type SetCardProps = {
   item: SetItem;
+  source?: SetCardSource;
+  categoryId?: number | string;
 };
 
-export default function SetCard({ item }: SetCardProps) {
+export default function SetCard({ item, source, categoryId }: SetCardProps) {
+  // Build item detail URL to keep the right link highlighted in the nav.
+  const href =
+    source === "categories"
+      ? `/items/${item.set_num}?from=categories${categoryId ? `&categoryId=${encodeURIComponent(String(categoryId))}` : ""}`
+      : source
+        ? `/items/${item.set_num}?from=${source}`
+        : `/items/${item.set_num}`;
+
   return (
     <>
-      <Link className={styles.card} prefetch={false} href={`/items/${item.set_num}`}>
+      <Link className={styles.card} prefetch={false} href={href}>
         <div className={styles.imgContainer}>
           {item.set_img_url ? (
             <Image

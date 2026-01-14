@@ -5,12 +5,13 @@ import styles from "./SavedSetList.module.scss";
 import { SetItem } from "@/models/SetItem";
 import SetCard from "../SetCard/SetCard";
 
-export type SetListProps = {
+export type SavedSetListProps = {
   ids: string[];
   emptyText: string;
+  source: "watchlist" | "collection";
 };
 
-export default function SetList({ ids, emptyText }: SetListProps) {
+export default function SavedSetList({ ids, emptyText, source }: SavedSetListProps) {
   const [items, setItems] = useState<SetItem[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +52,7 @@ export default function SetList({ ids, emptyText }: SetListProps) {
           <ul className={styles.list}>
             {items.map((item) => (
               <li key={item.set_num}>
-                <SetCard item={item} />
+                <SetCard item={item} source={source} />
               </li>
             ))}
           </ul>

@@ -3,39 +3,89 @@
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./Header.module.scss";
+import { hasStoredUser } from "@/lib/authLocalStorage";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const links = [
-  { href: "/", label: "Hem" },
-  { href: "/categories", label: "Utforska" },
-  { href: "/watchlist", label: "Bevaka" },
-  { href: "/collection", label: "Samling" },
-  { href: "/mypage", label: "Min sida" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/", label: "Hem", protected: true },
+  { href: "/categories", label: "Utforska", protected: true },
+  { href: "/watchlist", label: "Bevaka", protected: true },
+  { href: "/collection", label: "Samling", protected: true },
+  { href: "/mypage", label: "Min sida", protected: true },
+  { href: "/faq", label: "FAQ", protected: true },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  function isActive(href: string) {
+    // "/" must match exactly, otherwise it would be active on every route
+    if (href === "/") return pathname === "/";
+
+    // Keep parent section in nav active for nested routes (e.g. /categories/123 -> /categories)
+    if (pathname.startsWith(href)) return true;
+
+    // Use the "from" query param to decide which top level nav item should stay highlited
+    if (pathname.startsWith("/items/")) {
+      const from = searchParams.get("from");
+
+      if (from === "categories" && href === "/categories") return true;
+      if (from === "collection" && href === "/collection") return true;
+      if (from === "wishlist" && href === "/wishlist") return true;
+    }
+
+    return false;
+  }
+
+  function handleNavClick(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    isProtected: boolean
+  ) {
+    //Close mobile menu when navigating
+    setOpen(false);
+
+    // Client-side route guard: if no user is stored,
+    // prevent navigation and redirect to login page
+    if (isProtected && !hasStoredUser()) {
+      e.preventDefault();
+      router.replace("/login");
+    }
+  }
 
   return (
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
-        <Link href="/" className={`${styles.logoName} logoName`}>
+        <Link
+          href="/"
+          className={`${styles.logoName} logoName`}
+          onClick={(e) => handleNavClick(e, true)}
+        >
           Hamster
         </Link>
-
         <nav className={styles.nav} aria-label="Huvudnavigering">
           {/* DESKTOP */}
           <ul className={styles.desktopList}>
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className={styles.link}>
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {links.map((link) => {
+              const active = isActive(link.href);
+
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`navLink ${styles.navLink} ${active ? styles.isActive : ""}`}
+                    onClick={(e) => handleNavClick(e, link.protected)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
-          {/* MOBILE */}
+          {/* MOBILE TOGGLE */}
           <button
             type="button"
             className={styles.menuButton}
@@ -49,27 +99,43 @@ export default function Header() {
         </nav>
       </div>
 
-      <div
-        id="mobileMenu"
-        className={`${styles.mobilePanel} ${open ? styles.open : ""}`}
-        aria-hidden={!open}
-      >
-        <div className={styles.mobileInner}>
-          <ul className={styles.mobileList}>
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={styles.link}
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      {/* MOBILE PANEL */}
+      {open && (
+        <>
+          <button
+            type="button"
+            className={styles.backdrop}
+            aria-label="Stäng meny"
+            onClick={() => setOpen(false)}
+          ></button>
+
+          <div
+            id="mobileMenu"
+            className={`${styles.mobilePanel} ${styles.open}`}
+            aria-label="Mobilmeny"
+          >
+            <div className={styles.mobileInner}>
+              <ul className={styles.mobileList}>
+                {links.map((link) => {
+                  const active = isActive(link.href);
+
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={`navLink ${styles.navLink} ${active ? styles.isActive : ""}`}
+                        onClick={(e) => handleNavClick(e, link.protected)}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }

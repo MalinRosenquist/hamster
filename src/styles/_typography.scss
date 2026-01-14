@@ -130,17 +130,17 @@ button {
   }
 }
 
-nav {
+.navLink {
   font-weight: 500;
   line-height: 1.2;
-  font-size: v.$fs-16;
+  font-size: v.$fs-20;
 
   @include m.up(md) {
-    font-size: v.$fs-18;
+    font-size: v.$fs-20;
   }
 
   @include m.up(lg) {
-    font-size: v.$fs-20;
+    font-size: v.$fs-24;
   }
 }
 

@@ -199,7 +199,7 @@ export default function ItemsSection({
           <ul className={styles.list}>
             {items.map((item) => (
               <li key={item.set_num} className={styles.item}>
-                <SetCard item={item} />
+                <SetCard item={item} source="categories" categoryId={themeId} />
               </li>
             ))}
           </ul>
