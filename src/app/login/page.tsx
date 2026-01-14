@@ -7,21 +7,23 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/contexts/UserContext";
 import { UserActionTypes } from "@/reducers/UserReducer";
+import { LS_USER_NAME } from "@/lib/storageKeys";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
   const [nameInput, setNameInput] = useState("");
-  const { userName: savedUserName, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const trimmed = nameInput.trim();
   const USERNAME_RE = /^[A-Za-zÅÄÖåäö]{3,20}$/;
   const isValid = USERNAME_RE.test(trimmed);
   const isDisabled = isPending || !isValid;
   const router = useRouter();
 
-  // If user already exists, send to "/".
+  // If user already exists in localStorage, send to "/".
   useEffect(() => {
-    if (savedUserName) router.replace("/");
-  }, [savedUserName, router]);
+    const existing = localStorage.getItem(LS_USER_NAME);
+    if (existing) router.replace("/");
+  }, [router]);
 
   // Send user to "/" when entered userName
   async function handleSubmit(e: React.FormEvent) {
@@ -32,9 +34,9 @@ export default function LoginPage() {
     }
 
     setIsPending(true);
+
     dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
 
-    await Promise.resolve();
     router.replace("/");
   }
 
