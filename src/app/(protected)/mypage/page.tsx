@@ -7,6 +7,8 @@ import { UserContext } from "@/contexts/UserContext";
 import { useRouter } from "next/navigation";
 import { UserActionTypes } from "@/reducers/UserReducer";
 import ClearModal from "@/components/Modal/ClearModal";
+import { SetListsContext } from "@/contexts/SetListsContext";
+import Link from "next/link";
 
 export default function MyPage() {
   const router = useRouter();
@@ -18,6 +20,7 @@ export default function MyPage() {
   const isValid = USERNAME_RE.test(trimmed);
   const isDisabled = !isValid || trimmed === userName;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { counts } = useContext(SetListsContext);
 
   // Send to login if userName does not exist
   useEffect(() => {
@@ -64,18 +67,31 @@ export default function MyPage() {
 
         {/* Counters */}
         <section className={styles.counters}>
-          <div className={styles.card}>
+          <Link
+            href="/watchlist"
+            className={styles.card}
+            aria-labelledby="watchlistLabel watchlistCounter"
+          >
             <span id="watchlistCounter" className={styles.counter}>
-              0
+              {counts.watchlist}
             </span>
-            <span className={styles.label}>Bevakningar</span>
-          </div>
-          <div className={styles.card}>
+            <span id="watchlistLabel" className={styles.label}>
+              Bevakningar
+            </span>
+          </Link>
+
+          <Link
+            href="/collection"
+            className={styles.card}
+            aria-labelledby="collectionLabel collectionCounter"
+          >
             <span id="collectionCounter" className={styles.counter}>
-              0
+              {counts.collection}
             </span>
-            <span className={styles.label}>Set samlade</span>
-          </div>
+            <span id="collectionLabel" className={styles.label}>
+              Set samlade
+            </span>
+          </Link>
         </section>
 
         {/* Usersettings */}

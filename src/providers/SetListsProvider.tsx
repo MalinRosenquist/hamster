@@ -1,10 +1,9 @@
 "use client";
 
 import { SetListsContext } from "@/contexts/SetListsContext";
+import { LS_SET_LISTS } from "@/lib/storageKeys";
 import SetListsReducer, { SetListsActionTypes } from "@/reducers/SetListsReducer";
-import { useEffect, useReducer, useRef } from "react";
-
-const LS_SET_LISTS = "hamster:setLists";
+import { useEffect, useMemo, useReducer, useRef } from "react";
 
 export default function SetListsProvider({
   children,
@@ -60,8 +59,16 @@ export default function SetListsProvider({
     localStorage.setItem(LS_SET_LISTS, JSON.stringify(payload));
   }, [state.watchlistIds, state.collectionIds]);
 
+  const counts = useMemo(
+    () => ({
+      collection: state.collectionIds.length,
+      watchlist: state.watchlistIds.length,
+    }),
+    [state.collectionIds, state.watchlistIds]
+  );
+
   return (
-    <SetListsContext.Provider value={{ ...state, dispatch }}>
+    <SetListsContext.Provider value={{ ...state, counts, dispatch }}>
       {children}
     </SetListsContext.Provider>
   );

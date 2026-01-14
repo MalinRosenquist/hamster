@@ -41,6 +41,7 @@ export default function SetListsReducer(
         };
       }
       return {
+        ...state,
         watchlistIds: [...state.watchlistIds, id],
         collectionIds: state.collectionIds.filter((s) => s !== id),
       };
@@ -57,8 +58,9 @@ export default function SetListsReducer(
         };
       }
       return {
+        ...state,
         collectionIds: [...state.collectionIds, id],
-        watchlistIds: state.watchlistIds.filter((s) => s != id),
+        watchlistIds: state.watchlistIds.filter((s) => s !== id),
       };
     }
 
