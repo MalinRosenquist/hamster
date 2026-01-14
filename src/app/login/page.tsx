@@ -47,11 +47,13 @@ export default function LoginPage() {
     <div className={`container ${styles.container}`}>
       <h1>Alla kan samla på LEGO!</h1>
       <h2>Med Hamster kan du:</h2>
+
       <ul className={styles.features}>
         <li>Spara dina LEGO-set</li>
         <li>Bevaka set du letar efter</li>
         <li>Följa LEGO-auktioner</li>
       </ul>
+
       <div className={styles.card}>
         <h2>Kom igång</h2>
         <form onSubmit={handleSubmit}>
@@ -70,18 +72,17 @@ export default function LoginPage() {
               aria-describedby="userNameHelp"
             />
           </div>
-          <div>
-            <Button variant="primary" type="submit" disabled={isDisabled}>
-              {isPending ? (
-                <>
-                  <Spinner size="small"></Spinner>
-                  <span>Laddar...</span>
-                </>
-              ) : (
-                "Utforska set"
-              )}
-            </Button>
-          </div>
+
+          <Button variant="primary" type="submit" disabled={isDisabled}>
+            {isPending ? (
+              <>
+                <Spinner size="small"></Spinner>
+                <span>Laddar...</span>
+              </>
+            ) : (
+              "Utforska set"
+            )}
+          </Button>
         </form>
         <small className={styles.muted}>
           Du behöver inget konto. Din data sparas bara i den här webbläsaren.
