@@ -1,21 +1,19 @@
 "use client";
 
 import { UserContext } from "@/contexts/UserContext";
-import UserReducer, { UserActionTypes } from "@/reducers/UserReducer";
+import { LS_USER_NAME } from "@/lib/storageKeys";
+import UserReducer from "@/reducers/UserReducer";
 import { useEffect, useReducer } from "react";
 
-const LS_USER_NAME = "hamster:userName";
-
 export default function UserProvider({ children }: { children: React.ReactNode }) {
-  const [userName, dispatch] = useReducer(UserReducer, null);
+  // Initialize state from localStorage on the client, keeps auth + UI in sync on first render
+  const [userName, dispatch] = useReducer(UserReducer, null, () =>
+    typeof window === "undefined" ? null : localStorage.getItem(LS_USER_NAME)
+  );
 
-  useEffect(() => {
-    const saved = localStorage.getItem(LS_USER_NAME);
-    if (saved) {
-      dispatch({ type: UserActionTypes.SET_NAME, payload: saved });
-    }
-  }, []);
-
+  // Persist changes back to localStorage whenever the username changes.
+  // - null = "logged out / cleared" -> remove the key
+  // - otherwise store the current username
   useEffect(() => {
     if (userName === null) {
       localStorage.removeItem(LS_USER_NAME);
