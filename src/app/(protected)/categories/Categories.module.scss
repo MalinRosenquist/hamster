@@ -1,0 +1,8 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+
+.top {
+  h1 {
+    text-align: center;
+  }
+}
