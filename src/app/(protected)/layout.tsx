@@ -1,8 +1,8 @@
 "use client";
 
+import { hasStoredUser } from "@/lib/authLocalStorage";
 import styles from "./Layout.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
-import { LS_USER_NAME } from "@/lib/storageKeys";
 import SetListsProvider from "@/providers/SetListsProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -15,9 +15,7 @@ export default function ProtectedLayout({
   const router = useRouter();
 
   // Render-fas: avgör om vi *har* användare (client only)
-  const hasUser =
-    typeof window !== "undefined" &&
-    Boolean(window.localStorage.getItem(LS_USER_NAME));
+  const hasUser = hasStoredUser();
 
   // Redirect to login-page if username is false
   useEffect(() => {

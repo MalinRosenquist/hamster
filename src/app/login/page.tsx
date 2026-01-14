@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/contexts/UserContext";
 import { UserActionTypes } from "@/reducers/UserReducer";
-import { LS_USER_NAME } from "@/lib/storageKeys";
+import { getStoredUserName } from "@/lib/authLocalStorage";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   // If user already exists in localStorage, send to "/".
   useEffect(() => {
-    const existing = localStorage.getItem(LS_USER_NAME);
+    const existing = getStoredUserName();
     if (existing) router.replace("/");
   }, [router]);
 
@@ -35,9 +35,12 @@ export default function LoginPage() {
 
     setIsPending(true);
 
-    dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
-
-    router.replace("/");
+    try {
+      dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
+      router.replace("/");
+    } finally {
+      setIsPending(false);
+    }
   }
 
   return (
