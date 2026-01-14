@@ -45,7 +45,7 @@ export default function LoginPage() {
       <ul className={styles.features}>
         <li>Spara dina LEGO-set</li>
         <li>Bevaka set du letar efter</li>
-        <li>Följ LEGO-auktioner</li>
+        <li>Följa LEGO-auktioner</li>
       </ul>
       <div className={styles.card}>
         <h2>Kom igång</h2>
@@ -57,7 +57,7 @@ export default function LoginPage() {
               id="userName"
               name="username"
               type="text"
-              placeholder="T.ex Lego-Lasse"
+              placeholder="T.ex LegoLasse"
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               disabled={isPending}
