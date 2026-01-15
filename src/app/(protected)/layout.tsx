@@ -5,7 +5,7 @@ import styles from "./Layout.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
 import SetListsProvider from "@/providers/SetListsProvider";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProtectedLayout({
   children,
@@ -14,22 +14,20 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
-  // Render-fas: avgör om vi *har* användare (client only)
-  const hasUser = hasStoredUser();
+  const [hasUser] = useState<boolean>(() => hasStoredUser());
 
-  // Redirect to login-page if username is false
   useEffect(() => {
     if (!hasUser) router.replace("/login");
   }, [hasUser, router]);
 
-  // Block rendering of protected content
-  if (!hasUser)
+  if (!hasUser) {
     return (
       <div className={styles.redirect} role="status" aria-live="polite">
         <p>Omdirigerar...</p>
         <Spinner size="default" />
       </div>
     );
+  }
 
   return (
     <SetListsProvider>
