@@ -1,4 +1,4 @@
-import { getThemes, getThemeThumbnail } from "@/server/services/themeService";
+import { getThemes, getThemeThumbnailCached } from "@/server/services/themeService";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     const results = await Promise.all(
       data.results.map(async (theme) => ({
         ...theme,
-        thumb: await getThemeThumbnail(theme.id),
+        thumb: await getThemeThumbnailCached(theme.id),
       }))
     );
 

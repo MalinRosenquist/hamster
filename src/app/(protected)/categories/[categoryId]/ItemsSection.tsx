@@ -7,6 +7,9 @@ import { useState } from "react";
 import Toolbar from "@/components/Toolbar/Toolbar";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import SetCard from "@/components/SetCard/SetCard";
+import { buildSetItemsApiUrl } from "@/lib/rebrickable/buildSetItemsApiUrl";
+import { sortSets } from "@/lib/rebrickable/sortSets";
+import { setOrRemoveParam } from "@/lib/serOrRemoveParams";
 
 type ItemsListProps = {
   initialItems: SetItem[];
@@ -35,21 +38,26 @@ export default function ItemsSection({
   const [minYearInput, setMinYearInput] = useState(initialMinYear);
   const [maxYearInput, setMaxYearInput] = useState(initialMaxYear);
   const searchParams = useSearchParams();
-  const minYearParam = minYearInput ? `&min_year=${minYearInput}` : "";
-  const maxYearParam = maxYearInput ? `&max_year=${maxYearInput}` : "";
-  const searchQueryParam = search ? `&search=${encodeURIComponent(search)}` : "";
   const [totalCount, setTotalCount] = useState(total);
   const router = useRouter();
   const pathname = usePathname();
 
-  async function handleSearchSumbit() {
+  async function handleSearchSubmit() {
     if (loading) return;
 
     setLoading(true);
 
     try {
       const res = await fetch(
-        `/api/rebrickable/setItems?page=1&page_size=10&theme_id=${themeId}&ordering=${ordering}${searchQueryParam}${minYearParam}${maxYearParam}`
+        buildSetItemsApiUrl({
+          page: 1,
+          pageSize: 10,
+          themeId,
+          ordering,
+          search,
+          minYear: minYearInput,
+          maxYear: maxYearInput,
+        })
       );
 
       if (!res.ok) {
@@ -59,16 +67,16 @@ export default function ItemsSection({
 
       const data: { count: number; results: SetItem[] } = await res.json();
 
-      setItems(data.results);
+      setItems(sortSets(data.results, ordering));
       setTotalCount(data.count);
       setPage(1);
 
       const params = new URLSearchParams(searchParams.toString());
-      if (search) {
-        params.set("search", search);
-      } else {
-        params.delete("search");
-      }
+
+      setOrRemoveParam(params, "search", search);
+      setOrRemoveParam(params, "ordering", ordering);
+      setOrRemoveParam(params, "min_year", minYearInput);
+      setOrRemoveParam(params, "max_year", maxYearInput);
 
       router.replace(`${pathname}?${params.toString()}`);
     } finally {
@@ -80,11 +88,18 @@ export default function ItemsSection({
     if (loading) return;
     setLoading(true);
 
+    const url = buildSetItemsApiUrl({
+      page: 1,
+      pageSize: 10,
+      themeId,
+      ordering: value,
+      search,
+      minYear: minYearInput,
+      maxYear: maxYearInput,
+    });
+
     try {
-      console.log("DEBUG search:", search, "typeof:", typeof search);
-      const res = await fetch(
-        `/api/rebrickable/setItems?page=1&page_size=10&theme_id=${themeId}&ordering=${value}${searchQueryParam}${minYearParam}${maxYearParam}`
-      );
+      const res = await fetch(url);
 
       if (!res.ok) {
         console.error("Could not fetch sorted sets", res.status);
@@ -92,19 +107,20 @@ export default function ItemsSection({
       }
 
       const data: { count: number; results: SetItem[] } = await res.json();
+      const sorted = sortSets(data.results, value);
 
       setOrdering(value);
-      setItems(data.results);
+      setItems(sorted);
+
       setTotalCount(data.count);
       setPage(1);
 
       const params = new URLSearchParams(searchParams.toString());
 
-      if (value) {
-        params.set("ordering", value);
-      } else {
-        params.delete("ordering");
-      }
+      setOrRemoveParam(params, "ordering", value);
+      setOrRemoveParam(params, "search", search);
+      setOrRemoveParam(params, "min_year", minYearInput);
+      setOrRemoveParam(params, "max_year", maxYearInput);
 
       router.replace(`${pathname}?${params.toString()}`);
     } finally {
@@ -119,7 +135,15 @@ export default function ItemsSection({
 
     try {
       const res = await fetch(
-        `/api/rebrickable/setItems?page=1&page_size=10&theme_id=${themeId}&ordering=${ordering}${searchQueryParam}${minYearParam}${maxYearParam}`
+        buildSetItemsApiUrl({
+          page: 1,
+          pageSize: 10,
+          themeId,
+          ordering,
+          search,
+          minYear: minYearInput,
+          maxYear: maxYearInput,
+        })
       );
 
       if (!res.ok) {
@@ -129,23 +153,17 @@ export default function ItemsSection({
 
       const data: { count: number; results: SetItem[] } = await res.json();
 
-      setItems(data.results);
+      setItems(sortSets(data.results, ordering));
+
       setTotalCount(data.count);
       setPage(1);
 
       const params = new URLSearchParams(searchParams.toString());
 
-      if (minYearInput) {
-        params.set("min_year", minYearInput);
-      } else {
-        params.delete("min_year");
-      }
-
-      if (maxYearInput) {
-        params.set("max_year", maxYearInput);
-      } else {
-        params.delete("max_year");
-      }
+      setOrRemoveParam(params, "min_year", minYearInput);
+      setOrRemoveParam(params, "max_year", maxYearInput);
+      setOrRemoveParam(params, "search", search);
+      setOrRemoveParam(params, "ordering", ordering);
 
       router.replace(`${pathname}?${params.toString()}`);
     } finally {
@@ -161,7 +179,15 @@ export default function ItemsSection({
 
     try {
       const res = await fetch(
-        `/api/rebrickable/setItems?page=${nextPage}&page_size=10&theme_id=${themeId}&ordering=${ordering}${searchQueryParam}${minYearParam}${maxYearParam}`
+        buildSetItemsApiUrl({
+          page: nextPage,
+          pageSize: 10,
+          themeId,
+          ordering,
+          search,
+          minYear: minYearInput,
+          maxYear: maxYearInput,
+        })
       );
 
       if (!res.ok) {
@@ -171,7 +197,8 @@ export default function ItemsSection({
 
       const data: { count: number; results: SetItem[] } = await res.json();
 
-      setItems((prev) => [...prev, ...data.results]);
+      setItems((prev) => sortSets([...prev, ...data.results], ordering));
+
       setPage(nextPage);
     } finally {
       setLoading(false);
@@ -186,7 +213,7 @@ export default function ItemsSection({
           onOrderingChange={handleOrderingChange}
           search={search}
           onSearchChange={setSearch}
-          onSearchSubmit={handleSearchSumbit}
+          onSearchSubmit={handleSearchSubmit}
           yearFilter={{
             minYear: minYearInput,
             maxYear: maxYearInput,
