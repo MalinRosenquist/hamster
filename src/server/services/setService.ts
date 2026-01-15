@@ -5,6 +5,15 @@ import { SetInfo } from "@/models/SetInfo";
 
 const BASE_URL = "https://rebrickable.com/api/v3/lego/sets/";
 
+/**
+ * In-memory cache, process-local (RAM). Restarting the server clears it.
+ * - Watchlist/collection can trigger many "fetch by id" requests in a short time.
+ * - Rebrickable rate-limits (HTTP 429). Caching reduces repeated upstream calls.
+ */
+type SetByNumCacheEntry = { data: SetInfo; expiresAt: number };
+const setByNumCache = new Map<string, SetByNumCacheEntry>();
+const SET_BY_NUM_TTL_MS = 5 * 60_000;
+
 export const getSetItems = async (
   page = 1,
   pageSize = 10,
@@ -41,9 +50,22 @@ export const getSetBySetNum = async (setNum: string): Promise<SetInfo> => {
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
 
+  const now = Date.now();
+  const cached = setByNumCache.get(setNum);
+
+  // Return stored data it still valid
+  if (cached && cached.expiresAt > now) {
+    return cached.data;
+  }
+
   const url = `${BASE_URL}${setNum}/`;
 
-  return get<SetInfo>(url, {
+  const data = await get<SetInfo>(url, {
     headers: { Authorization: `key ${key}` },
   });
+
+  // Store in cache with expiration timestamp
+  setByNumCache.set(setNum, { data, expiresAt: now + SET_BY_NUM_TTL_MS });
+
+  return data;
 };
