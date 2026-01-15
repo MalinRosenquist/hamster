@@ -1,6 +1,15 @@
 import { getSetBySetNum } from "@/server/services/setService";
 import { NextResponse } from "next/server";
 
+/**
+ * Extract status code from service error messages.
+ * serviceBase.get() throws errors like: "HTTP 429: ..."
+ */
+function statusFromServiceError(message: string): number | null {
+  const match = message.match(/^HTTP\s(\d{3})\b/);
+  return match ? Number(match[1]) : null;
+}
+
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ setNum: string }> }
@@ -19,6 +28,7 @@ export async function GET(
     return NextResponse.json(data);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    return NextResponse.json({ error: true, message: message }, { status: 500 });
+    const status = statusFromServiceError(message) ?? 500;
+    return NextResponse.json({ error: true, message }, { status });
   }
 }
