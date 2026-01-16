@@ -1,55 +1,57 @@
 import { getSetItems } from "@/server/services/setService";
-import Link from "next/link";
 import { redirect } from "next/navigation";
+import SearchListView from "./SearchListView";
 
 const PAGE_SIZE = 24;
 
-type SeachPageProps = {
-  searchParams?: Promise<{ q?: string; page?: string }>;
+type SearchPageProps = {
+  searchParams?: Promise<{
+    q?: string;
+    page?: string;
+    ordering?: string;
+    min_year?: string;
+    max_year?: string;
+  }>;
 };
 
-export default async function search({ searchParams }: SeachPageProps) {
+export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = await searchParams;
+
   const q = (params?.q ?? "").trim();
+  if (!q) redirect("/categories");
+
   const page = Math.max(1, Number(params?.page ?? "1") || 1);
+  const ordering = params?.ordering ?? "-year";
+  const minYear = params?.min_year ?? "";
+  const maxYear = params?.max_year ?? "";
 
-  if (!q) {
-    redirect("/categories");
-  }
+  const minYearNum = Number(minYear);
+  const maxYearNum = Number(maxYear);
 
-  const data = await getSetItems(page, PAGE_SIZE, undefined, q, undefined);
+  const data = await getSetItems(
+    page,
+    PAGE_SIZE,
+    undefined,
+    q,
+    ordering || undefined,
+    Number.isFinite(minYearNum) ? minYearNum : undefined,
+    Number.isFinite(maxYearNum) ? maxYearNum : undefined
+  );
 
-  // No matching results
-  if (data.count === 0) {
-    return (
-      <div className="container">
-        <h1>Sökresultat</h1>
-        <p>
-          Inga träffar för <strong>{q}</strong>.
-        </p>
-      </div>
-    );
-  }
-
-  // matching results
   return (
-    <>
-      <div className="container">
-        <h1>Sökresultat</h1>
-        <p>
-          Visar {data.results.length} av {data.count} för <strong>{q}</strong>
-        </p>
+    <div className="container">
+      <h1>Sökresultat</h1>
 
-        <ul>
-          {data.results.map((set) => (
-            <li key={set.set_num}>
-              <Link href={`/items/${set.set_num}`}>
-                {set.set_num} — {set.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+      <SearchListView
+        initialQuery={q}
+        initialOrdering={ordering}
+        initialMinYear={minYear}
+        initialMaxYear={maxYear}
+        initialItems={data.results}
+        initialTotal={data.count}
+        initialPage={page}
+        pageSize={PAGE_SIZE}
+      />
+    </div>
   );
 }
