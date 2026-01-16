@@ -9,7 +9,8 @@ const BASE_URL = "https://rebrickable.com/api/v3/lego/themes/";
 
 export const getThemes = async (
   page = 1,
-  pageSize = 10
+  pageSize = 10,
+  ordering = ""
 ): Promise<ThemesResponse> => {
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
@@ -17,6 +18,7 @@ export const getThemes = async (
   const url = new URL(BASE_URL);
   url.searchParams.set("page", String(page));
   url.searchParams.set("page_size", String(pageSize));
+  if (ordering) url.searchParams.set("ordering", ordering);
 
   return get<ThemesResponse>(url.toString(), {
     headers: { Authorization: `key ${key}` },
