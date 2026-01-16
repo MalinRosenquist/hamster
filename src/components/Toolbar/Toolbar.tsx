@@ -18,7 +18,7 @@ type ToolbarProps = {
     maxYear: string;
     onMinYearChange: (value: string) => void;
     onMaxYearChange: (value: string) => void;
-    onApply: () => void;
+    onApply: (minYear: string, maxYear: string) => void;
   };
 };
 
