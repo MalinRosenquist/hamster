@@ -8,6 +8,7 @@ type LoadMoreProps = {
   shown: number;
   total: number;
   loading?: boolean;
+  canLoadMore: boolean;
   onLoadMore: () => void;
   children: ReactNode;
 };
@@ -16,11 +17,10 @@ export default function LoadMore({
   shown,
   total,
   loading = false,
+  canLoadMore,
   onLoadMore,
   children,
 }: LoadMoreProps) {
-  const canLoadMore = shown < total;
-
   return (
     <div className={styles.loaderWrapper}>
       <p>

@@ -11,7 +11,7 @@ type YearFilterProps = {
   maxYear: string;
   onMinYearChange: (value: string) => void;
   onMaxYearChange: (value: string) => void;
-  onApply: () => void;
+  onApply: (minYear: string, maxYear: string) => void;
 };
 
 export default function YearFilter({
@@ -49,7 +49,7 @@ export default function YearFilter({
   }
 
   function handleApply() {
-    onApply();
+    onApply(minYear, maxYear);
     setIsOpen(false);
     triggerRef.current?.focus();
   }
@@ -57,7 +57,7 @@ export default function YearFilter({
   function handleReset() {
     onMinYearChange("");
     onMaxYearChange("");
-    onApply();
+    onApply("", "");
     setIsOpen(false);
     triggerRef.current?.focus();
   }

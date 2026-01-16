@@ -5,6 +5,8 @@ import { ThemeWithThumb } from "@/models/ThemeWithThumb";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import styles from "./CategorySection.module.scss";
 import ThemeCard from "@/components/ThemeCard/ThemeCard";
+import Toolbar from "@/components/Toolbar/Toolbar";
+import { useRouter } from "next/navigation";
 
 type CategoryProps = {
   initialCategories: ThemeWithThumb[];
@@ -18,6 +20,15 @@ export default function CategorySection({
   const [themes, setThemes] = useState<ThemeWithThumb[]>(initialCategories);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const router = useRouter();
+  const hasMorePages = themes.length < total;
+
+  function handleSearchSubmit() {
+    const q = search.trim();
+    if (!q) return;
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+  }
 
   async function handleLoadMore() {
     if (loading) return;
@@ -46,6 +57,12 @@ export default function CategorySection({
 
   return (
     <div>
+      <Toolbar
+        search={search}
+        onSearchChange={setSearch}
+        onSearchSubmit={handleSearchSubmit}
+      />
+
       <section>
         <ul className={styles.list}>
           {themes.map((theme) => (
@@ -61,6 +78,7 @@ export default function CategorySection({
           total={total}
           onLoadMore={handleLoadMore}
           loading={loading}
+          canLoadMore={hasMorePages}
         >
           Hämta fler teman
         </LoadMore>
