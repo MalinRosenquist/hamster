@@ -23,6 +23,7 @@ export default function SearchBar({
           className={styles.search}
           onSubmit={(e) => {
             e.preventDefault();
+            if (!value.trim()) return;
             onSubmit();
           }}
         >

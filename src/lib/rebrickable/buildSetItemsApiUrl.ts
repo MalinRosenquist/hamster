@@ -5,8 +5,10 @@ export function buildSetItemsApiUrl(params: BuildSetItemsApiUrlParams) {
 
   searchParams.set("page", String(params.page));
   searchParams.set("page_size", String(params.pageSize));
-  searchParams.set("theme_id", String(params.themeId));
 
+  if (params.themeId != null) {
+    searchParams.set("theme_id", String(params.themeId));
+  }
   if (params.ordering) searchParams.set("ordering", params.ordering);
   if (params.search) searchParams.set("search", params.search);
   if (params.minYear) searchParams.set("min_year", params.minYear);

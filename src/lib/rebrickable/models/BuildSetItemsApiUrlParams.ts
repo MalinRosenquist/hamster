@@ -1,7 +1,7 @@
 export type BuildSetItemsApiUrlParams = {
   page: number;
   pageSize: number;
-  themeId: number;
+  themeId?: number;
   ordering?: string;
   search?: string;
   minYear?: string;

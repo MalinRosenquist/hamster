@@ -2,12 +2,14 @@
 
 import styles from "./Toolbar.module.scss";
 import SearchBar from "./SearchInput/SearchInput";
-import SortSelect from "./SortSelect/SortSelect";
+import SortSelect, { SortOption } from "./SortSelect/SortSelect";
 import YearFilter from "./YearFilter/YearFilter";
 
 type ToolbarProps = {
-  ordering: string;
-  onOrderingChange: (value: string) => void;
+  ordering?: string;
+  onOrderingChange?: (value: string) => void;
+
+  sortOptions?: SortOption[];
 
   search?: string;
   onSearchChange: (value: string) => void;
@@ -25,9 +27,10 @@ type ToolbarProps = {
 export default function Toolbar({
   ordering,
   onOrderingChange,
+  sortOptions,
   search = "",
-  onSearchChange = () => {},
-  onSearchSubmit = () => {},
+  onSearchChange,
+  onSearchSubmit,
   yearFilter,
 }: ToolbarProps) {
   return (
@@ -49,7 +52,14 @@ export default function Toolbar({
             onApply={yearFilter.onApply}
           />
         )}
-        <SortSelect value={ordering} onChange={onOrderingChange} />
+
+        {ordering && onOrderingChange && (
+          <SortSelect
+            value={ordering}
+            onChange={onOrderingChange}
+            options={sortOptions}
+          />
+        )}
       </div>
     </div>
   );
