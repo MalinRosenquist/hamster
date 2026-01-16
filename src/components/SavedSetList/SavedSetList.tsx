@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "./SavedSetList.module.scss";
 import { SetItem } from "@/models/SetItem";
 import SetCard from "../SetCard/SetCard";
 import Spinner from "../Spinner/Spinner";
+import CardList from "../CardList/CardList";
 
 export type SavedSetListProps = {
   ids: string[];
@@ -86,13 +86,13 @@ export default function SavedSetList({ ids, emptyText, source }: SavedSetListPro
         <p>{emptyText}</p>
       ) : items.length === 0 ? null : (
         <section>
-          <ul className={styles.list}>
+          <CardList>
             {items.map((item) => (
               <li key={item.set_num}>
                 <SetCard item={item} source={source} />
               </li>
             ))}
-          </ul>
+          </CardList>
         </section>
       )}
     </>

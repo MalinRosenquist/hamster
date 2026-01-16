@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "./ItemsSection.module.scss";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import { SetItem } from "@/models/SetItem";
 import { useState, useRef } from "react";
@@ -10,6 +9,7 @@ import SetCard from "@/components/SetCard/SetCard";
 import { buildSetItemsApiUrl } from "@/lib/rebrickable/buildSetItemsApiUrl";
 import { sortSets } from "@/lib/rebrickable/sortSets";
 import { setOrRemoveParam } from "@/lib/setOrRemoveParam";
+import CardList from "@/components/CardList/CardList";
 
 const PAGE_SIZE = 10;
 
@@ -290,16 +290,16 @@ export default function ItemsSection({
         />
 
         <section>
-          <ul className={styles.list}>
+          <CardList>
             {items.map((item) => (
-              <li key={item.set_num} className={styles.item}>
+              <li key={item.set_num}>
                 <SetCard item={item} source="categories" categoryId={themeId} />
               </li>
             ))}
-          </ul>
+          </CardList>
         </section>
 
-        <section className={styles.loading}>
+        <section>
           <LoadMore
             shown={items.length}
             total={estimatedTotal}

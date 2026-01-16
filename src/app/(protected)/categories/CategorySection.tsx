@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { ThemeWithThumb } from "@/models/ThemeWithThumb";
 import LoadMore from "@/components/LoadMore/LoadMore";
-import styles from "./CategorySection.module.scss";
 import ThemeCard from "@/components/ThemeCard/ThemeCard";
 import Toolbar from "@/components/Toolbar/Toolbar";
 import { useRouter } from "next/navigation";
+import CardList from "@/components/CardList/CardList";
 
 type CategoryProps = {
   initialCategories: ThemeWithThumb[];
@@ -64,15 +64,16 @@ export default function CategorySection({
       />
 
       <section>
-        <ul className={styles.list}>
+        <CardList>
           {themes.map((theme) => (
-            <li key={theme.id} className={styles.item}>
+            <li key={theme.id}>
               <ThemeCard theme={theme} />
             </li>
           ))}
-        </ul>
+        </CardList>
       </section>
-      <section className={styles.loading}>
+
+      <section>
         <LoadMore
           shown={themes.length}
           total={total}
