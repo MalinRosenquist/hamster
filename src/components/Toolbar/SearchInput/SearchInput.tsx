@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./SearchBar.module.scss";
+import styles from "./SearchInput.module.scss";
 
 type SearchInputProps = {
   value: string;
