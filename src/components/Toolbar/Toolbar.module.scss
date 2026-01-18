@@ -8,10 +8,16 @@
 
 .row {
   margin: 0.6rem;
+  min-width: 0;
 }
 
 .rowSortFilter {
   display: flex;
-  align-items: start;
+  flex-direction: column;
   gap: 0.8rem;
+
+  @include m.up(md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

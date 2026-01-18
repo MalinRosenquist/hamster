@@ -42,7 +42,9 @@ export default function SortSelect({
         onClick={() => setIsOpen((prev) => !prev)}
       >
         Sortera
-        <SortIcon aria-hidden="true" />
+        <span className={styles.iconWrapper}>
+          <SortIcon className={styles.sortIcon} aria-hidden="true" />
+        </span>
       </button>
 
       {isOpen && (
