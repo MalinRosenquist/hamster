@@ -36,10 +36,13 @@ export default function SearchBar({
             onChange={(e) => onChange(e.target.value)}
           />
           <button className={styles.searchButton} type="submit">
+            <span className={"srOnly"}>Sök</span>
             <span className={styles.searchIcon} aria-hidden="true">
               <Image src="/icons/search.svg" alt="" width={30} height={30} />
             </span>
-            <span>Sök</span>
+            <span className={styles.searchLabel} aria-hidden="true">
+              Sök
+            </span>
           </button>
         </form>
       </div>

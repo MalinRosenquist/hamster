@@ -1,10 +1,6 @@
 @use "../../../styles/variables" as v;
 @use "../../../styles/mixins" as m;
 
-// .wrap {
-//   padding: 0;
-// }
-
 .search {
   width: 100%;
   display: flex;
@@ -24,6 +20,7 @@
 }
 
 .searchButton {
+  position: relative;
   height: 44px;
   border: none;
   background-color: rgb(255, 255, 255);
@@ -34,4 +31,12 @@
   font-size: v.$fs-16;
   font-weight: 400;
   letter-spacing: 1px;
+
+  .searchLabel {
+    display: none;
+
+    @include m.up(md) {
+      display: inline;
+    }
+  }
 }
