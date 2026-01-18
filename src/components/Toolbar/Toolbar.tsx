@@ -53,9 +53,9 @@ export default function Toolbar({
           />
         )}
 
-        {ordering && onOrderingChange && (
+        {onOrderingChange && (
           <SortSelect
-            value={ordering}
+            value={ordering || ""}
             onChange={onOrderingChange}
             options={sortOptions}
           />
