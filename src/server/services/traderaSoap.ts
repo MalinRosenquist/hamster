@@ -1,5 +1,7 @@
 import "server-only";
 
+const DEFAULT_CATEGORY_ID = 1804;
+
 /**
  * Builds a SOAP envelope for Tradera SearchService.Search.
  * Note: The "sandbox" parameter is currently NOT used in the XML (kept for future use).
@@ -9,8 +11,9 @@ function buildSearchEnvelope(params: {
   appKey: string;
   query: string;
   sandbox: boolean;
+  categoryId: number;
 }) {
-  const { appId, appKey, query } = params;
+  const { appId, appKey, query, categoryId } = params;
 
   return `<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -28,7 +31,7 @@ function buildSearchEnvelope(params: {
     <!-- Search request -->
     <Search xmlns="http://api.tradera.com">
       <query>${query}</query>
-      <categoryId>0</categoryId>
+      <categoryId>${categoryId}</categoryId>
       <pageNumber>1</pageNumber>
       <orderBy>Relevance</orderBy>
     </Search>
@@ -54,6 +57,7 @@ export async function traderaSearchRawXml(query: string): Promise<string> {
     appKey,
     query,
     sandbox: true,
+    categoryId: DEFAULT_CATEGORY_ID,
   });
 
   // Send SOAP request to Tradera SearchService endpoint.
