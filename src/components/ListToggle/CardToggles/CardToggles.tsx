@@ -17,24 +17,32 @@ export default function CardToggles({ setNum }: CardTogglesProps) {
     <div className={styles.cardToggles}>
       <button
         type="button"
-        className={styles.iconButton}
+        className={`${styles.iconButton} ${isWatching ? styles.iconActive : ""}`}
         aria-label={isWatching ? "Ta bort bevakning" : "Lägg till i bevakning"}
         aria-pressed={isWatching}
         title={isWatching ? "Ta bort bevakning" : "Lägg till i bevakning"}
         onClick={toggleWatchlist}
       >
-        <WatchIcon className={styles.icon} aria-hidden="true" />
+        <WatchIcon
+          className={styles.icon}
+          strokeWidth={isWatching ? 2.5 : 2}
+          aria-hidden="true"
+        />
       </button>
 
       <button
         type="button"
-        className={styles.iconButton}
+        className={`${styles.iconButton} ${isCollected ? styles.iconActive : ""}`}
         aria-label={isCollected ? "Ta bort från samling" : "Lägg till i samling"}
         aria-pressed={isCollected}
-        title={isWatching ? "Ta bort från samling" : "Lägg till i samling"}
+        title={isCollected ? "Ta bort från samling" : "Lägg till i samling"}
         onClick={toggleCollection}
       >
-        <CollectIcon className={styles.icon} aria-hidden />
+        <CollectIcon
+          className={styles.icon}
+          strokeWidth={isCollected ? 2.5 : 2}
+          aria-hidden
+        />
       </button>
     </div>
   );
