@@ -4,7 +4,7 @@ import { REDIS_KEYS } from "../redis/keys";
 import { cacheGet, cacheSet } from "../redis/cache";
 import { canCallTraderaGlobal } from "../guards/traderaCallGuard";
 import { TraderaAuction } from "@/models/TraderaAuction";
-import { traderaSearchRawXml } from "./traderaSoap";
+import { TraderaSearchItems } from "./traderaSoap";
 
 const CACHE_TTL_SEC = 60 * 60 * 12;
 
@@ -35,7 +35,7 @@ export async function getTraderaAuctionsBySetNum(
     return { ...cached, cached: true };
   }
 
-  // 2) Rate limit check before any external call.
+  // Rate limit check before any external call.
   // If we are out of allowed calls, return data so the UI can show a retry timer.
   const rateLimitResult = await canCallTraderaGlobal();
 
@@ -62,13 +62,44 @@ export async function getTraderaAuctionsBySetNum(
     };
   }
 
-  // 3) External call (SOAP): only happens if cache missed AND rate limit allows it.
-  const xml = await traderaSearchRawXml(setNum);
-  console.log("TRADERA SOAP XML (first 300 chars):", xml.slice(0, 300));
+  const items = await TraderaSearchItems(setNum);
 
-  const auctions: TraderaAuction[] = [];
+  // Map raw Tradera SearchService items (parsed from SOAP XML) into internal model.
+  // Keep the fields the UI needs and normalize types (strings -> numbers, optional fields -> undefined).
+  // Skip invalid entries (missing id/title/url) to avoid rendering broken links.
 
-  // 4) Build response and cache it (including empty results) to avoid repeated API calls.
+  const auctions: TraderaAuction[] = items
+    .map((it) => {
+      const id = it.Id != null ? String(it.Id) : "";
+      const title = it.ShortDescription ?? "";
+      const url = it.ItemUrl ?? "";
+
+      if (!id || !title || !url) return null;
+
+      const maxBid = it.MaxBid != null ? Number(it.MaxBid) : undefined;
+      const buyItNowPrice =
+        it.BuyItNowPrice != null ? Number(it.BuyItNowPrice) : undefined;
+
+      const auction: TraderaAuction = {
+        id,
+        title,
+        url,
+        endDate: it.EndDate ? String(it.EndDate) : undefined,
+        buyItNowPrice,
+        maxBid,
+        price: maxBid ?? buyItNowPrice,
+      };
+
+      // Only add thumbnailUrl if we actually have one
+      if (it.ThumbnailLink) {
+        auction.thumbnailUrl = String(it.ThumbnailLink);
+      }
+
+      return auction;
+    })
+    .filter((a): a is TraderaAuction => a !== null);
+
+  // Build response and cache it (including empty results) to avoid repeated API calls.
   const result: TraderaAuctionsResponse = {
     status: auctions.length > 0 ? "ok" : "no_results",
     cached: false,
