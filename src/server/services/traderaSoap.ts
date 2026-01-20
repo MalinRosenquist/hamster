@@ -1,3 +1,5 @@
+import { TraderaSearchItem } from "@/models/TraderaSearchItem";
+import { XMLParser } from "fast-xml-parser";
 import "server-only";
 
 const DEFAULT_CATEGORY_ID = 1804;
@@ -80,4 +82,49 @@ export async function traderaSearchRawXml(query: string): Promise<string> {
   }
 
   return text;
+}
+
+const xmlParser = new XMLParser({
+  ignoreAttributes: true,
+});
+
+// Helper so we can handle "one item" vs "many items" consistently.
+function toArray<T>(value: T | T[] | undefined | null): T[] {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+export async function TraderaSearchItems(
+  query: string
+): Promise<TraderaSearchItem[]> {
+  const xml = await traderaSearchRawXml(query);
+  const obj = xmlParser.parse(xml);
+
+  // SOAP often uses prefixed keys like "soap:Envelope"
+  const envelope = obj["soap:Envelope"] ?? obj["Envelope"];
+  const body = envelope?.["soap:Body"] ?? envelope?.["Body"];
+
+  console.log("TOP KEYS:", Object.keys(obj));
+  console.log("ENVELOPE KEYS:", envelope ? Object.keys(envelope) : null);
+
+  console.log("BODY KEYS:", body ? Object.keys(body) : null);
+
+  const searchResponse = body?.SearchResponse;
+  const searchResult = searchResponse?.SearchResult;
+  console.log("RAW Items value:", searchResult?.Items);
+
+  console.log(
+    "SEARCHRESPONSE KEYS:",
+    searchResponse ? Object.keys(searchResponse) : null
+  );
+  console.log("SEARCHRESULT KEYS:", searchResult ? Object.keys(searchResult) : null);
+
+  const rawItems = searchResult?.Items;
+
+  const maybeWrapped =
+    rawItems && typeof rawItems === "object" && "Item" in rawItems
+      ? (rawItems as { Item?: TraderaSearchItem | TraderaSearchItem[] }).Item
+      : (rawItems as TraderaSearchItem | TraderaSearchItem[] | undefined);
+
+  return toArray<TraderaSearchItem>(maybeWrapped);
 }
