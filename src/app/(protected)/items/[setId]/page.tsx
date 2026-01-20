@@ -2,6 +2,8 @@ import styles from "./ItemDetailPage.module.scss";
 import { getSetBySetNum } from "@/server/services/setService";
 import Image from "next/image";
 import DetailToggles from "@/components/ListToggle/DetailToggles/DetailToggles";
+import { getTraderaAuctionsBySetNum } from "@/server/services/traderaService";
+import { formatDurationSv } from "@/lib/time";
 
 type SetProps = {
   params: Promise<{ setId: string }>;
@@ -10,6 +12,7 @@ type SetProps = {
 export default async function ItemDetailPage({ params }: SetProps) {
   const { setId } = await params;
   const set = await getSetBySetNum(setId);
+  const tradera = await getTraderaAuctionsBySetNum(set.set_num);
 
   return (
     <div className={`container ${styles.container}`}>
@@ -64,6 +67,33 @@ export default async function ItemDetailPage({ params }: SetProps) {
 
       <section className={styles.traderaCard}>
         <h2>Tradera</h2>
+        {tradera.status === "rate_limited" ? (
+          <p>
+            {tradera.message ?? "Tradera-anrop är tillfälligt begränsade."}
+            {typeof tradera.retryAfterSeconds === "number" && (
+              <>
+                <br />
+                Prova igen om {formatDurationSv(tradera.retryAfterSeconds)}.
+              </>
+            )}
+          </p>
+        ) : tradera.auctions.length === 0 ? (
+          <p>Inga matchande auktioner för {set.set_num}.</p>
+        ) : (
+          <ul>
+            {tradera.auctions.map((a) => (
+              <li key={a.id}>
+                <a href={a.url} target="_blank" rel="noreferrer">
+                  {a.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>
+          {tradera.cached ? "Visas från cache" : "Hämtad live"} •{" "}
+          {new Date(tradera.fetchedAt).toLocaleString("sv-SE")}
+        </p>
       </section>
     </div>
   );
