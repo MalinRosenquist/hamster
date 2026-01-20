@@ -1,5 +1,4 @@
 import { getThemes, getThemeThumbnailCached } from "@/server/services/themeService";
-import styles from "./Categories.module.scss";
 import CategorySection from "./CategorySection";
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner/Spinner";
@@ -16,7 +15,7 @@ export default async function CategoriesPage() {
 
   return (
     <div className="container">
-      <section className={styles.top}>
+      <section>
         <h1>Utforska</h1>
       </section>
       <Suspense

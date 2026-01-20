@@ -13,7 +13,7 @@ export default async function ItemDetailPage({ params }: SetProps) {
 
   return (
     <div className={`container ${styles.container}`}>
-      <section className={styles.top}>
+      <section>
         <h1>{set.name}</h1>
       </section>
 

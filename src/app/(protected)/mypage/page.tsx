@@ -61,7 +61,7 @@ export default function MyPage() {
   return (
     <div className="container">
       <div className={styles.wrapper}>
-        <section className={styles.top}>
+        <section>
           <h1>Min Sida</h1>
         </section>
 
