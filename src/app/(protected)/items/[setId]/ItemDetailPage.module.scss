@@ -3,17 +3,41 @@
 
 .setCard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   max-width: 650px;
   padding: 1.2rem;
   background-color: v.$clr-bg-card;
   border-radius: v.$border;
   box-shadow: v.$shadow;
   margin-block: 4rem;
+  gap: 2rem;
+
+  @include m.up(md) {
+    grid-template-columns: 1fr 1fr;
+  }
 
   .imgContainer {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
+    overflow: hidden;
+
+    .image {
+      object-fit: contain;
+    }
+  }
+
+  .detailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @include m.up(md) {
+      padding: 0;
+    }
   }
 
   .details {

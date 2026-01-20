@@ -19,7 +19,13 @@ export default async function ItemDetailPage({ params }: SetProps) {
 
       <section className={styles.setCard}>
         <div className={styles.imgContainer}>
-          <Image src={set.set_img_url} alt="" width={200} height={200} />
+          <Image
+            src={set.set_img_url?.trim() ? set.set_img_url : "/icons/no_photo.svg"}
+            className={styles.image}
+            alt=""
+            width={200}
+            height={200}
+          />
         </div>
         <div className={styles.detailsContainer}>
           <dl className={styles.details}>
