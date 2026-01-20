@@ -36,10 +36,12 @@ export default function SavedSetList({ ids, emptyText, source }: SavedSetListPro
     const ac = new AbortController();
 
     async function load() {
+      // Normalize incoming ids: remove duplicates (Set) and remove invalid/empty values
       const safeIds = Array.from(new Set(ids)).filter(
         (id): id is string => typeof id === "string" && id.length > 0
       );
 
+      // If there are no ids, clear the list and cancel early.
       if (safeIds.length === 0) {
         setItems([]);
         return;
@@ -48,6 +50,8 @@ export default function SavedSetList({ ids, emptyText, source }: SavedSetListPro
       setLoading(true);
 
       try {
+        // Fetch item details for each id in parallel.
+        // Each failed request returns `null` to be filter it out afterwards.
         const results = await Promise.all(
           safeIds.map(async (id) => {
             const res = await fetch(
@@ -64,7 +68,8 @@ export default function SavedSetList({ ids, emptyText, source }: SavedSetListPro
           })
         );
 
-        setItems(results.filter((x): x is SetItem => x !== null));
+        // Remove failed fetches (nulls) and store only valid SetItem objects.
+        setItems(results.filter((item): item is SetItem => item !== null));
       } catch (err) {
         // When aborted, fetch throws AbortError - ignore it.
         if (err instanceof DOMException && err.name === "AbortError") return;
@@ -76,6 +81,7 @@ export default function SavedSetList({ ids, emptyText, source }: SavedSetListPro
 
     load();
 
+    // Cleanup: abort any ongoing requests from this effect run.
     return () => ac.abort();
   }, [ids]);
 
