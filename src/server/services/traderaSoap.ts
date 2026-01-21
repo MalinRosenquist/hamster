@@ -2,20 +2,25 @@ import { TraderaSearchItem } from "@/models/TraderaSearchItem";
 import { XMLParser } from "fast-xml-parser";
 import "server-only";
 
-const DEFAULT_CATEGORY_ID = 1804;
+const DEFAULT_CATEGORY_ID = 180405; // LEGO-set category ID on Tradera
+
+// Convert set number to its base form (e.g. "8009-1" -> "8009")
+function toBaseSetNumber(value: string): string {
+  const base = value.split("-")[0]?.trim();
+  return base || value.trim();
+}
 
 /**
  * Builds a SOAP envelope for Tradera SearchService.Search.
- * Note: The "sandbox" parameter is currently NOT used in the XML (kept for future use).
  */
 function buildSearchEnvelope(params: {
   appId: string;
   appKey: string;
   query: string;
-  sandbox: boolean;
   categoryId: number;
 }) {
   const { appId, appKey, query, categoryId } = params;
+  const searchWords = toBaseSetNumber(query);
 
   return `<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -31,12 +36,17 @@ function buildSearchEnvelope(params: {
 
   <soap:Body>
     <!-- Search request -->
-    <Search xmlns="http://api.tradera.com">
-      <query>${query}</query>
-      <categoryId>${categoryId}</categoryId>
-      <pageNumber>1</pageNumber>
-      <orderBy>Relevance</orderBy>
-    </Search>
+   <SearchAdvanced xmlns="http://api.tradera.com">
+  <request>
+    <SearchWords>${searchWords}</SearchWords>
+    <CategoryId>${categoryId}</CategoryId>
+    <SearchInDescription>true</SearchInDescription>
+    <ItemsPerPage>20</ItemsPerPage>
+    <PageNumber>1</PageNumber>
+    <OrderBy>Relevance</OrderBy>
+    <OnlyItemsWithThumbnail>true</OnlyItemsWithThumbnail>
+  </request>
+</SearchAdvanced>
   </soap:Body>
 </soap:Envelope>`;
 }
@@ -58,7 +68,6 @@ export async function traderaSearchRawXml(query: string): Promise<string> {
     appId,
     appKey,
     query,
-    sandbox: true,
     categoryId: DEFAULT_CATEGORY_ID,
   });
 
@@ -67,7 +76,7 @@ export async function traderaSearchRawXml(query: string): Promise<string> {
     method: "POST",
     headers: {
       "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://api.tradera.com/Search",
+      SOAPAction: "http://api.tradera.com/SearchAdvanced",
     },
     body: xml,
   });
@@ -94,7 +103,7 @@ function toArray<T>(value: T | T[] | undefined | null): T[] {
   return Array.isArray(value) ? value : [value];
 }
 
-export async function TraderaSearchItems(
+export async function traderaSearchItems(
   query: string
 ): Promise<TraderaSearchItem[]> {
   const xml = await traderaSearchRawXml(query);
@@ -104,20 +113,8 @@ export async function TraderaSearchItems(
   const envelope = obj["soap:Envelope"] ?? obj["Envelope"];
   const body = envelope?.["soap:Body"] ?? envelope?.["Body"];
 
-  console.log("TOP KEYS:", Object.keys(obj));
-  console.log("ENVELOPE KEYS:", envelope ? Object.keys(envelope) : null);
-
-  console.log("BODY KEYS:", body ? Object.keys(body) : null);
-
-  const searchResponse = body?.SearchResponse;
-  const searchResult = searchResponse?.SearchResult;
-  console.log("RAW Items value:", searchResult?.Items);
-
-  console.log(
-    "SEARCHRESPONSE KEYS:",
-    searchResponse ? Object.keys(searchResponse) : null
-  );
-  console.log("SEARCHRESULT KEYS:", searchResult ? Object.keys(searchResult) : null);
+  const searchResponse = body?.SearchAdvancedResponse;
+  const searchResult = searchResponse?.SearchAdvancedResult;
 
   const rawItems = searchResult?.Items;
 
