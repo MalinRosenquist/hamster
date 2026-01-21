@@ -4,9 +4,26 @@ import { REDIS_KEYS } from "../redis/keys";
 import { cacheGet, cacheSet } from "../redis/cache";
 import { canCallTraderaGlobal } from "../guards/traderaCallGuard";
 import { TraderaAuction } from "@/models/TraderaAuction";
-import { TraderaSearchItems } from "./traderaSoap";
+import { traderaSearchItems } from "./traderaSoap";
 
 const CACHE_TTL_SEC = 60 * 60 * 12;
+
+// Escape special characters for use in RegExp
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Check if the given title or description matches the set number.
+function matchSetNumber(title: string, setNum: string): boolean {
+  const full = setNum.trim();
+  const base = full.split("-")[0]?.trim() ?? full;
+
+  // Match either the full set number or the base number (e.g "8009-1" or "8009")
+  // Should not match pattern inside a longer number (e.g "8009" should not match "18009")
+  const fullPattern = new RegExp(`\\b${escapeRegExp(full)}\\b`, "i");
+  const basePattern = new RegExp(`\\b${escapeRegExp(base)}\\b`, "i");
+  return fullPattern.test(title) || basePattern.test(title);
+}
 
 export async function getTraderaAuctionsBySetNum(
   rawSetNum: string
@@ -62,13 +79,18 @@ export async function getTraderaAuctionsBySetNum(
     };
   }
 
-  const items = await TraderaSearchItems(setNum);
+  const items = await traderaSearchItems(setNum);
+
+  // Filter items to only those matching the set number in title or description
+  const filteredItems = items.filter((it) => {
+    const haystack = `${it.ShortDescription ?? ""} ${it.LongDescription ?? ""}`;
+    return matchSetNumber(haystack, setNum);
+  });
 
   // Map raw Tradera SearchService items (parsed from SOAP XML) into internal model.
   // Keep the fields the UI needs and normalize types (strings -> numbers, optional fields -> undefined).
   // Skip invalid entries (missing id/title/url) to avoid rendering broken links.
-
-  const auctions: TraderaAuction[] = items
+  const auctions: TraderaAuction[] = filteredItems
     .map((it) => {
       const id = it.Id != null ? String(it.Id) : "";
       const title = it.ShortDescription ?? "";
