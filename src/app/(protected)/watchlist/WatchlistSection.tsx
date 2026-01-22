@@ -11,7 +11,7 @@ export default function WatchlistSection() {
     <SavedSetList
       ids={watchlistIds}
       emptyText="Du bevakar inget just nu."
-      source="collection"
+      source="watchlist"
     />
   );
 }

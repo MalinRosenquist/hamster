@@ -34,7 +34,7 @@ export default function Header() {
 
       if (from === "categories" && href === "/categories") return true;
       if (from === "collection" && href === "/collection") return true;
-      if (from === "wishlist" && href === "/wishlist") return true;
+      if (from === "watchlist" && href === "/watchlist") return true;
     }
 
     return false;
