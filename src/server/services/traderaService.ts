@@ -5,6 +5,7 @@ import { cacheGet, cacheSet } from "../redis/cache";
 import { canCallTraderaGlobal } from "../guards/traderaCallGuard";
 import { TraderaAuction } from "@/models/TraderaAuction";
 import { traderaSearchItems } from "./traderaSoap";
+import { TraderaSearchItem } from "@/models/TraderaSearchItem";
 
 const CACHE_TTL_SEC = 60 * 60 * 12;
 
@@ -23,6 +24,36 @@ function matchSetNumber(title: string, setNum: string): boolean {
   const fullPattern = new RegExp(`\\b${escapeRegExp(full)}\\b`, "i");
   const basePattern = new RegExp(`\\b${escapeRegExp(base)}\\b`, "i");
   return fullPattern.test(title) || basePattern.test(title);
+}
+
+/**
+ * Picks the best available image URL for an item.
+ * Tradera provides multiple formats; we prefer "normal" (largest), then "gallery"/"medium",
+ * then "thumb", and finally fall back to ThumbnailLink.
+ */
+function pickBestImageUrl(item: TraderaSearchItem): string | undefined {
+  const links = item.ImageLinks?.ImageLink;
+  const arr = Array.isArray(links) ? links : links ? [links] : [];
+
+  // 1) Best: highest resolution
+  const normal = arr.find((l) => l.Format === "normal")?.Url;
+  if (normal) return normal;
+
+  // 2) Next best
+  const galleryOrMedium = arr.find(
+    (l) => l.Format === "gallery" || l.Format === "medium"
+  )?.Url;
+  if (galleryOrMedium) return galleryOrMedium;
+
+  // 3) Low-res fallback
+  const thumb = arr.find((l) => l.Format === "thumb")?.Url;
+
+  // 4) Final fallback from Tradera
+  const fallback = thumb ?? item.ThumbnailLink;
+  if (!fallback) return undefined;
+
+  // If fallback is a thumbs-ish URL, try to upgrade it to the larger "images" version.
+  return item.ThumbnailLink;
 }
 
 export async function getTraderaAuctionsBySetNum(
@@ -113,8 +144,10 @@ export async function getTraderaAuctionsBySetNum(
       };
 
       // Only add thumbnailUrl if we actually have one
-      if (it.ThumbnailLink) {
-        auction.thumbnailUrl = String(it.ThumbnailLink);
+      const imageUrl = pickBestImageUrl(it);
+
+      if (imageUrl) {
+        auction.thumbnailUrl = imageUrl;
       }
 
       return auction;
