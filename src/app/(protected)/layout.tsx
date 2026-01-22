@@ -1,11 +1,11 @@
 "use client";
 
-import { hasStoredUser } from "@/lib/authLocalStorage";
 import styles from "./Layout.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
 import SetListsProvider from "@/providers/SetListsProvider";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import { UserContext } from "@/contexts/UserContext";
 
 export default function ProtectedLayout({
   children,
@@ -13,14 +13,15 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-
-  const [hasUser] = useState<boolean>(() => hasStoredUser());
+  const { userName } = useContext(UserContext);
 
   useEffect(() => {
-    if (!hasUser) router.replace("/login");
-  }, [hasUser, router]);
+    if (!userName) {
+      router.replace("/login");
+    }
+  }, [userName, router]);
 
-  if (!hasUser) {
+  if (!userName) {
     return (
       <div className={styles.redirect} role="status" aria-live="polite">
         <p>Omdirigerar...</p>
