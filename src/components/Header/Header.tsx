@@ -63,7 +63,7 @@ export default function Header() {
           className={`${styles.logoName} logoName`}
           onClick={(e) => handleNavClick(e, true)}
         >
-          Hamster
+          <span>Hamster</span>
         </Link>
         <nav className={styles.nav} aria-label="Huvudnavigering">
           {/* DESKTOP */}

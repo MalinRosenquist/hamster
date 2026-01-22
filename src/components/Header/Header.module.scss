@@ -6,7 +6,7 @@
   justify-content: center;
   position: relative;
   background-color: v.$clr-bg-frame;
-  padding: 1rem;
+  padding: 1rem 0.2rem;
 
   @include m.up(lg) {
     padding: 2rem;
@@ -21,20 +21,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: nowrap;
   gap: clamp(0.5rem, 3vw, 2rem);
   min-width: 0;
+
+  @include m.up(md) {
+    flex-wrap: wrap;
+  }
 }
 
 .logoName {
   text-align: center;
   text-transform: uppercase;
-  color: inherit;
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @include m.up(md) {
+    justify-content: center;
+  }
 }
 
 .navLink {
@@ -47,7 +55,7 @@
     position: absolute;
     width: 0;
     height: 4px;
-    bottom: 0;
+    bottom: -5;
     left: 50%;
     background-color: v.$clr-accent;
     transition: all 0.4s;
@@ -56,6 +64,7 @@
   &:hover::before {
     width: 100%;
     left: 0;
+    height: 2px;
   }
 }
 
@@ -71,7 +80,6 @@
 //---- Desktop
 .desktopList {
   display: none;
-
   list-style: none;
   margin: 0;
   padding: 0;
