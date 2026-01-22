@@ -4,6 +4,7 @@ import Image from "next/image";
 import DetailToggles from "@/components/ListToggle/DetailToggles/DetailToggles";
 import { getTraderaAuctionsBySetNum } from "@/server/services/traderaService";
 import { formatDurationSv } from "@/lib/time";
+import TraderaList from "@/components/TraderaList/TraderaList";
 
 type SetProps = {
   params: Promise<{ setId: string }>;
@@ -13,6 +14,7 @@ export default async function ItemDetailPage({ params }: SetProps) {
   const { setId } = await params;
   const set = await getSetBySetNum(setId);
   const tradera = await getTraderaAuctionsBySetNum(set.set_num);
+  const nowIso = new Date().toISOString();
 
   return (
     <div className={`container ${styles.container}`}>
@@ -65,35 +67,37 @@ export default async function ItemDetailPage({ params }: SetProps) {
         </div>
       </section>
 
-      <section className={styles.traderaCard}>
-        <h2>Tradera</h2>
+      {/* Tradera */}
+      <section className={styles.traderaListings} aria-labelledby="tradera-heading">
+        <h2 id="tradera-heading" className={styles.traderaLogo}>
+          <span className="srOnly">Tradera</span>
+          <Image
+            src="/images/tradera_logo_black.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            className={styles.logoImg}
+          />
+        </h2>
+
         {tradera.status === "rate_limited" ? (
-          <p>
+          <p className={styles.message}>
             {tradera.message ?? "Tradera-anrop är tillfälligt begränsade."}
             {typeof tradera.retryAfterSeconds === "number" && (
-              <>
-                <br />
-                Prova igen om {formatDurationSv(tradera.retryAfterSeconds)}.
-              </>
+              <>Prova igen om {formatDurationSv(tradera.retryAfterSeconds)}.</>
             )}
           </p>
         ) : tradera.auctions.length === 0 ? (
-          <p>Inga matchande auktioner för {set.set_num}.</p>
+          <p className={styles.message}>
+            Inga matchande auktioner för {set.set_num}.
+          </p>
         ) : (
-          <ul>
-            {tradera.auctions.map((a) => (
-              <li key={a.id}>
-                <a href={a.url} target="_blank" rel="noreferrer">
-                  {a.title}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <TraderaList auctions={tradera.auctions} nowIso={nowIso} />
         )}
-        <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>
-          {tradera.cached ? "Visas från cache" : "Hämtad live"} •{" "}
+        <small className={styles.muted}>
+          {tradera.cached ? "Visas från cache" : "Hämtad live"}{" "}
           {new Date(tradera.fetchedAt).toLocaleString("sv-SE")}
-        </p>
+        </small>
       </section>
     </div>
   );
