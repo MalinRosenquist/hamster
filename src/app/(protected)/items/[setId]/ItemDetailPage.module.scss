@@ -1,6 +1,12 @@
 @use "../../../../styles/variables" as v;
 @use "../../../../styles/mixins" as m;
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
 .setCard {
   display: grid;
   grid-template-columns: 1fr;
@@ -11,6 +17,7 @@
   box-shadow: v.$shadow;
   margin-block: 4rem;
   gap: 2rem;
+  margin: auto;
 
   @include m.up(md) {
     grid-template-columns: 1fr 1fr;
@@ -61,12 +68,20 @@
   }
 }
 
-//------ TRADERA
-.traderaCard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 1.2rem;
-  background-color: v.$clr-bg-card;
-  border-radius: v.$border;
-  box-shadow: v.$shadow;
+.traderaLogo {
+  position: relative;
+  width: 140px;
+  height: 40px;
+}
+
+.logoImg {
+  object-fit: contain;
+}
+
+.message {
+  margin: 0.5rem 0;
+}
+
+.muted {
+  opacity: 0.8;
 }

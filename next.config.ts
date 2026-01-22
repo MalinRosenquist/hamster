@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "cdn.rebrickable.com",
         pathname: "/media/**",
       },
+      {
+        protocol: "https",
+        hostname: "img.tradera.net",
+        pathname: "/**",
+      },
     ],
   },
 };
