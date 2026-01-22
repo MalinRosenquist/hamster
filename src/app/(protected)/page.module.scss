@@ -67,8 +67,8 @@
     }
 
     button {
-      display: flex;
-      align-self: end;
+      align-self: flex-end;
+      margin-top: auto;
     }
   }
 }
