@@ -1,18 +1,18 @@
 import "@/styles/globals.scss";
-import { Karma, Martel_Sans } from "next/font/google";
+import { Cabin_Condensed, Manrope } from "next/font/google";
 import UserProvider from "@/providers/UserProvider";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { Suspense } from "react";
 
-const karma = Karma({
+const karma = Cabin_Condensed({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["600", "700"],
   variable: "--font-brand",
-  fallback: ["Georgia", "Times New Roman", "serif"],
+  fallback: ["system-ui", "-apple-system", "Roboto", "sans-serif"],
 });
 
-const martelSans = Martel_Sans({
+const martelSans = Manrope({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-body",
