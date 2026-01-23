@@ -1,11 +1,9 @@
 "use client";
 
-import styles from "./Layout.module.scss";
-import Spinner from "@/components/Spinner/Spinner";
 import SetListsProvider from "@/providers/SetListsProvider";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
-import { UserContext } from "@/contexts/UserContext";
+import { useLayoutEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProtectedLayout({
   children,
@@ -13,26 +11,15 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { userName } = useContext(UserContext);
+  const { isAuthed } = useAuth();
 
-  useEffect(() => {
-    if (!userName) {
+  useLayoutEffect(() => {
+    if (!isAuthed) {
       router.replace("/login");
     }
-  }, [userName, router]);
+  }, [isAuthed, router]);
 
-  if (!userName) {
-    return (
-      <div className={styles.redirect} role="status" aria-live="polite">
-        <p>Omdirigerar...</p>
-        <Spinner size="default" />
-      </div>
-    );
-  }
+  if (!isAuthed) return null;
 
-  return (
-    <SetListsProvider>
-      <main>{children}</main>
-    </SetListsProvider>
-  );
+  return <SetListsProvider>{children}</SetListsProvider>;
 }

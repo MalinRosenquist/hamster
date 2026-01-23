@@ -2,30 +2,35 @@
 
 import Button from "@/components/Buttons/Button/Button";
 import styles from "./MyPage.module.scss";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/contexts/UserContext";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { UserActionTypes } from "@/reducers/UserReducer";
 import ClearModal from "@/components/Modal/ClearModal";
 import { SetListsContext } from "@/contexts/SetListsContext";
 import Link from "next/link";
 
+import { useAuth } from "@/hooks/useAuth";
+import { authClearUserName, authSetUserName } from "@/lib/storage/authStore";
+
 export default function MyPage() {
   const router = useRouter();
-  const { userName, dispatch } = useContext(UserContext);
+  const { userName, isAuthed } = useAuth();
+
   const [nameInput, setNameInput] = useState("");
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const trimmed = nameInput.trim();
   const USERNAME_RE = /^[A-Za-zÅÄÖåäö]{3,20}$/;
   const isValid = USERNAME_RE.test(trimmed);
-  const isDisabled = !isValid || trimmed === userName;
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isDisabled = !isValid || trimmed === (userName ?? "");
+
   const { counts } = useContext(SetListsContext);
 
-  // Send to login if userName does not exist
+  // Send to login if not authed
   useEffect(() => {
-    if (!userName) router.replace("/login");
-  }, [userName, router]);
+    if (!isAuthed) router.replace("/login");
+  }, [isAuthed, router]);
 
   // Set time on save message
   useEffect(() => {
@@ -46,17 +51,22 @@ export default function MyPage() {
       return;
     }
 
-    dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
+    authSetUserName(trimmed);
 
     setNameInput("");
     setSaveMessage("Sparat!");
   }
 
   function handleConfirmClear() {
-    dispatch({ type: UserActionTypes.CLEAR_DATA });
+    authClearUserName();
     setIsModalOpen(false);
     setNameInput("");
+    setSaveMessage(null);
+    router.replace("/login");
   }
+
+  // Prevent any content from flashing while redirecting
+  if (!isAuthed) return null;
 
   return (
     <div className="container">
@@ -101,6 +111,7 @@ export default function MyPage() {
             <form className={styles.form} onSubmit={handleSave}>
               <label htmlFor="newName">Välj ett nytt namn</label>
               <small id="newNameHelp">Namnet behöver bestå av 3-20 bokstäver</small>
+
               <div className={styles.row}>
                 <input
                   id="newName"
@@ -113,9 +124,11 @@ export default function MyPage() {
                     setSaveMessage(null);
                   }}
                 />
+
                 <Button variant="secondary" type="submit" disabled={isDisabled}>
                   Spara
                 </Button>
+
                 {saveMessage && (
                   <p role="status" aria-live="polite">
                     {saveMessage}
@@ -146,7 +159,7 @@ export default function MyPage() {
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onConfirm={handleConfirmClear}
-        ></ClearModal>
+        />
       </div>
     </div>
   );

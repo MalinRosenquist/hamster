@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./Header.module.scss";
-import { hasStoredUser } from "@/lib/authLocalStorage";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 const links = [
   { href: "/", label: "Hem", protected: true },
@@ -20,15 +20,19 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { isAuthed } = useAuth();
 
   function isActive(href: string) {
+    // Don't highlight anything unless authenticated (prevents "active" flash)
+    if (!isAuthed) return false;
+
     // "/" must match exactly, otherwise it would be active on every route
     if (href === "/") return pathname === "/";
 
     // Keep parent section in nav active for nested routes (e.g. /categories/123 -> /categories)
     if (pathname.startsWith(href)) return true;
 
-    // Use the "from" query param to decide which top level nav item should stay highlited
+    // Use the "from" query param to decide which top level nav item should stay highlighted
     if (pathname.startsWith("/items/")) {
       const from = searchParams.get("from");
 
@@ -44,12 +48,11 @@ export default function Header() {
     e: React.MouseEvent<HTMLAnchorElement>,
     isProtected: boolean
   ) {
-    //Close mobile menu when navigating
+    // Close mobile menu when navigating
     setOpen(false);
 
-    // Client-side route guard: if no user is stored,
-    // prevent navigation and redirect to login page
-    if (isProtected && !hasStoredUser()) {
+    // Client-side route guard: if not authed, prevent navigation and redirect to login page
+    if (isProtected && !isAuthed) {
       e.preventDefault();
       router.replace("/login");
     }
@@ -65,6 +68,7 @@ export default function Header() {
         >
           <span>Hamster</span>
         </Link>
+
         <nav className={styles.nav} aria-label="Huvudnavigering">
           {/* DESKTOP */}
           <ul className={styles.desktopList}>
@@ -75,7 +79,9 @@ export default function Header() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`navLink ${styles.navLink} ${active ? styles.isActive : ""}`}
+                    className={`navLink ${styles.navLink} ${
+                      active ? styles.isActive : ""
+                    }`}
                     onClick={(e) => handleNavClick(e, link.protected)}
                   >
                     {link.label}
@@ -107,7 +113,7 @@ export default function Header() {
             className={styles.backdrop}
             aria-label="Stäng meny"
             onClick={() => setOpen(false)}
-          ></button>
+          />
 
           <div
             id="mobileMenu"
@@ -123,7 +129,9 @@ export default function Header() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className={`navLink ${styles.navLink} ${active ? styles.isActive : ""}`}
+                        className={`navLink ${styles.navLink} ${
+                          active ? styles.isActive : ""
+                        }`}
                         onClick={(e) => handleNavClick(e, link.protected)}
                       >
                         {link.label}
