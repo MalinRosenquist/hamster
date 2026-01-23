@@ -1,7 +1,7 @@
 "use client";
 
 import { SetListsContext } from "@/contexts/SetListsContext";
-import { LS_SET_LISTS } from "@/lib/storageKeys";
+import { LS_SET_LISTS } from "@/lib/storage/storageKeys";
 import SetListsReducer from "@/reducers/SetListsReducer";
 import { useEffect, useMemo, useReducer } from "react";
 
