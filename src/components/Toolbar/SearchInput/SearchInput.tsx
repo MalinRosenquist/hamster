@@ -28,6 +28,7 @@ export default function SearchBar({
           }}
         >
           <input
+            data-testid="search-input"
             className={styles.searchInput}
             type="search"
             placeholder={placeholder}
