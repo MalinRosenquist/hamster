@@ -61,6 +61,7 @@ export default function LoginPage() {
             <label htmlFor="userName">Smeknamn</label>
             <small id="userNameHelp">Välj ett smeknamn (3-20 bokstäver)</small>
             <input
+              data-testid="login-username"
               id="userName"
               name="username"
               type="text"
@@ -73,7 +74,12 @@ export default function LoginPage() {
             />
           </div>
 
-          <Button variant="primary" type="submit" disabled={isDisabled}>
+          <Button
+            data-testid="login-submit"
+            variant="primary"
+            type="submit"
+            disabled={isDisabled}
+          >
             {isPending ? (
               <>
                 <Spinner size="small"></Spinner>
