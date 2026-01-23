@@ -1,6 +1,5 @@
 import "@/styles/globals.scss";
 import { Cabin_Condensed, Manrope } from "next/font/google";
-import UserProvider from "@/providers/UserProvider";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { Suspense } from "react";
@@ -26,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Suspense fallback={null}>
           <Header />
         </Suspense>
-        <UserProvider>{children}</UserProvider>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

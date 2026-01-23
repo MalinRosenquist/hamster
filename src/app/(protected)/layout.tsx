@@ -21,9 +21,5 @@ export default function ProtectedLayout({
 
   if (!isAuthed) return null;
 
-  return (
-    <SetListsProvider>
-      <main>{children}</main>
-    </SetListsProvider>
-  );
+  return <SetListsProvider>{children}</SetListsProvider>;
 }
