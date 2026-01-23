@@ -3,40 +3,35 @@
 import Button from "@/components/Buttons/Button/Button";
 import styles from "./Login.module.scss";
 import Spinner from "@/components/Spinner/Spinner";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserContext } from "@/contexts/UserContext";
-import { UserActionTypes } from "@/reducers/UserReducer";
-import { getStoredUserName } from "@/lib/authLocalStorage";
+
+import { useAuth } from "@/hooks/useAuth";
+import { authSetUserName } from "@/lib/storage/authStore";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
   const [nameInput, setNameInput] = useState("");
-  const { dispatch } = useContext(UserContext);
   const trimmed = nameInput.trim();
+
   const USERNAME_RE = /^[A-Za-zÅÄÖåäö]{3,20}$/;
   const isValid = USERNAME_RE.test(trimmed);
   const isDisabled = isPending || !isValid;
+
   const router = useRouter();
+  const { isAuthed } = useAuth();
 
-  // If user already exists in localStorage, send to "/".
   useEffect(() => {
-    const existing = getStoredUserName();
-    if (existing) router.replace("/");
-  }, [router]);
+    if (isAuthed) router.replace("/");
+  }, [isAuthed, router]);
 
-  // Send user to "/" when entered userName
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    if (!isValid) {
-      return;
-    }
+    if (!isValid) return;
 
     setIsPending(true);
-
     try {
-      dispatch({ type: UserActionTypes.SET_NAME, payload: trimmed });
+      authSetUserName(trimmed);
       router.replace("/");
     } finally {
       setIsPending(false);
@@ -61,6 +56,7 @@ export default function LoginPage() {
             <label htmlFor="userName">Smeknamn</label>
             <small id="userNameHelp">Välj ett smeknamn (3-20 bokstäver)</small>
             <input
+              data-testid="login-username"
               id="userName"
               name="username"
               type="text"
@@ -73,10 +69,15 @@ export default function LoginPage() {
             />
           </div>
 
-          <Button variant="primary" type="submit" disabled={isDisabled}>
+          <Button
+            data-testid="login-submit"
+            variant="primary"
+            type="submit"
+            disabled={isDisabled}
+          >
             {isPending ? (
               <>
-                <Spinner size="small"></Spinner>
+                <Spinner size="small" />
                 <span>Laddar...</span>
               </>
             ) : (
@@ -84,6 +85,7 @@ export default function LoginPage() {
             )}
           </Button>
         </form>
+
         <small className={styles.muted}>
           Du behöver inget konto. Din data sparas bara i den här webbläsaren.
         </small>
