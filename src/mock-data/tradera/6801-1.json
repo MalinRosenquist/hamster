@@ -1,0 +1,35 @@
+{
+  "status": "ok",
+  "cached": true,
+  "fetchedAt": "2026-01-26T10:00:00.000Z",
+  "setNum": "6801-1",
+  "auctions": [
+    {
+      "id": "mock-6801-1-1",
+      "title": "LEGO 6801-1 – Mock Tradera Auction (Bud)",
+      "url": "https://www.tradera.com/item/mock-6801-1-1",
+      "thumbnailUrl": "/icons/no_photo.svg",
+      "endDate": "2026-02-02T18:00:00.000Z",
+      "maxBid": 120,
+      "price": 120
+    },
+    {
+      "id": "mock-6801-1-2",
+      "title": "LEGO 6801-1 – Mock Tradera Auction (Köp nu)",
+      "url": "https://www.tradera.com/item/mock-6801-1-2",
+      "thumbnailUrl": "/icons/no_photo.svg",
+      "endDate": "2026-02-03T19:15:00.000Z",
+      "buyItNowPrice": 299,
+      "price": 299
+    },
+    {
+      "id": "mock-6801-1-3",
+      "title": "LEGO 6801-1 – Mock Tradera Auction (Bud, billig)",
+      "url": "https://www.tradera.com/item/mock-6801-1-3",
+      "thumbnailUrl": "/icons/no_photo.svg",
+      "endDate": "2026-02-01T09:30:00.000Z",
+      "maxBid": 75,
+      "price": 75
+    }
+  ]
+}

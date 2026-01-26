@@ -1,0 +1,37 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "set_num": "5223-1",
+      "name": "Mock Castle Cinderella",
+      "year": 1991,
+      "theme_id": 1,
+      "num_parts": 120,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/5223-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "1972-1",
+      "name": "Mock Castle Snow White",
+      "year": 1990,
+      "theme_id": 1,
+      "num_parts": 160,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/1972-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "5219-1",
+      "name": "Mock Castle Sleeping Beauty",
+      "year": 1992,
+      "theme_id": 1,
+      "num_parts": 210,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/5219-1/",
+      "last_modified_dt": "2020-01-01"
+    }
+  ]
+}

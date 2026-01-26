@@ -1,0 +1,37 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "set_num": "8048-1",
+      "name": "Mock Technic Buggy",
+      "year": 2010,
+      "theme_id": 3,
+      "num_parts": 667,
+      "set_img_url": "/mock/sets/8048-1.png",
+      "set_url": "https://rebrickable.com/sets/8048-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "42000-1",
+      "name": "Mock Technic Grand Prix Racer",
+      "year": 2013,
+      "theme_id": 3,
+      "num_parts": 1141,
+      "set_img_url": "/mock/sets/42000-1.png",
+      "set_url": "https://rebrickable.com/sets/42000-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "42033-1",
+      "name": "Mock Technic Record Breaker",
+      "year": 2015,
+      "theme_id": 3,
+      "num_parts": 125,
+      "set_img_url": "/mock/sets/42033-1.png",
+      "set_url": "https://rebrickable.com/sets/42033-1/",
+      "last_modified_dt": "2020-01-01"
+    }
+  ]
+}
