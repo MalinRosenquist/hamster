@@ -1,16 +1,23 @@
 describe("Explore and find sets", () => {
-  it("can search from /categories -> goes to /search -> open a set detail page", () => {
+  it("goes to categories via nav, searches -> redirects to /search -> open a set detail page", () => {
     const username = "ExplorerTest";
 
     cy.visitLoggedIn("/", username);
 
+    cy.location("pathname").should("eq", "/");
+
+    // Navigarte to Categories
+    cy.get('[data-testid="nav-categories"]').click();
     cy.location("pathname").should("eq", "/categories");
 
-    cy.get('[data-testid="search-input"]').type("falcon{enter}");
-
+    // Search for "falcon"
+    cy.get('[data-testid="search-input"]')
+      .should("be.visible")
+      .type("falcon{enter}");
     cy.location("pathname").should("include", "/search");
 
-    cy.get('[data-testid="set-card"]').first().click();
+    // Open first set in results
+    cy.get('[data-testid^="set-card-"]').first().click();
 
     cy.location("pathname").should("not.eq", "/search");
   });
