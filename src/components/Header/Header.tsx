@@ -78,6 +78,7 @@ export default function Header() {
               return (
                 <li key={link.href}>
                   <Link
+                    data-testid={`nav-${link.href.replace("/", "") || "home"}`}
                     href={link.href}
                     className={`navLink ${styles.navLink} ${
                       active ? styles.isActive : ""

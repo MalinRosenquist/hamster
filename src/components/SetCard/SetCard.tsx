@@ -26,7 +26,7 @@ export default function SetCard({ item, source, categoryId }: SetCardProps) {
   return (
     <>
       <Link
-        data-testid="set-card"
+        data-testid={`set-card-${item.set_num}`}
         className={styles.card}
         prefetch={false}
         href={href}

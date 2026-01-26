@@ -16,6 +16,7 @@ export default function CardToggles({ setNum }: CardTogglesProps) {
   return (
     <div className={styles.cardToggles}>
       <button
+        data-testid={`toggle-watchlist-${setNum}`}
         type="button"
         className={`${styles.iconButton} ${isWatching ? styles.iconActive : ""}`}
         aria-label={isWatching ? "Ta bort bevakning" : "Lägg till i bevakning"}
@@ -31,6 +32,7 @@ export default function CardToggles({ setNum }: CardTogglesProps) {
       </button>
 
       <button
+        data-testid={`toggle-collection-${setNum}`}
         type="button"
         className={`${styles.iconButton} ${isCollected ? styles.iconActive : ""}`}
         aria-label={isCollected ? "Ta bort från samling" : "Lägg till i samling"}
