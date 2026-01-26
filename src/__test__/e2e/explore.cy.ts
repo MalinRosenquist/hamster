@@ -1,15 +1,8 @@
-import { LS_USER_NAME } from "../../../cypress/support/storageKeys";
-
 describe("Explore and find sets", () => {
   it("can search from /categories -> goes to /search -> open a set detail page", () => {
     const username = "ExplorerTest";
 
-    cy.visit("/categories", {
-      onBeforeLoad(win) {
-        win.localStorage.clear();
-        win.localStorage.setItem(LS_USER_NAME, username);
-      },
-    });
+    cy.visitLoggedIn("/", username);
 
     cy.location("pathname").should("eq", "/categories");
 

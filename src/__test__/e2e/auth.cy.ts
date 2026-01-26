@@ -4,8 +4,6 @@ describe("first visit", () => {
   it("first visit directs to /login, enteres a username, redirects to '/' and stores username", () => {
     const username = "FirstTest";
 
-    cy.clearLocalStorage();
-
     cy.visit("/", {
       onBeforeLoad(win) {
         win.localStorage.clear();
@@ -19,8 +17,6 @@ describe("first visit", () => {
     cy.get('button[data-testid="login-submit"]').click();
 
     cy.location("pathname").should("eq", "/");
-
-    cy.location("pathname", { timeout: 10000 }).should("eq", "/");
 
     cy.window()
       .its("localStorage")
