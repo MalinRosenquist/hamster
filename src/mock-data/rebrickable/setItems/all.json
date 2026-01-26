@@ -1,0 +1,97 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "set_num": "1972-1",
+      "name": "Mock Castle Set B",
+      "year": 1990,
+      "theme_id": 1,
+      "num_parts": 160,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/1972-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "5219-1",
+      "name": "Mock Castle Set C",
+      "year": 1992,
+      "theme_id": 1,
+      "num_parts": 210,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/5219-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "5223-1",
+      "name": "Mock Castle Set A",
+      "year": 1991,
+      "theme_id": 1,
+      "num_parts": 120,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/5223-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "6801-1",
+      "name": "Mock Space Moon Buggy",
+      "year": 1981,
+      "theme_id": 2,
+      "num_parts": 92,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/6801-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "6841-1",
+      "name": "Mock Space Mineral Detector",
+      "year": 1980,
+      "theme_id": 2,
+      "num_parts": 150,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/6841-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "6929-1",
+      "name": "Mock Space Star Fleet Voyager",
+      "year": 1981,
+      "theme_id": 2,
+      "num_parts": 241,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/6929-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "8048-1",
+      "name": "Mock Technic Buggy",
+      "year": 2010,
+      "theme_id": 3,
+      "num_parts": 667,
+      "set_img_url": "/mock/sets/8048-1.png",
+      "set_url": "https://rebrickable.com/sets/8048-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "42000-1",
+      "name": "Mock Technic Grand Prix Racer",
+      "year": 2013,
+      "theme_id": 3,
+      "num_parts": 1141,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/42000-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "42033-1",
+      "name": "Mock Technic Record Breaker",
+      "year": 2015,
+      "theme_id": 3,
+      "num_parts": 125,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/42033-1/",
+      "last_modified_dt": "2020-01-01"
+    }
+  ]
+}

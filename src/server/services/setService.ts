@@ -44,6 +44,17 @@ export const getSetItems = async (
       return mock;
     }
 
+    if (search) {
+      const mock = await readMockJson<SetListResponse>(
+        `rebrickable/setItems/all.json`
+      );
+
+      const q = search.toLowerCase();
+      const filtered = mock.results.filter((s) => s.name.toLowerCase().includes(q));
+
+      return { ...mock, count: filtered.length, results: filtered };
+    }
+
     return { count: 0, next: null, previous: null, results: [] };
   }
 
