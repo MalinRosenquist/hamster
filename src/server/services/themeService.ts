@@ -4,6 +4,7 @@ import { get } from "./serviceBase";
 import { Theme } from "@/models/Theme";
 import { getSetItems } from "./setService";
 import { unstable_cache } from "next/cache";
+import { mockDataEnabled, readMockJson } from "./readMockJson";
 
 const BASE_URL = "https://rebrickable.com/api/v3/lego/themes/";
 
@@ -12,6 +13,19 @@ export const getThemes = async (
   pageSize = 10,
   ordering = ""
 ): Promise<ThemesResponse> => {
+  if (mockDataEnabled()) {
+    const mock = await readMockJson<{ count: number; results: Theme[] }>(
+      "rebrickable/themes/mockThemes.json"
+    );
+
+    return {
+      count: mock.count,
+      next: null,
+      previous: null,
+      results: mock.results, // innehåller thumb om du har det i json
+    };
+  }
+
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
 
@@ -27,6 +41,7 @@ export const getThemes = async (
 
 // Get themethumbnail by fetching 1 set from the theme and using its set_img_url
 export const getThemeThumbnail = async (themeId: number): Promise<string | null> => {
+  if (mockDataEnabled()) return null;
   const sets = await getSetItems(1, 1, themeId, undefined, "-year");
   return sets.results[0]?.set_img_url ?? null;
 };
@@ -40,6 +55,15 @@ export const getThemeThumbnailCached = (themeId: number) =>
   )();
 
 export const getThemeById = async (id: number): Promise<Theme> => {
+  if (mockDataEnabled()) {
+    const mock = await readMockJson<{ count: number; results: Theme[] }>(
+      "rebrickable/themes/mockThemes.json"
+    );
+    const found = mock.results.find((t) => t.id === id);
+    if (!found) throw new Error(`Theme ${id} not found in mockThemes.json`);
+    return found;
+  }
+
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
 

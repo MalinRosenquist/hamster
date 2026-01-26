@@ -6,6 +6,7 @@ import { canCallTraderaGlobal } from "../guards/traderaCallGuard";
 import { TraderaAuction } from "@/models/TraderaAuction";
 import { traderaSearchItems } from "./traderaSoap";
 import { TraderaSearchItem } from "@/models/TraderaSearchItem";
+import { mockDataEnabled, readMockJson } from "./readMockJson";
 
 const CACHE_TTL_SEC = 60 * 60 * 12;
 
@@ -61,6 +62,32 @@ export async function getTraderaAuctionsBySetNum(
 ): Promise<TraderaAuctionsResponse> {
   const setNum = rawSetNum.trim();
   const fetchedAt = new Date().toISOString();
+  console.log("[TRADERA]", { mock: mockDataEnabled(), setNum });
+
+  if (mockDataEnabled()) {
+    if (!setNum) {
+      return {
+        status: "no_results",
+        cached: false,
+        fetchedAt,
+        setNum,
+        auctions: [],
+      };
+    }
+
+    try {
+      return await readMockJson<TraderaAuctionsResponse>(`tradera/${setNum}.json`);
+    } catch {
+      return {
+        status: "no_results",
+        cached: false,
+        fetchedAt,
+        setNum,
+        auctions: [],
+        message: `Missing mock file for Tradera: ${setNum}`,
+      };
+    }
+  }
 
   // Empty input should not trigger cache reads, rate limiting, or external calls.
   if (!setNum) {

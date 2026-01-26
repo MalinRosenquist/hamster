@@ -2,6 +2,7 @@ import "server-only";
 import { SetListResponse } from "@/models/RebrickableResponses";
 import { get } from "./serviceBase";
 import { SetInfo } from "@/models/SetInfo";
+import { mockDataEnabled, readMockJson } from "./readMockJson";
 
 const BASE_URL = "https://rebrickable.com/api/v3/lego/sets/";
 
@@ -25,6 +26,27 @@ export const getSetItems = async (
   minParts?: number,
   maxParts?: number
 ): Promise<SetListResponse> => {
+  if (mockDataEnabled()) {
+    if (typeof themeId === "number") {
+      const mock = await readMockJson<SetListResponse>(
+        `rebrickable/setItems/theme-${themeId}.json`
+      );
+
+      // (valfritt men bra) stöd för sök i mockläge:
+      if (search) {
+        const q = search.toLowerCase();
+        const filtered = mock.results.filter((s) =>
+          s.name.toLowerCase().includes(q)
+        );
+        return { ...mock, count: filtered.length, results: filtered };
+      }
+
+      return mock;
+    }
+
+    return { count: 0, next: null, previous: null, results: [] };
+  }
+
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
 
@@ -47,6 +69,10 @@ export const getSetItems = async (
 };
 
 export const getSetBySetNum = async (setNum: string): Promise<SetInfo> => {
+  if (mockDataEnabled()) {
+    return readMockJson<SetInfo>(`rebrickable/setItems/${setNum}.json`);
+  }
+
   const key = process.env.REBRICKABLE_API_KEY;
   if (!key) throw new Error("REBRICKABLE_API_KEY is missing");
 
