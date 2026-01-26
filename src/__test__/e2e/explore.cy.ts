@@ -10,10 +10,8 @@ describe("Explore and find sets", () => {
     cy.get('[data-testid="nav-categories"]').click();
     cy.location("pathname").should("eq", "/categories");
 
-    // Search for "falcon"
-    cy.get('[data-testid="search-input"]')
-      .should("be.visible")
-      .type("falcon{enter}");
+    // Search for "buggy"
+    cy.get('[data-testid="search-input"]').should("be.visible").type("buggy{enter}");
     cy.location("pathname").should("include", "/search");
 
     // Open first set in results
