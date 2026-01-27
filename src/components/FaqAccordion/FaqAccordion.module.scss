@@ -9,7 +9,7 @@
 .item {
   border: 1px solid grey;
   border-radius: 12px;
-  padding: 12px;
+  padding: 0.8rem;
   background-color: v.$clr-bg-card;
 }
 
@@ -18,8 +18,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 12px;
+  gap: 0.75rem;
+  padding: 0.75rem 0.75rem 0.75rem 0;
   background-color: transparent;
   border: 0;
   cursor: pointer;
