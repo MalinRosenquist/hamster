@@ -1,4 +1,9 @@
+import { Metadata } from "next";
 import WatchlistSection from "./WatchlistSection";
+
+export const metadata: Metadata = {
+  title: "Mina bevakningar",
+};
 
 export default function WatchListPage() {
   return (

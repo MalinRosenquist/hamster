@@ -1,6 +1,7 @@
 import { getSetItems } from "@/server/services/setService";
 import { redirect } from "next/navigation";
 import SearchListView from "./SearchListView";
+import { Metadata } from "next";
 
 const PAGE_SIZE = 24;
 
@@ -12,6 +13,10 @@ type SearchPageProps = {
     min_year?: string;
     max_year?: string;
   }>;
+};
+
+export const metadata: Metadata = {
+  title: "Sökresultat",
 };
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {

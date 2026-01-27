@@ -5,6 +5,18 @@ import DetailToggles from "@/components/ListToggle/DetailToggles/DetailToggles";
 import { getTraderaAuctionsBySetNum } from "@/server/services/traderaService";
 import { formatDurationSv } from "@/lib/time";
 import TraderaList from "@/components/TraderaList/TraderaList";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ setId: string }>;
+}): Promise<Metadata> {
+  const { setId } = await params;
+  const set = await getSetBySetNum(setId);
+
+  return { title: set.name };
+}
 
 type SetProps = {
   params: Promise<{ setId: string }>;

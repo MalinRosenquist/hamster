@@ -1,6 +1,11 @@
 import styles from "./FaqPage.module.scss";
 import { faqItems } from "@/data/faq";
 import FaqAccordion from "@/components/FaqAccordion/FaqAccordion";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FAQ",
+};
 
 export default function FaqPage() {
   return (

@@ -1,6 +1,7 @@
 import { getThemeById } from "@/server/services/themeService";
 import ItemsSection from "./ItemsSection";
 import { getSetItems } from "@/server/services/setService";
+import { Metadata } from "next";
 
 type ThemeProps = {
   params: Promise<{ categoryId: string }>;
@@ -11,6 +12,19 @@ type ThemeProps = {
     max_year?: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ categoryId: string }>;
+}): Promise<Metadata> {
+  const { categoryId } = await params;
+  const theme = await getThemeById(Number(categoryId));
+
+  return {
+    title: theme.name, // => "Temanamn | Hamster"
+  };
+}
 
 export default async function CategoryDetailPage({
   params,

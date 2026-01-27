@@ -2,6 +2,11 @@ import { getThemes, getThemeThumbnailCached } from "@/server/services/themeServi
 import CategorySection from "./CategorySection";
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner/Spinner";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Utforska",
+};
 
 export default async function CategoriesPage() {
   const data = await getThemes(1, 10);
