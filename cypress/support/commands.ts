@@ -1,37 +1,60 @@
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+import { LS_USER_NAME, LS_SET_LISTS } from "./storageKeys";
+
+type SetLists = { watchlistIds: string[]; collectionIds: string[] };
+
+Cypress.Commands.add(
+  "visitLoggedIn",
+  (path: string, username = "TestUser", lists?: SetLists) => {
+    cy.visit(path, {
+      onBeforeLoad(win) {
+        win.localStorage.setItem(LS_USER_NAME, username);
+        if (lists === undefined) {
+          win.localStorage.removeItem(LS_SET_LISTS);
+        } else {
+          win.localStorage.setItem(LS_SET_LISTS, JSON.stringify(lists));
+        }
+      },
+    });
+  }
+);
+
+Cypress.Commands.add("goToCategories", () => {
+  cy.get('[data-testid="nav-categories"]').click();
+  cy.location("pathname").should("eq", "/categories");
+});
+
+Cypress.Commands.add("openFirstTheme", () => {
+  cy.get('[data-testid^="theme-card-"]').first().click();
+  cy.location("pathname").should("match", /^\/categories\/\d+$/);
+});
+
+Cypress.Commands.add("getFirstSetNum", () => {
+  return cy
+    .get('[data-testid^="set-card-"]')
+    .first()
+    .invoke("attr", "data-testid")
+    .then((id) => {
+      const setNum = (id || "").replace("set-card-", "");
+      expect(setNum, "setNum").to.not.equal("");
+      return setNum;
+    });
+});
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      visitLoggedIn(
+        path: string,
+        username?: string,
+        lists?: SetLists
+      ): Chainable<void>;
+      goToCategories(): Chainable<void>;
+      openFirstTheme(): Chainable<void>;
+      getFirstSetNum(): Chainable<string>;
+    }
+  }
+}
+
+export {};
