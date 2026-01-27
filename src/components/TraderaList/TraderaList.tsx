@@ -23,9 +23,9 @@ export default function TraderaList({ auctions, nowIso }: TraderaListProps) {
   };
 
   return (
-    <ul className={styles.traderaList}>
+    <ul data-testid="tradera-list" className={styles.traderaList}>
       {auctions.map((a) => (
-        <li key={a.id}>
+        <li data-testid={`tradera-list-item-${a.id}`} key={a.id}>
           <div className={styles.traderaCard}>
             <div className={styles.imgContainer}>
               <a

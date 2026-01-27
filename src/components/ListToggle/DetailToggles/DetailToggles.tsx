@@ -16,6 +16,7 @@ export default function DetailToggles({ setNum }: DetailTogglesProps) {
   return (
     <div className={styles.actions}>
       <button
+        data-testid={`toggle-watchlist-${setNum}`}
         className={styles.toggle}
         aria-pressed={isWatching}
         aria-label={isWatching ? "Ta bort från bevakning" : "Lägg till bevakning"}
@@ -26,6 +27,7 @@ export default function DetailToggles({ setNum }: DetailTogglesProps) {
         <span>{isWatching ? "Bevakar" : "Bevaka"}</span>
       </button>
       <button
+        data-testid={`toggle-collection-${setNum}`}
         className={styles.toggle}
         aria-pressed={isCollected}
         aria-label={isCollected ? "Ta bort från samling" : "Lägg till i samling"}

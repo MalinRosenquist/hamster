@@ -10,6 +10,7 @@ import Link from "next/link";
 
 import { useAuth } from "@/hooks/useAuth";
 import { authClearUserName, authSetUserName } from "@/lib/storage/authStore";
+import { LS_SET_LISTS } from "../../../lib/storage/storageKeys";
 
 export default function MyPage() {
   const router = useRouter();
@@ -58,6 +59,7 @@ export default function MyPage() {
   }
 
   function handleConfirmClear() {
+    window.localStorage.removeItem(LS_SET_LISTS);
     authClearUserName();
     setIsModalOpen(false);
     setNameInput("");
@@ -82,7 +84,11 @@ export default function MyPage() {
             className={styles.card}
             aria-labelledby="watchlistLabel watchlistCounter"
           >
-            <span id="watchlistCounter" className={styles.counter}>
+            <span
+              data-testid="watchlist-count"
+              id="watchlistCounter"
+              className={styles.counter}
+            >
               {counts.watchlist}
             </span>
             <span id="watchlistLabel" className={styles.label}>
@@ -95,7 +101,11 @@ export default function MyPage() {
             className={styles.card}
             aria-labelledby="collectionLabel collectionCounter"
           >
-            <span id="collectionCounter" className={styles.counter}>
+            <span
+              data-testid="collection-count"
+              id="collectionCounter"
+              className={styles.counter}
+            >
               {counts.collection}
             </span>
             <span id="collectionLabel" className={styles.label}>
@@ -114,6 +124,7 @@ export default function MyPage() {
 
               <div className={styles.row}>
                 <input
+                  data-testid="username-input"
                   id="newName"
                   type="text"
                   value={nameInput}
@@ -125,12 +136,17 @@ export default function MyPage() {
                   }}
                 />
 
-                <Button variant="secondary" type="submit" disabled={isDisabled}>
+                <Button
+                  data-testid="save-username"
+                  variant="secondary"
+                  type="submit"
+                  disabled={isDisabled}
+                >
                   Spara
                 </Button>
 
                 {saveMessage && (
-                  <p role="status" aria-live="polite">
+                  <p data-testid="save-message" role="status" aria-live="polite">
                     {saveMessage}
                   </p>
                 )}
@@ -146,6 +162,7 @@ export default function MyPage() {
               återhämtas.
             </p>
             <Button
+              data-testid="clear-data"
               variant="danger"
               type="button"
               onClick={() => setIsModalOpen(true)}
