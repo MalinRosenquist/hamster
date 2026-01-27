@@ -2,8 +2,9 @@
 
 import SetListsProvider from "@/providers/SetListsProvider";
 import { useRouter } from "next/navigation";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useHydrated } from "@/hooks/useHydrated";
 
 export default function ProtectedLayout({
   children,
@@ -12,12 +13,15 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
   const { isAuthed } = useAuth();
+  const hydrated = useHydrated();
 
-  useLayoutEffect(() => {
-    if (!isAuthed) {
+  useEffect(() => {
+    if (hydrated && !isAuthed) {
       router.replace("/login");
     }
-  }, [isAuthed, router]);
+  }, [hydrated, isAuthed, router]);
+
+  if (!hydrated) return null;
 
   if (!isAuthed) return null;
 
