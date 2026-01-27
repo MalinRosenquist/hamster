@@ -16,6 +16,7 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
   return (
     <>
       <Link
+        data-testid={`theme-card-${theme.id}`}
         className={styles.card}
         prefetch={false}
         href={{

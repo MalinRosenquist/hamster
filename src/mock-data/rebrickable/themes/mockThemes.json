@@ -1,0 +1,24 @@
+{
+  "mock": true,
+  "count": 3,
+  "results": [
+    {
+      "id": 1,
+      "name": "Castle",
+      "parent_id": null,
+      "thumb": "/mock/thumbs/castle.png"
+    },
+    {
+      "id": 2,
+      "name": "Space",
+      "parent_id": null,
+      "thumb": "/mock/thumbs/space.png"
+    },
+    {
+      "id": 3,
+      "name": "Technic",
+      "parent_id": null,
+      "thumb": "/mock/thumbs/technic.png"
+    }
+  ]
+}

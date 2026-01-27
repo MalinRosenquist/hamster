@@ -22,7 +22,7 @@ export default async function ItemDetailPage({ params }: SetProps) {
         <h1>{set.name}</h1>
       </section>
 
-      <section className={styles.setCard}>
+      <section data-testid="set-card" className={styles.setCard}>
         <div className={styles.imgContainer}>
           <Image
             src={set.set_img_url?.trim() ? set.set_img_url : "/icons/no_photo.svg"}
@@ -36,11 +36,11 @@ export default async function ItemDetailPage({ params }: SetProps) {
           <dl className={styles.details}>
             <div className={styles.detailRow}>
               <dt>Setnamn</dt>
-              <dd>{set.name}</dd>
+              <dd data-testid="set-name">{set.name}</dd>
             </div>
             <div className={styles.detailRow}>
               <dt>Setnummer</dt>
-              <dd>{set.set_num}</dd>
+              <dd data-testid="set-num">{set.set_num}</dd>
             </div>
             <div className={styles.detailRow}>
               <dt>Tema</dt>

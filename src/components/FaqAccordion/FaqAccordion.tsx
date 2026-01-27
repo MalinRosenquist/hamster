@@ -22,6 +22,7 @@ export default function FaqAccordion({ items }: FaqAccordionProps) {
           <div key={item.id} className={styles.item}>
             <h3>
               <button
+                data-testid={`faq-toggle-${item.id}`}
                 type="button"
                 id={buttonId}
                 className={styles.trigger}
@@ -36,6 +37,7 @@ export default function FaqAccordion({ items }: FaqAccordionProps) {
 
             {isOpen && (
               <div
+                data-testid={`faq-panel-${item.id}`}
                 id={panelId}
                 className={styles.panel}
                 role="region"

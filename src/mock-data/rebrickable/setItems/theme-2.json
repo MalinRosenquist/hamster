@@ -1,0 +1,37 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "set_num": "6801-1",
+      "name": "Mock Space Moon Buggy",
+      "year": 1981,
+      "theme_id": 2,
+      "num_parts": 92,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/6801-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "6841-1",
+      "name": "Mock Space Mineral Detector",
+      "year": 1980,
+      "theme_id": 2,
+      "num_parts": 150,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/6841-1/",
+      "last_modified_dt": "2020-01-01"
+    },
+    {
+      "set_num": "6929-1",
+      "name": "Mock Space Star Fleet Voyager",
+      "year": 1981,
+      "theme_id": 2,
+      "num_parts": 241,
+      "set_img_url": "/icons/no_photo.svg",
+      "set_url": "https://rebrickable.com/sets/6929-1/",
+      "last_modified_dt": "2020-01-01"
+    }
+  ]
+}

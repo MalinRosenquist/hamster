@@ -25,6 +25,7 @@ export default function ClearModal({ open, onClose, onConfirm }: ClearModalProp)
 
   return (
     <dialog
+      data-testid="clear-modal"
       className={styles.modal}
       ref={dialogRef}
       onCancel={(e) => {
@@ -41,10 +42,20 @@ export default function ClearModal({ open, onClose, onConfirm }: ClearModalProp)
         återfås.
       </p>
       <div className={styles.buttonWrapper}>
-        <Button variant="secondary" type="button" onClick={onClose}>
+        <Button
+          data-testid="clear-modal-cancel"
+          variant="secondary"
+          type="button"
+          onClick={onClose}
+        >
           Avbryt
         </Button>
-        <Button variant="danger" type="button" onClick={onConfirm}>
+        <Button
+          data-testid="clear-modal-confirm"
+          variant="danger"
+          type="button"
+          onClick={onConfirm}
+        >
           Rensa data
         </Button>
       </div>

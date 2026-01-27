@@ -6,6 +6,13 @@ import eslintConfigPrettier from "eslint-config-prettier";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // Allow the use of TypeScript namespaces in Cypress tests.
+  {
+    files: ["cypress/**/*.{ts,tsx,js,jsx,d.ts}"],
+    rules: {
+      "@typescript-eslint/no-namespace": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

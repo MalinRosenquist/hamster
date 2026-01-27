@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "cached": true,
+  "fetchedAt": "2026-01-26T10:00:00.000Z",
+  "setNum": "8048-1",
+  "auctions": [
+    {
+      "id": "mock-8048-1-1",
+      "title": "LEGO 8048-1 – Mock Tradera Auction",
+      "url": "https://www.tradera.com/item/mock-8048-1-1",
+      "thumbnailUrl": "/mock/tradera/8048-1-1.jpg",
+      "endDate": "2026-02-07T12:00:00.000Z",
+      "maxBid": 450,
+      "price": 450
+    }
+  ]
+}

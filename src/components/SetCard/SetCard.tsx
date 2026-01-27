@@ -25,7 +25,12 @@ export default function SetCard({ item, source, categoryId }: SetCardProps) {
 
   return (
     <>
-      <Link className={styles.card} prefetch={false} href={href}>
+      <Link
+        data-testid={`set-card-${item.set_num}`}
+        className={styles.card}
+        prefetch={false}
+        href={href}
+      >
         <div className={styles.imgContainer}>
           {item.set_img_url ? (
             <Image

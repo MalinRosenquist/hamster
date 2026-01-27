@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "cached": true,
+  "fetchedAt": "2026-01-26T10:00:00.000Z",
+  "setNum": "5223-1",
+  "auctions": [
+    {
+      "id": "mock-5223-1-1",
+      "title": "LEGO 5223-1 Mock Auction",
+      "url": "https://www.tradera.com/item/mock-5223-1-1",
+      "thumbnailUrl": "/icons/no_photo.svg",
+      "endDate": "2026-02-01T12:00:00.000Z",
+      "maxBid": 250,
+      "buyItNowPrice": 400,
+      "price": 250
+    }
+  ]
+}
