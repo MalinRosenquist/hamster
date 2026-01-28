@@ -34,17 +34,13 @@ export default function TraderaList({ auctions, nowIso }: TraderaListProps) {
                 rel="noopener noreferrer"
                 className={styles.imgLink}
               >
-                {a.thumbnailUrl ? (
-                  <Image
-                    src={a.thumbnailUrl}
-                    className={styles.image}
-                    alt={a.title}
-                    width={200}
-                    height={150}
-                  />
-                ) : (
-                  <Image src="/icons/no_photo.svg" alt="" width={200} height={150} />
-                )}
+                <Image
+                  src={a.thumbnailUrl ?? "/icons/no_photo.svg"}
+                  className={styles.image}
+                  alt={a.title}
+                  fill
+                  sizes="140"
+                />
               </a>
             </div>
             <div className={styles.info}>

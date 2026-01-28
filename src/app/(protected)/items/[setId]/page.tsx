@@ -40,8 +40,9 @@ export default async function ItemDetailPage({ params }: SetProps) {
             src={set.set_img_url?.trim() ? set.set_img_url : "/icons/no_photo.svg"}
             className={styles.image}
             alt=""
-            width={200}
-            height={200}
+            fill
+            sizes="200px"
+            priority
           />
         </div>
         <div className={styles.detailsContainer}>
@@ -80,6 +81,7 @@ export default async function ItemDetailPage({ params }: SetProps) {
             alt=""
             aria-hidden="true"
             fill
+            sizes="140px"
             className={styles.logoImg}
           />
         </h2>
