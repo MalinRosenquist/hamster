@@ -93,8 +93,11 @@ input {
   font-weight: 500;
   line-height: 1;
   font-size: v.$fs-16;
-  font-style: italic;
   transform: translateY(-2px);
+
+  &::placeholder {
+    font-style: italic;
+  }
 
   @include m.up(md) {
     font-size: v.$fs-18;

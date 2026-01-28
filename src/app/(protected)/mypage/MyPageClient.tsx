@@ -78,12 +78,11 @@ export default function MyPageClient() {
         </section>
 
         {/* Counters */}
-        <section className={styles.counters}>
-          <Link
-            href="/watchlist"
-            className={styles.card}
-            aria-labelledby="watchlistLabel watchlistCounter"
-          >
+        <section className={styles.counters} aria-labelledby="overview-heading">
+          <h2 id="overview-heading" className="srOnly">
+            Översikt
+          </h2>
+          <Link href="/watchlist" className={styles.card}>
             <span
               data-testid="watchlist-count"
               id="watchlistCounter"
@@ -96,11 +95,7 @@ export default function MyPageClient() {
             </span>
           </Link>
 
-          <Link
-            href="/collection"
-            className={styles.card}
-            aria-labelledby="collectionLabel collectionCounter"
-          >
+          <Link href="/collection" className={styles.card}>
             <span
               data-testid="collection-count"
               id="collectionCounter"
@@ -115,7 +110,13 @@ export default function MyPageClient() {
         </section>
 
         {/* Usersettings */}
-        <section className={styles.userSettings}>
+        <section
+          className={styles.userSettings}
+          aria-labelledby="user-settings-heading"
+        >
+          <h2 id="user-settings-heading" className="srOnly">
+            Inställningar
+          </h2>
           <section className={styles.panel}>
             <h3 className={styles.title}>Ändra namn</h3>
             <form className={styles.form} onSubmit={handleSave}>
@@ -126,6 +127,8 @@ export default function MyPageClient() {
                 <input
                   data-testid="username-input"
                   id="newName"
+                  minLength={3}
+                  maxLength={20}
                   type="text"
                   value={nameInput}
                   placeholder={userName ?? ""}
@@ -156,7 +159,7 @@ export default function MyPageClient() {
 
           <section className={styles.panel}>
             <h3 className={styles.title}>Rensa min information</h3>
-            <p>
+            <p className={styles.description}>
               Har du samlat klart? Här kan du ta bort ditt konto. Detta tar bort
               samling, bevakning och sparat namn från den här enheten och kan inte
               återhämtas.

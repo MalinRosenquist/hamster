@@ -13,7 +13,7 @@ $clr-secondary-disabled: #dac79b;
 $clr-danger: #9c4b4b;
 $clr-danger-hover: #8c3636;
 
-$clr-font-light: #ceccc9;
+$clr-font-light: #f5f5f4;
 $clr-font-dark: #1c1c1c;
 $clr-font-disabled: rgba(45, 62, 70, 0.7);
 $clr-font-mute: #485460;
@@ -49,4 +49,7 @@ $fs-13: 0.8125rem;
 //------**MISC**---------//
 $border: 18px;
 $border-input: 10px;
-$shadow: 1px 12px 20px rgb(0 0 0 / 30%);
+$shadow:
+  0 2px 6px rgb(0 0 0 / 10%),
+  0 12px 24px rgb(0 0 0 / 12%);
+$shadow-light: 0 8px 24px rgb(0 0 0 / 14%);
