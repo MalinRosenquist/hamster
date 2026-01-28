@@ -4,13 +4,12 @@
 .footer {
   background-color: v.$clr-bg-frame;
   padding: 2rem 0;
-  opacity: 0.8;
 
   p {
     font-size: v.$fs-13;
     line-height: 1.6;
     margin-bottom: 1rem;
-    opacity: 0.9;
+    color: v.$clr-font-mute;
 
     @include m.up(md) {
       font-size: v.$fs-14;

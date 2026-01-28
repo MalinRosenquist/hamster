@@ -119,21 +119,6 @@ label {
   }
 }
 
-button {
-  font-weight: 600;
-  line-height: 1;
-  font-size: v.$fs-16;
-  text-transform: uppercase;
-
-  @include m.up(md) {
-    font-size: v.$fs-18;
-  }
-
-  @include m.up(lg) {
-    font-size: v.$fs-18;
-  }
-}
-
 .navLink {
   font-weight: 500;
   line-height: 1.2;

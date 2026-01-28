@@ -3,6 +3,8 @@
 @use "../../../styles/mixins" as m;
 
 .button {
+  @include m.buttonText;
+
   min-height: 44px;
   width: fit-content;
   box-shadow: v.$shadow;

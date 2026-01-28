@@ -36,3 +36,19 @@ $breakpoints: (
     cursor: pointer;
   }
 }
+
+//------**BUTTONS**-----//
+@mixin buttonText {
+  font-weight: 600;
+  line-height: 1;
+  font-size: v.$fs-16;
+  text-transform: uppercase;
+
+  @include up(md) {
+    font-size: v.$fs-18;
+  }
+
+  @include up(lg) {
+    font-size: v.$fs-18;
+  }
+}

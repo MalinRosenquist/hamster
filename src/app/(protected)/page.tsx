@@ -1,7 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
-import Button from "@/components/Buttons/Button/Button";
-import Link from "next/link";
+import { ButtonLink } from "@/components/Buttons/Button/ButtonLink";
 
 export default function HomePage() {
   return (
@@ -25,16 +24,20 @@ export default function HomePage() {
         <div className={styles.card}>
           <h2>Utforska set</h2>
           <p>Bläddra bland LEGO och lägg till i din egna samling.</p>
-          <Button variant="primary" className="">
-            <Link href="/categories">Utforska set</Link>
-          </Button>
+          <ButtonLink href="/categories" variant="primary" className={styles.button}>
+            Utforska set
+          </ButtonLink>
         </div>
         <div className={styles.card}>
           <h2>bevaka</h2>
           <p>Bevaka LEGO set och håll koll på nya annonser</p>
-          <Button variant="secondary" className={styles.button}>
-            <Link href="/watchlist">Hantera bevakningar</Link>
-          </Button>
+          <ButtonLink
+            href="/watchlist"
+            variant="secondary"
+            className={styles.button}
+          >
+            Hantera bevakningar
+          </ButtonLink>
         </div>
       </section>
     </>
