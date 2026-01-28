@@ -1,5 +1,5 @@
 import { getThemes, getThemeThumbnailCached } from "@/server/services/themeService";
-import CategorySection from "./CategorySection";
+import CategoryClient from "./CategoryClient";
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner/Spinner";
 import { Metadata } from "next";
@@ -30,7 +30,7 @@ export default async function CategoriesPage() {
           </div>
         }
       >
-        <CategorySection initialCategories={themesWithThumbs} total={data.count} />
+        <CategoryClient initialCategories={themesWithThumbs} total={data.count} />
       </Suspense>
     </div>
   );

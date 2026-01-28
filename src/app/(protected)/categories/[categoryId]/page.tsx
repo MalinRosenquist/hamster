@@ -1,5 +1,5 @@
 import { getThemeById } from "@/server/services/themeService";
-import ItemsSection from "./ItemsSection";
+import ItemsClient from "./ItemsClient";
 import { getSetItems } from "@/server/services/setService";
 import { Metadata } from "next";
 
@@ -53,7 +53,7 @@ export default async function CategoryDetailPage({
         <h1>{theme.name}</h1>
       </section>
 
-      <ItemsSection
+      <ItemsClient
         initialItems={setsData.results}
         total={setsData.count}
         themeId={theme.id}

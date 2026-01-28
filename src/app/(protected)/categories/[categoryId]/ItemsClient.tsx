@@ -6,7 +6,7 @@ import ItemsListContent from "@/components/ItemsListContent/ItemsListContent";
 
 const PAGE_SIZE = 10;
 
-type ItemsListProps = {
+type ItemsClientProps = {
   initialItems: SetItem[];
   total: number;
   themeId: number;
@@ -16,7 +16,7 @@ type ItemsListProps = {
   initialMaxYear: string;
 };
 
-export default function ItemsSection({
+export default function ItemsClient({
   initialItems,
   total,
   themeId,
@@ -24,7 +24,7 @@ export default function ItemsSection({
   initialSearch,
   initialMinYear,
   initialMaxYear,
-}: ItemsListProps) {
+}: ItemsClientProps) {
   const {
     items,
     loading,

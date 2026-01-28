@@ -8,15 +8,15 @@ import Toolbar from "@/components/Toolbar/Toolbar";
 import { useRouter } from "next/navigation";
 import CardList from "@/components/CardList/CardList";
 
-type CategoryProps = {
+type CategoryClientProps = {
   initialCategories: ThemeWithThumb[];
   total: number;
 };
 
-export default function CategorySection({
+export default function CategoryClient({
   initialCategories,
   total,
-}: CategoryProps) {
+}: CategoryClientProps) {
   const [themes, setThemes] = useState<ThemeWithThumb[]>(initialCategories);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);

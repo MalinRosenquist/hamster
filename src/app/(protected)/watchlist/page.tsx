@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import WatchlistSection from "./WatchlistSection";
+import WatchlistClient from "./WatchlistClient";
 
 export const metadata: Metadata = {
   title: "Mina bevakningar",
@@ -12,7 +12,7 @@ export default function WatchListPage() {
         <h1>Bevakning</h1>
       </section>
 
-      <WatchlistSection />
+      <WatchlistClient />
     </div>
   );
 }
