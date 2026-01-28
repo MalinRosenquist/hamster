@@ -2,10 +2,11 @@ import styles from "./ItemDetailPage.module.scss";
 import { getSetBySetNum } from "@/server/services/setService";
 import Image from "next/image";
 import DetailToggles from "@/components/ListToggle/DetailToggles/DetailToggles";
-import { getTraderaAuctionsBySetNum } from "@/server/services/traderaService";
 import { formatDurationSv } from "@/lib/time";
 import TraderaList from "@/components/TraderaList/TraderaList";
 import { Metadata } from "next";
+import { getItemDetail } from "@/server/loaders/itemDetailLoader";
+import Link from "next/link";
 
 export async function generateMetadata({
   params,
@@ -24,8 +25,7 @@ type SetProps = {
 
 export default async function ItemDetailPage({ params }: SetProps) {
   const { setId } = await params;
-  const set = await getSetBySetNum(setId);
-  const tradera = await getTraderaAuctionsBySetNum(set.set_num);
+  const { set, themeName, tradera } = await getItemDetail(setId);
   const nowIso = new Date().toISOString();
 
   return (
@@ -54,7 +54,14 @@ export default async function ItemDetailPage({ params }: SetProps) {
             <dd data-testid="set-num">{set.set_num}</dd>
 
             <dt>Tema</dt>
-            <dd>{set.theme_id}</dd>
+            <dd>
+              <Link
+                href={`/categories/${set.theme_id}`}
+                className={styles.themeLink}
+              >
+                {themeName}
+              </Link>
+            </dd>
 
             <dt>Antal delar</dt>
             <dd>{set.num_parts}</dd>
