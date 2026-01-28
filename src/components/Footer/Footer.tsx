@@ -4,6 +4,9 @@ import styles from "./Footer.module.scss";
 export default function Footer() {
   return (
     <footer className={styles.footer}>
+      <h2 id="footer-heading" className="srOnly">
+        Sidfot
+      </h2>
       <div className="container">
         <div className={styles.topGrid}>
           <div className={styles.colNav}>
@@ -42,10 +45,9 @@ export default function Footer() {
           <div className={styles.colAbout}>
             <h3 className={styles.colHeading}>Om projektet</h3>
             <p>
-              Hamster är ett studentprojekt. Inte associerat med Rebrickable
-              eller Tradera. LEGO® är ett varumärke som tillhör LEGO Group och
-              webbplatsen är inte sponsrad, auktoriserad eller godkänd av LEGO
-              Group.
+              Hamster är ett studentprojekt. Inte associerat med Rebrickable eller
+              Tradera. LEGO® är ett varumärke som tillhör LEGO Group och webbplatsen
+              är inte sponsrad, auktoriserad eller godkänd av LEGO Group.
             </p>
 
             <Link href={"/about"} className={styles.readMoreLink}>
