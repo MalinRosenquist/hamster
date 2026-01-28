@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/hooks/useAuth";
 import { authSetUserName } from "@/lib/storage/authStore";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
@@ -40,17 +41,30 @@ export default function LoginPage() {
 
   return (
     <div className={`container ${styles.container}`}>
-      <h1>Alla kan samla på LEGO!</h1>
-      <h2>Med Hamster kan du:</h2>
+      <div>
+        <h1>Hamstra set - på ditt sätt</h1>
+        <p className={styles.tagline}>
+          Platsen för dig som aldrig blir för gammal för att samla på LEGO
+        </p>
+      </div>
 
-      <ul className={styles.features}>
-        <li>Spara dina LEGO-set</li>
-        <li>Bevaka set du letar efter</li>
-        <li>Följa LEGO-auktioner</li>
-      </ul>
+      <section className={styles.featuresSection}>
+        <h2>Med Hamster kan du:</h2>
+        <ul className={styles.features}>
+          <li>Håll koll på dina set</li>
+          <li>Bevaka set du letar efter</li>
+          <li>Se matchande auktioner</li>
+        </ul>
+      </section>
 
-      <div className={styles.card}>
+      <section className={styles.card}>
         <h2>Kom igång</h2>
+        <Image
+          src="/images/logo_dark.png"
+          alt="Hamster med LEGO"
+          width={100}
+          height={100}
+        />
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName">Smeknamn</label>
@@ -81,15 +95,15 @@ export default function LoginPage() {
                 <span>Laddar...</span>
               </>
             ) : (
-              "Utforska set"
+              "Börja hamstra"
             )}
           </Button>
         </form>
 
         <small className={styles.muted}>
-          Du behöver inget konto. Din data sparas bara i den här webbläsaren.
+          Inget konto, inget krångel. Listorna sparas bara här i webbläsaren.
         </small>
-      </div>
+      </section>
     </div>
   );
 }
