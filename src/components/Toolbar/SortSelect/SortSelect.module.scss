@@ -61,11 +61,14 @@
   max-width: min(320px, 92vw);
   padding: 0.8rem;
   border-radius: v.$border-input;
+  border-top-left-radius: 0;
   background-color: v.$clr-bg-card;
 
   @include m.up(md) {
-    left: 0;
-    border-top-left-radius: 0;
+    left: auto;
+    right: 0;
+    border-top-left-radius: v.$border-input;
+    border-top-right-radius: 0;
   }
 }
 
@@ -85,6 +88,10 @@
 }
 
 .option {
+  appearance: none;
+  border: 0;
+  background: transparent;
+
   position: relative;
   display: flex;
   align-items: center;
@@ -93,33 +100,19 @@
   padding: 0.6rem;
   border-radius: 10px;
   cursor: pointer;
+  text-align: left;
+  color: inherit;
 
   &:hover {
     background: rgba(0, 0, 0, 0.05);
   }
 
-  .radio {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
   }
 
-  .optionLabel {
-    font-size: v.$fs-16;
-    letter-spacing: 0.3px;
-    font-weight: 400;
-  }
-
-  .check {
-    margin-left: auto;
-    opacity: 0;
-    transform: scale(0.9);
-    transition:
-      opacity 120ms ease,
-      transform 120ms ease;
-  }
-
-  &:has(.radio:checked) {
+  &[aria-pressed="true"] {
     font-weight: 500;
 
     .check {
@@ -127,4 +120,13 @@
       transform: scale(1);
     }
   }
+}
+
+.check {
+  margin-left: auto;
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
 }

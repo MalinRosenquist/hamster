@@ -50,26 +50,29 @@ export default function SortSelect({
       {isOpen && (
         <div className={styles.panel} id="sortPanel">
           <ul className={styles.list}>
-            {options.map((opt) => (
-              <li key={opt.value} className={styles.item}>
-                <label className={styles.option}>
-                  <input
-                    className={styles.radio}
-                    type="radio"
-                    name="sort"
-                    value={opt.value}
-                    checked={opt.value === value}
-                    onChange={() => {
+            {options.map((opt) => {
+              const selected = opt.value === value;
+
+              return (
+                <li key={opt.value} className={styles.item}>
+                  <button
+                    type="button"
+                    className={styles.option}
+                    aria-pressed={selected}
+                    onClick={() => {
                       onChange(opt.value);
+                      setIsOpen(false);
+                      triggerRef.current?.focus();
                     }}
-                  />
-                  <span className={styles.optionLabel}>{opt.label}</span>
-                  <span className={styles.check} aria-hidden="true">
-                    ✓
-                  </span>
-                </label>
-              </li>
-            ))}
+                  >
+                    <span className={styles.optionLabel}>{opt.label}</span>
+                    <span className={styles.check} aria-hidden="true">
+                      ✓
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
