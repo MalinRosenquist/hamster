@@ -18,6 +18,11 @@ describe("first visit", () => {
 
     cy.location("pathname").should("eq", "/");
 
+    cy.get('[data-testid="greeting"]').should("contain", username);
+
+    cy.get('[data-testid="collection-count"]').should("have.text", "0");
+    cy.get('[data-testid="watchlist-count"]').should("have.text", "0");
+
     cy.window()
       .its("localStorage")
       .invoke("getItem", LS_USER_NAME)
