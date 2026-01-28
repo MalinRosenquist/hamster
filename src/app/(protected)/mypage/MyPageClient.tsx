@@ -91,7 +91,7 @@ export default function MyPageClient() {
               {counts.watchlist}
             </span>
             <span id="watchlistLabel" className={styles.label}>
-              Bevakningar
+              Set bevakade
             </span>
           </Link>
 
