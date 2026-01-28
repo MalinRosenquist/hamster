@@ -25,6 +25,8 @@ export default function YearFilter({
   const isYear = (value: string) => /^\d{4}$/.test(value.trim());
   const isEmpty = (value: string) => value.trim() === "";
   const [touched, setTouched] = useState(false);
+  const earliestYear = 1949;
+  const currentYear = new Date().getFullYear();
   const error = getYearFilterError(minYear, maxYear);
   const canApply = error === null;
 
@@ -43,6 +45,22 @@ export default function YearFilter({
 
     if (isYear(minYear) && isYear(maxYear) && Number(minYear) > Number(maxYear)) {
       return "Från-år kan inte vara större än Till-år";
+    }
+
+    if (isYear(minYear) && Number(minYear) < earliestYear) {
+      return `Från-år kan inte vara tidigare än ${earliestYear}`;
+    }
+
+    if (isYear(maxYear) && Number(maxYear) < earliestYear) {
+      return `Till-år kan inte vara tidigare än ${earliestYear}`;
+    }
+
+    if (isYear(minYear) && Number(minYear) > currentYear) {
+      return `Från-år kan inte vara senare än ${currentYear}`;
+    }
+
+    if (isYear(maxYear) && Number(maxYear) > currentYear) {
+      return `Till-år kan inte vara senare än ${currentYear}`;
     }
 
     return null;
@@ -93,7 +111,10 @@ export default function YearFilter({
                 autoFocus
                 className={styles.input}
                 type="number"
-                placeholder="1960"
+                min={earliestYear}
+                max={currentYear}
+                step={1}
+                placeholder="1949"
                 value={minYear}
                 onBlur={() => setTouched(true)}
                 onChange={(e) => onMinYearChange(e.target.value)}
@@ -105,7 +126,10 @@ export default function YearFilter({
               <input
                 className={styles.input}
                 type="number"
-                placeholder="2026"
+                min={earliestYear}
+                max={currentYear}
+                step={1}
+                placeholder={String(currentYear)}
                 value={maxYear}
                 onBlur={() => setTouched(true)}
                 onChange={(e) => onMaxYearChange(e.target.value)}
