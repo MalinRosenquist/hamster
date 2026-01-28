@@ -1,6 +1,6 @@
 import { getSetItems } from "@/server/services/setService";
 import { redirect } from "next/navigation";
-import SearchListView from "./SearchListView";
+import SearchClient from "./SearchClient";
 import { Metadata } from "next";
 
 const PAGE_SIZE = 24;
@@ -47,7 +47,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className="container">
       <h1>Sökresultat</h1>
 
-      <SearchListView
+      <SearchClient
         initialQuery={q}
         initialOrdering={ordering}
         initialMinYear={minYear}

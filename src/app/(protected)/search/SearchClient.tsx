@@ -4,7 +4,7 @@ import { SetItem } from "@/models/SetItem";
 import { useSetItemsList } from "@/hooks/useSetItemsList";
 import ItemsListContent from "@/components/ItemsListContent/ItemsListContent";
 
-type SearchListViewProps = {
+type SearchClientProps = {
   initialQuery: string;
   initialItems: SetItem[];
   initialTotal: number;
@@ -15,7 +15,7 @@ type SearchListViewProps = {
   pageSize: number;
 };
 
-export default function SearchListView({
+export default function SearchClient({
   initialQuery,
   initialItems,
   initialTotal,
@@ -24,7 +24,7 @@ export default function SearchListView({
   initialMaxYear,
   initialPage,
   pageSize,
-}: SearchListViewProps) {
+}: SearchClientProps) {
   const {
     items,
     loading,

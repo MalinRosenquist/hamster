@@ -4,14 +4,14 @@ import { useContext } from "react";
 import { SetListsContext } from "@/contexts/SetListsContext";
 import SavedSetList from "@/components/SavedSetList/SavedSetList";
 
-export default function CollectionSection() {
-  const { collectionIds } = useContext(SetListsContext);
+export default function WatchlistClient() {
+  const { watchlistIds } = useContext(SetListsContext);
 
   return (
     <SavedSetList
-      ids={collectionIds}
-      emptyText="Din samling är tom."
-      source="collection"
+      ids={watchlistIds}
+      emptyText="Du bevakar inget just nu."
+      source="watchlist"
     />
   );
 }

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import CollectionSection from "./CollectionSection";
+import CollectionClient from "./CollectionClient";
 
 export const metadata: Metadata = {
   title: "Min samling",
@@ -12,7 +12,7 @@ export default function CollectionPage() {
         <h1>Samling</h1>
       </section>
 
-      <CollectionSection />
+      <CollectionClient />
     </div>
   );
 }
