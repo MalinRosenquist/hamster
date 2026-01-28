@@ -21,3 +21,9 @@
     justify-content: space-between;
   }
 }
+
+.sortWrapper {
+  @include m.up(md) {
+    margin-left: auto;
+  }
+}

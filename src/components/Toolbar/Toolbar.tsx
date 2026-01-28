@@ -54,11 +54,13 @@ export default function Toolbar({
         )}
 
         {onOrderingChange && (
-          <SortSelect
-            value={ordering || ""}
-            onChange={onOrderingChange}
-            options={sortOptions}
-          />
+          <div className={styles.sortWrapper}>
+            <SortSelect
+              value={ordering || ""}
+              onChange={onOrderingChange}
+              options={sortOptions}
+            />
+          </div>
         )}
       </div>
     </div>
