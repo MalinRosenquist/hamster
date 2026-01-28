@@ -50,20 +50,17 @@ export default function TraderaList({ auctions, nowIso }: TraderaListProps) {
             <div className={styles.info}>
               <h3 className={styles.title}>{a.title}</h3>
               <dl className={styles.meta}>
-                <div className={styles.metaItem}>
-                  <GavelIcon />
-                  <div>
-                    <dt>Maxbud</dt>
-                    <dd>{formatPrice(a.maxBid)}</dd>
-                  </div>
-                </div>
-                <div className={styles.metaItem}>
-                  <MoneyIcon />
-                  <div>
-                    <dt>Köp nu</dt>
-                    <dd>{formatPrice(a.buyItNowPrice)}</dd>
-                  </div>
-                </div>
+                <dt className={styles.metaLabel}>
+                  <GavelIcon aria-hidden="true" focusable="false" />
+                  Maxbud
+                </dt>
+                <dd className={styles.metaValue}>{formatPrice(a.maxBid)}</dd>
+
+                <dt className={styles.metaLabel}>
+                  <MoneyIcon aria-hidden="true" focusable="false" />
+                  Köp nu
+                </dt>
+                <dd className={styles.metaValue}>{formatPrice(a.buyItNowPrice)}</dd>
               </dl>
               {a.endDate ? (
                 <span className={styles.endDate}>

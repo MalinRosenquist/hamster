@@ -46,34 +46,26 @@ export default async function ItemDetailPage({ params }: SetProps) {
         </div>
         <div className={styles.detailsContainer}>
           <dl className={styles.details}>
-            <div className={styles.detailRow}>
-              <dt>Setnamn</dt>
-              <dd data-testid="set-name">{set.name}</dd>
-            </div>
-            <div className={styles.detailRow}>
-              <dt>Setnummer</dt>
-              <dd data-testid="set-num">{set.set_num}</dd>
-            </div>
-            <div className={styles.detailRow}>
-              <dt>Tema</dt>
-              <dd>{set.theme_id}</dd>
-            </div>
-            <div className={styles.detailRow}>
-              <dt>Antal delar</dt>
-              <dd>{set.num_parts}</dd>
-            </div>
-            <div className={styles.detailRow}>
-              <dt>Utgivningsår</dt>
-              <dd>{set.year}</dd>
-            </div>
-            <div className={styles.detailRow}>
-              <dt>Status</dt>
-              <dd></dd>
-            </div>
-            <div className={styles.detailRow}>
-              <dt>Tillagd</dt>
-              <dd></dd>
-            </div>
+            <dt>Setnamn</dt>
+            <dd data-testid="set-name">{set.name}</dd>
+
+            <dt>Setnummer</dt>
+            <dd data-testid="set-num">{set.set_num}</dd>
+
+            <dt>Tema</dt>
+            <dd>{set.theme_id}</dd>
+
+            <dt>Antal delar</dt>
+            <dd>{set.num_parts}</dd>
+
+            <dt>Utgivningsår</dt>
+            <dd>{set.year}</dd>
+
+            <dt>Status</dt>
+            <dd></dd>
+
+            <dt>Tillagd</dt>
+            <dd></dd>
           </dl>
           <DetailToggles setNum={set.set_num} />
         </div>
