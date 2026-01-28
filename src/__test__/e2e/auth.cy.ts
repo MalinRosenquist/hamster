@@ -27,9 +27,6 @@ describe("first visit", () => {
       .its("localStorage")
       .invoke("getItem", LS_USER_NAME)
       .should("eq", username);
-    cy.window().then((win) =>
-      console.log("LS keys:", Object.keys(win.localStorage))
-    );
   });
 
   it("blocks protected routes when not logged in", () => {

@@ -62,7 +62,6 @@ export async function getTraderaAuctionsBySetNum(
 ): Promise<TraderaAuctionsResponse> {
   const setNum = rawSetNum.trim();
   const fetchedAt = new Date().toISOString();
-  console.log("[TRADERA]", { mock: mockDataEnabled(), setNum });
 
   if (mockDataEnabled()) {
     if (!setNum) {
