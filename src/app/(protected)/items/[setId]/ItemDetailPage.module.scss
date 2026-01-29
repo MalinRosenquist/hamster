@@ -10,14 +10,15 @@
 .setCard {
   display: grid;
   grid-template-columns: 1fr;
-  max-width: 650px;
+  align-items: start;
+  width: min(650px, 100%);
   padding: 1.2rem;
+  margin-block: 4rem;
+  align-self: center;
   background-color: v.$clr-bg-card;
   border-radius: v.$border;
   box-shadow: v.$shadow;
-  margin-block: 4rem;
   gap: 2rem;
-  margin: auto;
 
   @include m.up(md) {
     grid-template-columns: 1fr 1fr;
@@ -27,6 +28,7 @@
 .imgContainer {
   position: relative;
   width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 8px;
   display: flex;
   justify-content: center;
