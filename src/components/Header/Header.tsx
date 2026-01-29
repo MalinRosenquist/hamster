@@ -12,7 +12,7 @@ const links = [
   { href: "/watchlist", label: "Bevaka", protected: true },
   { href: "/collection", label: "Samling", protected: true },
   { href: "/mypage", label: "Min sida", protected: true },
-  { href: "/faq", label: "FAQ", protected: true },
+  { href: "/faq", label: "FAQ", protected: false },
 ];
 
 export default function Header() {
