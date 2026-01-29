@@ -8,6 +8,10 @@
   overflow: hidden;
   border-radius: v.$border-input;
   border: 1px solid v.$clr-form-border;
+
+  &:focus-within {
+    outline: 2px solid #000;
+  }
 }
 
 .searchInput {
@@ -17,6 +21,10 @@
   padding: 0 52px 0 12px;
   -webkit-appearance: none;
   appearance: none;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .searchButton {
