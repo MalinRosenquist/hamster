@@ -40,7 +40,9 @@ export function useSetItemsList({
   themeId,
   requireSearch = false,
 }: UseSetItemsListParams) {
-  const [items, setItems] = useState<SetItem[]>(initialItems);
+  const [items, setItems] = useState<SetItem[]>(() =>
+    sortSets(initialItems, initialOrdering)
+  );
   const [page, setPage] = useState(initialPage);
   const [loading, setLoading] = useState(false);
   const [estimatedTotal, setEstimatedTotal] = useState(initialTotal);
