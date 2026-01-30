@@ -68,12 +68,6 @@ export default async function ItemDetailPage({ params }: SetProps) {
 
             <dt>Utgivningsår</dt>
             <dd>{set.year}</dd>
-
-            <dt>Status</dt>
-            <dd></dd>
-
-            <dt>Tillagd</dt>
-            <dd></dd>
           </dl>
           <DetailToggles setNum={set.set_num} />
         </div>
