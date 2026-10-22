@@ -12,12 +12,16 @@ export async function canCallTraderaGlobal(): Promise<TraderaRateLimitResult> {
     return { success: true };
   }
 
-  const res = await ratelimit.limit("tradera:global");
-
-  return {
-    success: res.success,
-    limit: res.limit,
-    remaining: res.remaining,
-    reset: res.reset,
-  };
+  try {
+    const res = await ratelimit.limit("tradera:global");
+    return {
+      success: res.success,
+      limit: res.limit,
+      remaining: res.remaining,
+      reset: res.reset,
+    };
+  } catch (error) {
+    console.error(`Error occurred while checking rate limit: ${error}`);
+    return { success: true };
+  }
 }
