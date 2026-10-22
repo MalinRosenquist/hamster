@@ -28,6 +28,16 @@ export default async function ItemDetailPage({ params }: SetProps) {
   const { set, themeName, tradera } = await getItemDetail(setId);
   const nowIso = new Date().toISOString();
 
+  let fetchText: string;
+
+  if (tradera.status === "unavailable" || tradera.status === "rate_limited") {
+    fetchText = "Senaste försök";
+  } else if (tradera.cached) {
+    fetchText = "Visas från cache";
+  } else {
+    fetchText = "Hämtad live";
+  }
+
   return (
     <div className={`container ${styles.container}`}>
       <section>
@@ -94,6 +104,10 @@ export default async function ItemDetailPage({ params }: SetProps) {
               <>Prova igen om {formatDurationSv(tradera.retryAfterSeconds)}.</>
             )}
           </p>
+        ) : tradera.status === "unavailable" ? (
+          <p className={styles.message}>
+            {tradera.message ?? "Tradera är tillfälligt otillgängligt."}
+          </p>
         ) : tradera.auctions.length === 0 ? (
           <p className={styles.message}>
             Inga matchande auktioner för {set.set_num}.
@@ -102,8 +116,7 @@ export default async function ItemDetailPage({ params }: SetProps) {
           <TraderaList auctions={tradera.auctions} nowIso={nowIso} />
         )}
         <small className={styles.muted}>
-          {tradera.cached ? "Visas från cache" : "Hämtad live"}{" "}
-          {new Date(tradera.fetchedAt).toLocaleString("sv-SE")}
+          {fetchText} {new Date(tradera.fetchedAt).toLocaleString("sv-SE")}
         </small>
       </section>
     </div>
