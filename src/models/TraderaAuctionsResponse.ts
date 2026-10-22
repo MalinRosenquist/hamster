@@ -1,7 +1,7 @@
 import { TraderaAuction } from "./TraderaAuction";
 
 export type TraderaAuctionsResponse = {
-  status: "ok" | "no_results" | "rate_limited";
+  status: "ok" | "no_results" | "rate_limited" | "unavailable";
   cached: boolean;
   fetchedAt: string;
   setNum: string;

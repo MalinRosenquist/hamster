@@ -136,7 +136,21 @@ export async function getTraderaAuctionsBySetNum(
     };
   }
 
-  const items = await traderaSearchItems(setNum);
+  let items: TraderaSearchItem[] = [];
+
+  try {
+    items = await traderaSearchItems(setNum);
+  } catch (error) {
+    console.error(`Error occurred while fetching Tradera auctions: ${error}`);
+    return {
+      status: "unavailable",
+      cached: false,
+      fetchedAt,
+      setNum,
+      auctions: [],
+      message: `Annonser från Tradera för set: ${setNum} kunde inte hämtas`,
+    };
+  }
 
   // Filter items to only those matching the set number in title or description
   const filteredItems = items.filter((it) => {
